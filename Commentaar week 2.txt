@@ -1,0 +1,22 @@
+Beste groepsgenoten, hieronder het commentaar wat ik bij week 2 kreeg op het practicum. Misschien kunnen we hier mee werken
+in het opzetten van de room advertisement website om ook de laatste foutjes eruit te halen
+
+
+2. Setup a database : 3
+3. Get the name of a user : 3
+4. Change the table generator : 3
+5. Remove redundant code : 2
+6. Add an information card : 3
+7. Change series view : 3
+8. Routes for User Authentication : 3
+9. User registration : 3
+10. User login : 3
+11. My Account and Security : 3
+12. Logout user : 3
+13. Restrict logged in users to edit and delete series : 1
+14. Use of VCS : 3
+Code quality : 3
+
+Feedback :
+- Probeer in Github vaker commits te gebruiken
+4- Je bent vergeten een extra label toe te voegen in de bovenste rij van de table
