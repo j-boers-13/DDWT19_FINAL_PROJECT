@@ -46,7 +46,7 @@
                             Welcome, <?= $user ?>
                         </div>
                         <div class="card-body">
-                            <p>You're logged in to Series Overview.</p>
+                            <p>You're logged in to Account Overview.</p>
                             <a href="/DDWT19/week2/logout/" class="btn btn-primary">Logout</a>
                         </div>
                     </div>
@@ -58,8 +58,8 @@
                             Add series
                         </div>
                         <div class="card-body">
-                            <p>Add your contribution to Series Overview.</p>
-                            <a href="/DDWT19/week2/add/" class="btn btn-primary">Add a series</a>
+                            <p>Post a room for rent!</p>
+                            <a href="/DDWT19/week2/add/" class="btn btn-primary">Post a room!</a>
                         </div>
                     </div>
                 </div>
