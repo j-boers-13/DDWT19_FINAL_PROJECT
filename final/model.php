@@ -252,7 +252,7 @@ function get_breadcrumbs($breadcrumbs) {
 function get_navigation($template,$active_id){
     $navigation_exp = '
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand">Series Overview</a>
+    <a class="navbar-brand">ROOM.NET</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
@@ -579,7 +579,7 @@ function count_users($pdo) {
     return $users;
 }
 /**
- * Count the number of series listed on Series Overview
+ * Count the number of rooms
  * @param object $pdo database object
  * @return mixed
  */
@@ -589,6 +589,30 @@ function count_rooms($pdo){
     $stmt->execute();
     $rooms = $stmt->rowCount();
     return $rooms;
+}
+
+/**
+ * Count the number of owners
+ * @param object $pdo database object
+ * @return mixed
+ */
+function count_owners($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE role = "owner"');
+    $stmt->execute();
+    $owners = $stmt->rowCount();
+    return $owners;
+}
+
+/**
+ * Count the number of tenants
+ * @param object $pdo database object
+ * @return mixed
+ */
+function count_tenants($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE role = "tenant"');
+    $stmt->execute();
+    $tenants = $stmt->rowCount();
+    return $tenants;
 }
 
 /**

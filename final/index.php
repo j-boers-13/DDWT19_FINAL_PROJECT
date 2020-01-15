@@ -38,17 +38,15 @@ $db = connect_db('remotemysql.com', '1cJD522I73', '1cJD522I73','MHJUWcQxxb');
 $nbr_rooms = count_rooms($db);
 /* Get Number of Users */
 $nbr_users = count_users($db);
-//$nbr_owners = count_owners($db);
-//$nbr_renters = count_renters($db);
+$nbr_owners = count_owners($db);
+$nbr_tenants = count_tenants($db);
 
 /* set the right column as default on every route instead constantly calling it */
 $right_column = use_template('cards');
 
 
-
 /* Landing page */
 if (new_route('/DDWT19_FINAL_PROJECT/final/', 'get')) {
-    /* Get Number of Series */
 
     /* Page info */
     $page_title = 'Home';
@@ -59,8 +57,8 @@ if (new_route('/DDWT19_FINAL_PROJECT/final/', 'get')) {
     $navigation = get_navigation($nav_array,1);
 
     /* Page content */
-    $page_subtitle = 'The online platform to list your favorite series';
-    $page_content = 'On Series Overview you can list your favorite series. You can see the favorite series of all Series Overview users. By sharing your favorite series, you can get inspired by others and explore new series.';
+    $page_subtitle = 'The online platform for room tenants and -owners!';
+    $page_content = 'On room overview you can see all rooms.';
 
     /* Get error msg from remove post route */
     if ( isset($_GET['error_msg']) ) {
@@ -84,9 +82,9 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/overview/', 'get')) {
     $navigation = get_navigation($nav_array, 2);
 
     /* Page content */
-    $page_subtitle = 'The overview of all series';
-    $page_content = 'Here you find all series listed on Series Overview.';
-    $left_content = get_serie_table(get_series($db), $db);
+    $page_subtitle = 'The overview of all available rooms';
+    $page_content = 'Here you find all rooms listed on ROOM.NET';
+    $left_content = get_room_table(get_rooms($db), $db);
 
     /* Get error msg from remove post route */
     if ( isset($_GET['error_msg']) ) {
