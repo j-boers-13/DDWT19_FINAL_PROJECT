@@ -53,14 +53,14 @@
                             <input type="text" class="form-control" id="inputUsername" placeholder="Jansen" name="lastname" required>
                         </div>
                         <div class="form-group row">
-                            <label for="inputBirthdate" class="col-2 col-form-label">Date and time</label>
+                            <label for="inputBirthdate" class="col-2 col-form-label">Birthdate</label>
                             <div class="col-10">
-                                <input class="form-control" type="datetime-local" value="2019-08-19T13:45:00" id="birthdate" name="birthdate" required>
+                                <input class="form-control" type="datetime-local" value="year-month-day" id="birthdate" name="birthdate" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputProfession">Profession</label>
-                            <input type="text" class="form-control" id="inputProfession" name="profession">
+                            <input type="text" class="form-control" id="inputProfession" name="profession" required>
                         </div>
                         <div class="form-group">
                             <label for="inputLanguages">Language(s)</label>
@@ -71,7 +71,7 @@
                             <input type="text" class="form-control" id="inputUsername" placeholder="Write a short introduction about yourself!" name="biography" required>
                         </div>
                         <div class="form-group">
-                            <label for="inputtelephone">Telephone</label>
+                            <label for="inputTelephone">Telephone</label>
                             <input type="text" class="form-control" id="inputUsername" placeholder="+31667567491" name="telephone" required>
                         </div>
                         <div class="form-group">

@@ -273,7 +273,7 @@ elseif (new_route('/DDWT19/week2/myaccount/', 'get')) {
 }
 
 /* Register GET */
-elseif (new_route('/DDWT19/week2/register/', 'get')) {
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/register', 'get')) {
     /* Page info */
     $page_title = 'Register';
     $breadcrumbs = get_breadcrumbs([
