@@ -52,6 +52,39 @@
                             <label for="inputUsername">Last name</label>
                             <input type="text" class="form-control" id="inputUsername" placeholder="Jansen" name="lastname" required>
                         </div>
+                        <div class="form-group row">
+                            <label for="inputBirthdate" class="col-2 col-form-label">Date and time</label>
+                            <div class="col-10">
+                                <input class="form-control" type="datetime-local" value="2019-08-19T13:45:00" id="birthdate" name="birthdate" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputProfession">Profession</label>
+                            <input type="text" class="form-control" id="inputProfession" name="profession">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLanguages">Language(s)</label>
+                            <input type="text" class="form-control" id="inputLanguages" placeholder="English,Dutch,Etc" name="language" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputBiography">Biography</label>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="Write a short introduction about yourself!" name="biography" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtelephone">Telephone</label>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="+31667567491" name="telephone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail">E-mail</label>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="x@gmail.com" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="InputRole">Role</label>
+                            <select class="form-control" id="Role" name="role">
+                                <option>Owner</option>
+                                <option>Tenant</option>
+                            </select>
+                        </div>
                         <button type="submit" class="btn btn-primary">Register now</button>
                     </form>
 
