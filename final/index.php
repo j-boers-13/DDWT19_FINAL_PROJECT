@@ -31,15 +31,15 @@ $nav_array = Array(
 );
 
 /* Connect to DB */
-$db = connect_db('db4free.net', 'ddwt19', 'ddwt19','dbpassword');
+$db = connect_db('remotemysql.com', '1cJD522I73', '1cJD522I73','MHJUWcQxxb');
 
 /* Redudant code is added here */
 /* Get Number of Series */
 $nbr_rooms = count_rooms($db);
 /* Get Number of Users */
 $nbr_users = count_users($db);
-$nbr_owners = count_owners($db);
-$nbr_renters = count_renters($db);
+//$nbr_owners = count_owners($db);
+//$nbr_renters = count_renters($db);
 
 /* set the right column as default on every route instead constantly calling it */
 $right_column = use_template('cards');
