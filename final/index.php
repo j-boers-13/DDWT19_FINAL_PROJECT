@@ -114,9 +114,10 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
     /* Page content */
     $page_subtitle = sprintf("Information about %s", $room_info['street_address']);
     $page_content = $room_info['description'];
-    $nbr_seasons = $room_info['seasons'];
+    $city = $room_info['city'];
     $added_by = get_user_name($db, $room_info['owner_id']);
-    $display_button =  check_if_users($serie_info['user']);
+    $date_added = $room_info['created_at'];
+    $display_button = check_if_owner($room_info['owner_id']);
 
 
     /* Get error msg from POST route */
@@ -146,9 +147,9 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/add/', 'get')) {
     /* Page info */
     $page_title = 'Add room';
     $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'Week 2' => na('/DDWT19_FINAL_PROJECT/final/', False),
-        'Add Series' => na('/DDWT19_FINAL_PROJECT/final/new/', True)
+        'ROOM.NET' => na('/DDWT19_FINAL_PROJECT/', False),
+        'Rooms' => na('/DDWT19_FINAL_PROJECT/final/', False),
+        'Add Room' => na('/DDWT19_FINAL_PROJECT/final/new/', True)
     ]);
     $navigation = get_navigation($nav_array,5);
 
@@ -166,7 +167,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/add/', 'get')) {
     include use_template('new');
 }
 
-/* Add serie POST */
+/* Add room POST */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/add/', 'post')) {
     /* check if logged in */
     if ( !check_login()) {
@@ -179,7 +180,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/add/', 'post')) {
         json_encode($feedback)));
 }
 
-/* Edit serie GET */
+/* Edit room GET */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/edit/', 'get')) {
     /* check if logged in */
     if ( !check_login()) {
@@ -190,7 +191,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/edit/', 'get')) {
             'type' => 'error',
             'message' => 'Tenants can\'t add rooms.'
         ];;
-        /* Redirect to serie GET route */
+        /* Redirect to room GET route */
         redirect(sprintf('/DDWT19_FINAL_PROJECT/final/?error_msg=%s',
             json_encode($feedback)));
     }
@@ -204,7 +205,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/edit/', 'get')) {
     $breadcrumbs = get_breadcrumbs([
         'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
         'Week 2' => na('/DDWT19_FINAL_PROJECT/final/', False),
-        sprintf("Edit Room %s", $room_info['street_address']) => na('/DDWT19_FINAL_PROJECT/final//new/', True)
+        sprintf("Edit Room %s", $room_info['street_address']) => na('/DDWT19_FINAL_PROJECT/final/edit/', True)
     ]);
     $navigation = get_navigation($nav_array,6);
 
@@ -223,18 +224,27 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/edit/', 'get')) {
     include use_template('new');
 }
 
-/* Edit serie POST */
+/* Edit room POST */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/edit/', 'post')) {
     /* check if logged in */
     if ( !check_login()) {
         redirect('/DDWT19_FINAL_PROJECT/final/login/');
     }
+    if ( !check_owner($db) ) {
+        $feedback = [
+            'type' => 'error',
+            'message' => 'Tenants can\'t add rooms.'
+        ];;
+        /* Redirect to serie GET route */
+        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/edit?error_msg=%s',
+            json_encode($feedback)));
+    }
     /* Update serie in database */
-    $feedback = update_serie($db, $_POST);
+    $feedback = update_room($db, $_POST);
 
     /* Get serie info from db */
-    $serie_id = $_POST['serie_id'];
-    $serie_info = get_serieinfo($db, $serie_id);
+    $room_id = $_POST['room_id'];
+    $room_info = get_roominfo($db, $room_id);
 
     /* Redirect to serie get route */
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/room/?error_msg=%s&room_id=%s',
@@ -249,8 +259,8 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/remove/', 'post')) {
     }
 
     /* Remove serie in database */
-    $serie_id = $_POST['room_id'];
-    $feedback = remove_serie($db, $serie_id);
+    $room_id = $_POST['room_id'];
+    $feedback = remove_room($db, $room_id);
 
     /* Redirect to overview GET route */
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/overview/?error_msg=%s',

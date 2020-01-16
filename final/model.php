@@ -179,6 +179,17 @@ function check_owner($pdo) {
     }
 }
 
+function check_if_owner($owner_id) {
+    if (isset($_SESSION['user_id'])){
+        if ($_SESSION['user_id'] == $owner_id) {
+            return True;
+        }
+        else {
+            return False;
+        }
+    }
+}
+
 function get_user_role($user_id, $pdo){
     $stmt = $pdo->prepare("SELECT role FROM users WHERE id = ?");
     $stmt->execute([$user_id]);
@@ -318,9 +329,8 @@ function get_room_table($rooms,$pdo){
     foreach($rooms as $key => $value){
         $table_exp .= '
         <tr>
-            <th scope="row">'.$value['address'].'</th>
-             <th scope="row"></th>
-            <td>'.get_user_name($pdo,$value['id']).'</td>
+            <th scope="row">'.$value['street_address'].'</th>
+            <td>'.get_user_name($pdo,$value['owner_id']).'</td>
             <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
         </tr>
         ';
@@ -369,25 +379,25 @@ function p_print($input){
 function get_available_rooms($pdo){
     $stmt = $pdo->prepare('SELECT * FROM rooms WHERE is_available = 1');
     $stmt->execute();
-    $series = $stmt->fetchAll();
-    $series_exp = Array();
+    $rooms = $stmt->fetchAll();
+    $room_exp = Array();
 
     /* Create array with htmlspecialchars */
-    foreach ($series as $key => $value){
+    foreach ($rooms as $key => $value){
         foreach ($value as $user_key => $user_input) {
-            $series_exp[$key][$user_key] = htmlspecialchars($user_input);
+            $room_exp[$key][$user_key] = htmlspecialchars($user_input);
         }
     }
-    return $series_exp;
+    return $room_exp;
 }
 
 /**
  * Generates an array with serie information
  * @param object $pdo db object
- * @param int $serie_id id from the serie
+ * @param int $room_id id from the serie
  * @return mixed
  */
-function get_roominfo($pdo, $serie_id){
+function get_roominfo($pdo, $room_id){
     $stmt = $pdo->prepare('SELECT * FROM rooms WHERE id = ?');
     $stmt->execute([$room_id]);
     $room_info = $stmt->fetch();
@@ -434,10 +444,10 @@ function add_room($pdo, $room_info){
             'message' => 'There was an error. Not all fields were filled in.'
         ];
     }
-    if ($_SESSION['id'] !== $room_info['owner_id']){
+    if (!check_owner($pdo)){
         return[
             'type' => 'danger',
-            'message' => 'There was an error. You cannot edit this serie'
+            'message' => 'There was an error. You cannot add series as a tenant.'
         ];
 
     }
@@ -480,10 +490,10 @@ function add_room($pdo, $room_info){
 /**
  * Updates a serie in the database using post array
  * @param object $pdo db object
- * @param array $serie_info post array
+ * @param array $room_info post array
  * @return array
  */
-function update_serie($pdo, $serie_info){
+function update_room($pdo, $room_info){
     session_start();
     /* Check if all fields are set */
     if (
@@ -498,10 +508,11 @@ function update_serie($pdo, $serie_info){
             'message' => 'There was an error. Not all fields were filled in.'
         ];
     }
-    if ($_SESSION['user_id'] !== $room_info['owner_id']){
+    $room_data = get_roominfo($pdo, $room_info['room_id']);
+    if ($_SESSION['user_id'] !== $room_data['owner_id']){
         return[
             'type' => 'danger',
-            'message' => 'There was an error. You cannot edit this serie'
+            'message' => 'There was an error. You cannot edit this room'
         ];
     }
 
@@ -524,7 +535,7 @@ function update_serie($pdo, $serie_info){
     }
 
     /* Update Serie */
-    $stmt = $pdo->prepare('UPDATE series SET street_address = ?, city = ?, zipcode = ?, description = ?, owner_id = ? WHERE id = ?');
+    $stmt = $pdo->prepare('UPDATE rooms SET street_address = ?, city = ?, zipcode = ?, description = ?, owner_id = ? WHERE id = ?');
     $stmt->execute([
         $room_info['street_address'],
         $room_info['city'],
@@ -549,23 +560,23 @@ function update_serie($pdo, $serie_info){
 }
 
 /**
- * Removes a series with a specific series-ID
+ * Removes a room with a specific series-ID
  * @param object $pdo db object
- * @param int $serie_id id of the to be deleted series
+ * @param int $room_id id of the to be deleted series
  * @return array
  */
-function remove_serie($pdo, $serie_id){
+function remove_room($pdo, $room_id){
     /* Get series info */
-    $serie_info = get_serieinfo($pdo, $serie_id);
+    $room_info = get_roominfo($pdo, $room_id);
 
     /* Delete Serie */
-    $stmt = $pdo->prepare("DELETE FROM series WHERE id = ?");
-    $stmt->execute([$serie_id]);
+    $stmt = $pdo->prepare("DELETE FROM rooms WHERE id = ?");
+    $stmt->execute([$room_id]);
     $deleted = $stmt->rowCount();
     if ($deleted ==  1) {
         return [
             'type' => 'success',
-            'message' => sprintf("Series '%s' was removed!", $serie_info['name'])
+            'message' => sprintf("Series '%s' was removed!", $room_info['street_address'])
         ];
     }
     else {
@@ -577,7 +588,7 @@ function remove_serie($pdo, $serie_id){
 }
 
 /**
- * Count the number of users listed on Series Overview
+ * Count the number of users
  * @param object $pdo database object
  * @return mixed
  */
@@ -587,6 +598,7 @@ function count_users($pdo) {
     $users = $stmt->rowCount();
     return $users;
 }
+
 /**
  * Count the number of rooms
  * @param object $pdo database object

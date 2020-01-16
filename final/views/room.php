@@ -36,14 +36,14 @@
                 <?php if ($display_button) { ?>
                     <div class='row'}>
                         <div class ='col-sm-2'>
-                            <a href="/DDWT19_FINAL_PROJECT/final/edit/?serie_id=<?=
-                            $serie_id ?>" role="button" class="btn btn-warning">Edit</a>
+                            <a href="/DDWT19_FINAL_PROJECT/final/edit/?room_id=<?=
+                            $room_id ?>" role="button" class="btn btn-warning">Edit</a>
                         </div>
                         <div class="col-sm-2">
                             <form action="/DDWT19_FINAL_PROJECT/final/remove/" method="POST">
-                                <input type="hidden" value="<?=$serie_id
-                                ?>" name="serie_id">
-                                <button type="sumbit" class="btn btn-danger">Remove</button>
+                                <input type="hidden" value="<?=$room_id
+                                ?>" name="room_id">
+                                <button type="submit" class="btn btn-danger">Remove</button>
                             </form>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                     </table>
                     <div class="row">
                         <div class="col-sm-2">
-                            <a href="/DDWT19_FINAL_PROJECT/final/?room_id=<?= $room_id ?>" role="button" class="btn btn-warning">Edit</a>
+                            <a href="/DDWT19_FINAL_PROJECT/final/edit/?room_id=<?= $room_id ?>" role="button" class="btn btn-warning">Edit</a>
                         </div>
                         <div class="col-sm-2">
                             <form action="/DDWT19_FINAL_PROJECT/final/remove/" method="POST">
