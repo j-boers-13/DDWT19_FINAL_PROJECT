@@ -322,6 +322,8 @@ function get_room_table($rooms,$pdo){
     <thead
     <tr>
         <th scope="col">Address</th>
+        <th scope="col">Price</th>
+        <th scope="col">Temporary</th>
         <th scope="col">Square Meters</th>
         <th scope="col">Added By</th>
     </tr>
@@ -331,6 +333,8 @@ function get_room_table($rooms,$pdo){
         $table_exp .= '
         <tr>
             <th scope="row">'.$value['street_address'].'</th>
+            <td>'.$value['price'].'</td>
+            <td>'.$value['temporary'].'</td>
             <td>'.$value['square_meters'].'</td>
             <td>'.get_user_name($pdo,$value['owner_id']).'</td>
             <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
