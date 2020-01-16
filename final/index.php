@@ -393,6 +393,36 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/logout', 'get')) {
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/myaccount/?error_msg=%s',
     json_encode($feedback)));
 }
+
+/* get opt-ins page */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/', 'get')) {
+
+    /* Page info */
+    $page_title = 'Opt-ins';
+    $breadcrumbs = get_breadcrumbs([
+        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
+        'final' => na('/DDWT19/final/', False),
+        'Opt-ins' => na('/DDWT19_FINAL_PROJECT/final/optins', True)
+    ]);
+    $navigation = get_navigation($nav_array, 2);
+
+    /* Page content */
+    $page_subtitle = 'The overview of all your opt-ins';
+    $page_content = 'This is an overview of all the rooms you opted-in for';
+    $left_content = get_optin_table(get_optin_rooms($db), $db);
+
+    /* Get error msg from remove post route */
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+
+    /* Choose Template */
+    include use_template('main');
+}
+
+
+
 else {
     http_response_code(404);
 }
+

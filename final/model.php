@@ -425,6 +425,60 @@ function get_error($feedback){
         </div>';
     return $error_exp;
 }
+/**
+ * Get array with the rooms a user has opted-in for
+ * @param object $pdo database object
+ * @return array Associative array with all series
+ */
+function get_optin_rooms($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $rooms = $stmt->fetchAll();
+    $optins_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($rooms as $key => $value){
+        foreach ($value as $user_key => $user_input) {
+            $room_exp[$key][$user_key] = htmlspecialchars($user_input);
+        }
+    }
+    return $optins_exp;
+}
+
+/**
+ * Creates a Bootstrap table with a list of opted-in rooms for the user
+ * @param array $rooms with rooms from the db
+ * @return string
+ */
+function get_optin_table($optins,$pdo){
+    $table_exp = '
+    <table class="table table-hover">
+    <thead
+    <tr>
+        <th scope="col">Address</th>
+        <th scope="col">Square Meters</th>
+        <th scope="col">Added By</th>
+    </tr>
+    </thead>
+    <tbody>';
+    foreach($optins as $key => $value){
+        $table_exp .= '
+        <tr>
+            <th scope="row">'.$value['street_address'].'</th>
+            <td>'.$value['square_meters'].'</td>
+            <td>'.get_user_name($pdo,$value['owner_id']).'</td>
+            <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
+        </tr>
+        ';
+    }
+    $table_exp .= '
+    </tbody>
+    </table>
+    ';
+    return $table_exp;
+}
+
+
 
 /**
  * Add room to the database
@@ -683,3 +737,5 @@ function get_user_id(){
         return False;
     }
 }
+
+
