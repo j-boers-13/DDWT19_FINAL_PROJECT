@@ -107,9 +107,9 @@ function register_user($pdo, $form_data){
  * @return array
  */
 function login_user($pdo, $form_data){
-    /* check if all fields are set */
+    /*check if all fields are set */
     if (
-        empty($form_data['username']) or
+        empty($form_data ['username']) or
         empty($form_data['password'])
     ) {
         return [
@@ -117,7 +117,7 @@ function login_user($pdo, $form_data){
             'message' => 'You should enter a username and password.'
         ];
     }
-    /* check if user exists */
+    /* Check if user exists */
     try {
         $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
         $stmt->execute([$form_data['username']]);
@@ -129,38 +129,40 @@ function login_user($pdo, $form_data){
         ];
     }
     /* Return error message for wrong username */
-    if (empty(user_info) ) {
+    if ( empty($user_info) ) {
         return [
             'type' => 'danger',
             'message' => 'The username you entered does not exist!'
         ];
     }
     /* Check password */
-    if (!password_verify($form_data['password'], $user_info['password']) ) {
+    if ( !password_verify($form_data['password'], $user_info['password'])){
         return [
             'type' => 'danger',
             'message' => 'The password you entered is incorrect!'
         ];
-    } else {
+    }
+    else {
         session_start();
         $_SESSION['user_id'] = $user_info['id'];
         $feedback = [
-            'type' => 'succes',
+            'type' => 'success',
             'message' => sprintf('%s, you were logged in successfully!',
-            get_user_name($pdo,$_SESSION['user_id']))
+                get_user_name($pdo, $_SESSION['user_id']))
         ];
         redirect(sprintf('/DDWT19_FINAL_PROJECT/final/myaccount/?error_msg=%s',
-        json_encode($feedback)));
+            json_encode($feedback)));
     }
 }
-
 
 /**
  * Check Login
  *
  */
 function check_login(){
-    session_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
     if (isset($_SESSION['user_id'])){
         return True;
     } else {
@@ -199,7 +201,6 @@ function get_user_role($user_id, $pdo){
 
 
 function check_room_owners($room_ownerid){
-    session_start();
     if ($_SESSION['user_id'] == $room_ownerid){
         return True;
     }
@@ -352,7 +353,6 @@ function get_room_table($rooms,$pdo){
  * Logout user
  */
 function logout_user(){
-    session_start();
     if (isset($_SESSION['user_id']) ) {
         session_destroy();
 
@@ -746,7 +746,6 @@ function redirect($location){
  * @return bool current user id or False if not logged in
  */
 function get_user_id(){
-    session_start();
     if (isset($_SESSION['user_id'])){
         return $_SESSION['user_id'];
     } else {
