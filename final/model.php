@@ -167,11 +167,31 @@ function check_login(){
         return False;
     }
 }
-function check_if_users($serie_userid){
-  session_start();
-  if ($_SESSION['user_id'] == $serie_userid){
-      return True;
-  }
+
+function check_owner($pdo) {
+    if (isset($_SESSION['user_id'])){
+        if (get_user_role($_SESSION['user_id'], $pdo) == "Owner") {
+            return True;
+        }
+        else {
+            return False;
+        }
+    }
+}
+
+function get_user_role($user_id, $pdo){
+    $stmt = $pdo->prepare("SELECT role FROM users WHERE id = ?");
+    $stmt->execute([$user_id]);
+    $user_info = $stmt->fetch();
+    return $user_info['role'];
+}
+
+
+function check_room_owners($room_ownerid){
+    session_start();
+    if ($_SESSION['user_id'] == $room_ownerid){
+        return True;
+    }
 }
 
 /**
@@ -601,7 +621,7 @@ function count_rooms($pdo){
  * @return mixed
  */
 function count_owners($pdo){
-    $stmt = $pdo->prepare('SELECT * FROM users WHERE role = "owner"');
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE role = "Owner"');
     $stmt->execute();
     $owners = $stmt->rowCount();
     return $owners;
@@ -613,7 +633,7 @@ function count_owners($pdo){
  * @return mixed
  */
 function count_tenants($pdo){
-    $stmt = $pdo->prepare('SELECT * FROM users WHERE role = "tenant"');
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE role = "Tenant"');
     $stmt->execute();
     $tenants = $stmt->rowCount();
     return $tenants;

@@ -127,16 +127,24 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
     include use_template('room');
 }
 
-/* Add serie GET */
-elseif (new_route('//DDWT19_FINAL_PROJECT/final/add/', 'get')) {
+/* Add room GET */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/add/', 'get')) {
     /* check if logged in */
     if ( !check_login()) {
         redirect('/DDWT19_FINAL_PROJECT/final/login/');
     }
-
+    if ( !check_owner($db) ) {
+        $feedback = [
+            'type' => 'error',
+            'message' => 'Tenants can\'t add rooms.'
+        ];;
+        /* Redirect to serie GET route */
+        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/?error_msg=%s',
+            json_encode($feedback)));
+    }
 
     /* Page info */
-    $page_title = 'Add Series';
+    $page_title = 'Add room';
     $breadcrumbs = get_breadcrumbs([
         'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
         'Week 2' => na('/DDWT19_FINAL_PROJECT/final/', False),
@@ -145,9 +153,9 @@ elseif (new_route('//DDWT19_FINAL_PROJECT/final/add/', 'get')) {
     $navigation = get_navigation($nav_array,5);
 
     /* Page content */
-    $page_subtitle = 'Add your favorite series';
-    $page_content = 'Fill in the details of you favorite series.';
-    $submit_btn = "Add Series";
+    $page_subtitle = 'Add your room';
+    $page_content = 'Fill in the details of the room you have available.';
+    $submit_btn = "Add Room";
     $form_action = '/DDWT19_FINAL_PROJECT/final/add/';
     /* Get error msg from POST route */
     if (isset($_GET['error_msg']) ) {
