@@ -70,7 +70,7 @@
                     <?php } else { ?>
                     <div class='row'>
                         <div class ='col-sm-2'>
-                            <a href="/DDWT19_FINAL_PROJECT/final/optin/?room_id=<?=
+                            <a href="/DDWT19_FINAL_PROJECT/final/optins/?room_id=<?=
                             $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                         </div>
                     </div>
