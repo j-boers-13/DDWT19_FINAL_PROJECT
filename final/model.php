@@ -415,26 +415,26 @@ function get_error($feedback){
 }
 
 /**
- * Add serie to the database
+ * Add room to the database
  * @param object $pdo db object
- * @param array $serie_info post array
+ * @param array $room_info post array
  * @return array with message feedback
  */
-function add_serie($pdo, $serie_info){
+function add_room($pdo, $room_info){
     session_start();
     /* Check if all fields are set */
     if (
-        empty($serie_info['Name']) or
-        empty($serie_info['Creator']) or
-        empty($serie_info['Seasons']) or
-        empty($serie_info['Abstract'])
+        empty($room_info['street_address']) or
+        empty($room_info['city']) or
+        empty($room_info['description']) or
+        empty($room_info['zipcode'])
     ) {
         return [
             'type' => 'danger',
             'message' => 'There was an error. Not all fields were filled in.'
         ];
     }
-    if ($_SESSION['id'] !== $serie_info['user']){
+    if ($_SESSION['id'] !== $room_info['owner_id']){
         return[
             'type' => 'danger',
             'message' => 'There was an error. You cannot edit this serie'
@@ -442,39 +442,31 @@ function add_serie($pdo, $serie_info){
 
     }
 
-    /* Check data type */
-    if (!is_numeric($serie_info['Seasons'])) {
-        return [
-            'type' => 'danger',
-            'message' => 'There was an error. You should enter a number in the field Seasons.'
-        ];
-    }
-
-    /* Check if serie already exists */
-    $stmt = $pdo->prepare('SELECT * FROM series WHERE name = ?');
-    $stmt->execute([$serie_info['Name']]);
-    $serie = $stmt->rowCount();
-    if ($serie){
+    /* Check if room already exists */
+    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE street_address = ?');
+    $stmt->execute([$room_info['street_address']]);
+    $room = $stmt->rowCount();
+    if ($room){
         return [
             'type' => 'danger',
             'message' => 'This series was already added.'
         ];
     }
 
-    /* Add Serie */
-    $stmt = $pdo->prepare("INSERT INTO series (name, creator, seasons, abstract, user) VALUES (?, ?, ?, ?, ?)");
+    /* Add Room */
+    $stmt = $pdo->prepare("INSERT INTO rooms (street_address, city, description, zipcode, owner_id) VALUES (?, ?, ?, ?, ?)");
     $stmt->execute([
-        $serie_info['Name'],
-        $serie_info['Creator'],
-        $serie_info['Seasons'],
-        $serie_info['Abstract'],
+        $room_info['street_address'],
+        $room_info['city'],
+        $room_info['description'],
+        $room_info['zipcode'],
         $_SESSION['user_id']
     ]);
     $inserted = $stmt->rowCount();
     if ($inserted ==  1) {
         return [
             'type' => 'success',
-            'message' => sprintf("Series '%s' added to Series Overview.", $serie_info['Name'])
+            'message' => sprintf("Room '%s' added to Room Overview.", $room_info['street_address'])
         ];
     }
     else {
@@ -495,70 +487,63 @@ function update_serie($pdo, $serie_info){
     session_start();
     /* Check if all fields are set */
     if (
-        empty($serie_info['Name']) or
-        empty($serie_info['Creator']) or
-        empty($serie_info['Seasons']) or
-        empty($serie_info['Abstract']) or
-        empty($serie_info['serie_id'])
+        empty($room_info['street_address']) or
+        empty($room_info['city']) or
+        empty($room_info['zipcode']) or
+        empty($room_info['description']) or
+        empty($room_info['room_id'])
     ) {
         return [
             'type' => 'danger',
             'message' => 'There was an error. Not all fields were filled in.'
         ];
     }
-    if ($_SESSION['user_id'] !== $serie_info['user_id']){
+    if ($_SESSION['user_id'] !== $room_info['owner_id']){
         return[
             'type' => 'danger',
             'message' => 'There was an error. You cannot edit this serie'
         ];
     }
 
-    /* Check data type */
-    if (!is_numeric($serie_info['Seasons'])) {
+
+    /* Get current room name */
+    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE id = ?');
+    $stmt->execute([$room_info['room_id']]);
+    $room = $stmt->fetch();
+    $current_address = $room['street_address'];
+
+    /* Check if room already exists */
+    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE street_address = ?');
+    $stmt->execute([$room_info['street_address']]);
+    $room = $stmt->fetch();
+    if ($room_info['street_address'] == $room['street_address'] and $room['street_address'] != $current_address){
         return [
             'type' => 'danger',
-            'message' => 'There was an error. You should enter a number in the field Seasons.'
-        ];
-    }
-
-    /* Get current series name */
-    $stmt = $pdo->prepare('SELECT * FROM series WHERE id = ?');
-    $stmt->execute([$serie_info['serie_id']]);
-    $serie = $stmt->fetch();
-    $current_name = $serie['name'];
-
-    /* Check if serie already exists */
-    $stmt = $pdo->prepare('SELECT * FROM series WHERE name = ?');
-    $stmt->execute([$serie_info['Name']]);
-    $serie = $stmt->fetch();
-    if ($serie_info['Name'] == $serie['name'] and $serie['name'] != $current_name){
-        return [
-            'type' => 'danger',
-            'message' => sprintf("The name of the series cannot be changed. %s already exists.", $serie_info['Name'])
+            'message' => sprintf("The address of the room cannot be changed. %s already exists.", $room_info['street_address'])
         ];
     }
 
     /* Update Serie */
-    $stmt = $pdo->prepare('UPDATE series SET name = ?, creator = ?, seasons = ?, abstract = ?, user = ? WHERE id = ?');
+    $stmt = $pdo->prepare('UPDATE series SET street_address = ?, city = ?, zipcode = ?, description = ?, owner_id = ? WHERE id = ?');
     $stmt->execute([
-        $serie_info['Name'],
-        $serie_info['Creator'],
-        $serie_info['Seasons'],
-        $serie_info['Abstract'],
-        $serie_info['serie_id'],
-        $_SESSION['user_id']
+        $room_info['street_address'],
+        $room_info['city'],
+        $room_info['zipcode'],
+        $room_info['description'],
+        $_SESSION['user_id'],
+        $room_info['room_id']
     ]);
     $updated = $stmt->rowCount();
     if ($updated ==  1) {
         return [
             'type' => 'success',
-            'message' => sprintf("Series '%s' was edited!", $serie_info['Name'])
+            'message' => sprintf("Room '%s' was edited!", $room_info['street_address'])
         ];
     }
     else {
         return [
             'type' => 'danger',
-            'message' => 'The series was not edited. No changes were detected.'
+            'message' => 'The room was not edited. No changes were detected.'
         ];
     }
 }

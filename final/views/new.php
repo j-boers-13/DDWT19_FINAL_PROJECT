@@ -35,30 +35,30 @@
                     <p><?= $page_content ?></p>
                     <form action="<?= $form_action ?>" method="POST">
                         <div class="form-group row">
-                            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                            <label for="inputAddress" class="col-sm-2 col-form-label">Street Address</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputName" name="Name" value="<?php if (isset($serie_info)){echo $serie_info['name'];} ?>" required>
+                                <input type="text" class="form-control" id="inputAddress" name="street_address" value="<?php if (isset($room_info)){echo $room_info['street_address'];} ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCreator" class="col-sm-2 col-form-label">Creator</label>
+                            <label for="inputCity" class="col-sm-2 col-form-label">City</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputCreator" name="Creator" value="<?php if (isset($serie_info)){echo $serie_info['creator'];} ?>" required>
+                                <input type="text" class="form-control" id="inputCity" name="city" value="<?php if (isset($room_info)){echo $room_info['city'];} ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputSeasons" class="col-sm-2 col-form-label">Seasons</label>
+                            <label for="inputZipcode" class="col-sm-2 col-form-label">Zip Code</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" id="inputCreator" name="Seasons" value="<?php if (isset($serie_info)){echo $serie_info['seasons'];} ?>" required>
+                                <input type="text" class="form-control" id="inputZipcode" name="zipcode" value="<?php if (isset($room_info)){echo $room_info['zipcode'];} ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputAbstract" class="col-sm-2 col-form-label">Abstract</label>
+                            <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" id="inputAbstract" rows="3" name="Abstract" required><?php if (isset($serie_info)){echo $serie_info['abstract'];} ?></textarea>
+                                <textarea class="form-control" id="inputDescription" rows="3" name="description" required><?php if (isset($room_info)){echo $room_info['description'];} ?></textarea>
                             </div>
                         </div>
-                        <?php if(isset($serie_id)){ ?><input type="hidden" name="serie_id" value="<?php echo $serie_id ?>"><?php } ?>
+                        <?php if(isset($room_id)){ ?><input type="hidden" name="room_id" value="<?php echo $room_id ?>"><?php } ?>
                         <div class="form-group row">
                             <div class="col-sm-10">
                                 <button type="submit" class="btn btn-primary"><?= $submit_btn ?></button>

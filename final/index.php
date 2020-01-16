@@ -173,7 +173,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/add/', 'post')) {
         redirect('/DDWT19_FINAL_PROJECT/final/login/');
     }
     /* add serie to database */
-    $feedback = add_serie($db, $_POST);
+    $feedback = add_room($db, $_POST);
     /* Redirect to serie GET route */
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/add/?error_msg=%s',
         json_encode($feedback)));
@@ -185,24 +185,33 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/edit/', 'get')) {
     if ( !check_login()) {
         redirect('/DDWT19_FINAL_PROJECT/final/login/');
     }
+    if ( !check_owner($db) ) {
+        $feedback = [
+            'type' => 'error',
+            'message' => 'Tenants can\'t add rooms.'
+        ];;
+        /* Redirect to serie GET route */
+        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/?error_msg=%s',
+            json_encode($feedback)));
+    }
 
     /* Get serie info from db */
-    $serie_id = $_GET['serie_id'];
-    $serie_info = get_serieinfo($db, $serie_id);
+    $room_id = $_GET['room_id'];
+    $room_info = get_roominfo($db, $room_id);
 
     /* Page info */
-    $page_title = 'Edit Series';
+    $page_title = 'Edit Room';
     $breadcrumbs = get_breadcrumbs([
         'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
         'Week 2' => na('/DDWT19_FINAL_PROJECT/final/', False),
-        sprintf("Edit Series %s", $serie_info['name']) => na('/DDWT19_FINAL_PROJECT/final//new/', True)
+        sprintf("Edit Room %s", $room_info['street_address']) => na('/DDWT19_FINAL_PROJECT/final//new/', True)
     ]);
     $navigation = get_navigation($nav_array,6);
 
     /* Page content */
-    $page_subtitle = sprintf("Edit %s", $serie_info['name']);
-    $page_content = 'Edit the series below.';
-    $submit_btn = "Edit Series";
+    $page_subtitle = sprintf("Edit %s", $room_info['street_address']);
+    $page_content = 'Edit the room below.';
+    $submit_btn = "Edit Room";
     $form_action = '/DDWT19_FINAL_PROJECT/final/edit/';
 
 
