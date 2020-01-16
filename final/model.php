@@ -55,7 +55,7 @@ function register_user($pdo, $form_data){
     ) {
         return [
             'type' => 'danger',
-            'message' => 'You Should enter a username, password, first- and last name.'
+            'message' => 'Please check your file completion, you must enter all credentials.'
         ];
     }
     try {

@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputTelephone">Telephone</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="+31667567491" name="telephone" required>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="+316 67567491" name="telephone" required>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail">E-mail</label>
