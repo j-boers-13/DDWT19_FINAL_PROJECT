@@ -92,7 +92,7 @@ function register_user($pdo, $form_data){
     session_start();
     $_SESSION['user_id'] = $user_id;
     $feedback = [
-        'type' => 'succes',
+        'type' => 'success',
         'message' => sprintf('%s, your account was successfully created!',
          get_user_name($pdo, $_SESSION['user_id']))
     ];
@@ -357,7 +357,7 @@ function logout_user(){
     if (isset($_SESSION['user_id']) ) {
         session_destroy();
         $feedback = [
-            'type' => 'succes',
+            'type' => 'success',
             'message' => 'You were logged out succesfully'
         ];
     } else {
