@@ -37,59 +37,80 @@
 
                     <form action="/DDWT19_FINAL_PROJECT/final/register/" method="POST">
                         <div class="form-group">
-                            <div class="col-xs-2">
+                            <div class="col-md-3">
                             <label for="inputUsername">Username</label>
                             <input type="text" class="form-control" id="inputUsername" placeholder="jannejanzz" name="username" required>
                             </div>
                         </div>
+
                         <div class="form-group">
+                            <div class="col-md-3">
                             <label for="inputPassword">Password</label>
-                            <input type="password" class="form-control" size="small" id="inputPassword" placeholder="******" name="password" required>
+                            <input type="password" class="form-control"  id="inputPassword" placeholder="******" name="password" required>
+                            </div>
                         </div>
+
                         <div class="form-group row">
-                            <div class="col-xs-2">
+                            <div class="col-md-3">
                             <label for="inputUsername">First name</label>
                             <input type="text" class="form-control" id="inputUsername" placeholder="Jan" name="firstname" required>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-md-3">
                             <label for="inputUsername">Last name</label>
                             <input type="text" class="form-control" id="inputUsername" placeholder="Jansen" name="lastname" required>
                             </div>
                         </div>
+
                         <div class="form-group row">
-                            <label for="inputBirthdate" class="col-2 col-form-label">Birthdate</label>
-                            <div class="col-xs-2">
+                            <div class="col-md-3">
+                                <label for="inputBirthdate">Birthdate</label>
                                 <input class="form-control" type="date" value="year-month-day" id="birthdate" name="birthdate" required>
                             </div>
                         </div>
+
                         <div class="form-group row">
-                            <label for="inputProfession">Profession</label>
-                            <div class="col-xs-2">
+                            <div class="col-md-3">
+                                <label for="inputProfession">Profession</label>
                                 <input type="text" class="form-control"  placeholder = "carpenter" id="inputProfession" name="profession" required>
                             </div>
                         </div>
+
                         <div class="form-group">
+                            <div class="col-md-3">
                             <label for="inputLanguages">Language(s)</label>
                             <input type="text" class="form-control" id="inputLanguages" placeholder="English,Dutch,Etc" name="languages" required>
+                            </div>
                         </div>
+
                         <div class="form-group">
-                            <label for="inputBiography">Biography</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="Write a short introduction about yourself!" name="biography" required>
-                        </div>
-                        <div class="form-group">
+                            <div class="col-md-3">
                             <label for="inputTelephone">Telephone</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="+316 67567491" name="telephone" required>
+                            <input type="text" class="form-control" id="inputTelephone" placeholder="+316 67567491" name="telephone" required>
+                            </div>
                         </div>
+
                         <div class="form-group">
+                            <div class="col-md-3">
                             <label for="inputEmail">E-mail</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="x@gmail.com" name="email" required>
+                            <input type="text" class="form-control" id="inputEmail" placeholder="johnnyxxx@gmail.com" name="email" required>
+                            </div>
                         </div>
+
                         <div class="form-group">
+                            <div class="col-md-3">
                             <label for="InputRole">Role</label>
                             <select class="form-control" id="Role" name="role">
                                 <option>Owner</option>
                                 <option>Tenant</option>
                             </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputBiography">Biography</label>
+                                <textarea placeholder="Write a short introduction about yourself!" class="form-control" id="inputBiography" name="biography" required></textarea>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Register now</button>
                     </form>
