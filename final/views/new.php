@@ -35,6 +35,27 @@
                     <p><?= $page_content ?></p>
                     <form action="<?= $form_action ?>" method="POST">
                         <div class="form-group row">
+                            <label for="inputPrice" class="col-sm-2 col-form-label">Price</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputPrice" name="price" value="<?php if (isset($room_info)){echo $room_info['price'];} ?>" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputTemp">Is the room temporary?</label>
+                                <select class="form-control" id="inputTemp" name="role">
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputSquaremeters" class="col-sm-2 col-form-label">Amount of square meters</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputSquaremeters" name="square_meters" value="<?php if (isset($room_info)){echo $room_info['square_meters'];} ?>" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="inputAddress" class="col-sm-2 col-form-label">Street Address</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="inputAddress" name="street_address" value="<?php if (isset($room_info)){echo $room_info['street_address'];} ?>" required>
