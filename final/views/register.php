@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <div class="col-xs-2">
                             <label for="inputUsername">Username</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="j.jansen" name="username" required>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="jannejanzz" name="username" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -58,13 +58,15 @@
                         </div>
                         <div class="form-group row">
                             <label for="inputBirthdate" class="col-2 col-form-label">Birthdate</label>
-                            <div class="col-10">
-                                <input class="form-control" type="datetime-local" value="year-month-day" id="birthdate" name="birthdate" required>
+                            <div class="col-xs-2">
+                                <input class="form-control" type="date" value="year-month-day" id="birthdate" name="birthdate" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputProfession">Profession</label>
-                            <input type="text" class="form-control" id="inputProfession" name="profession" required>
+                            <div class="col-xs-2">
+                                <input type="text" class="form-control"  placeholder = "carpenter" id="inputProfession" name="profession" required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="inputLanguages">Language(s)</label>
@@ -76,7 +78,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputTelephone">Telephone</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="+31667567491" name="telephone" required>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="+316 67567491" name="telephone" required>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail">E-mail</label>
