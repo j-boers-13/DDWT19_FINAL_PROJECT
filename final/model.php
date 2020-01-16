@@ -285,20 +285,20 @@ function get_navigation($template,$active_id){
  * @param array $series with series from the db
  * @return string
  */
-function get_serie_table($series,$pdo){
+function get_room_table($rooms,$pdo){
     $table_exp = '
     <table class="table table-hover">
     <thead
     <tr>
-        <th scope="col">Series</th>
+        <th scope="col">Address</th>
         <th scope="col">Added By</th>
     </tr>
     </thead>
     <tbody>';
-    foreach($series as $key => $value){
+    foreach($rooms as $key => $value){
         $table_exp .= '
         <tr>
-            <th scope="row">'.$value['name'].'</th>
+            <th scope="row">'.$value['address'].'</th>
              <th scope="row"></th>
             <td>'.get_user_name($pdo,$value['id']).'</td>
             <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
@@ -346,8 +346,8 @@ function p_print($input){
  * @param object $pdo database object
  * @return array Associative array with all series
  */
-function get_series($pdo){
-    $stmt = $pdo->prepare('SELECT * FROM series');
+function get_available_rooms($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE is_available = 1');
     $stmt->execute();
     $series = $stmt->fetchAll();
     $series_exp = Array();
@@ -367,17 +367,17 @@ function get_series($pdo){
  * @param int $serie_id id from the serie
  * @return mixed
  */
-function get_serieinfo($pdo, $serie_id){
-    $stmt = $pdo->prepare('SELECT * FROM series WHERE id = ?');
-    $stmt->execute([$serie_id]);
-    $serie_info = $stmt->fetch();
-    $serie_info_exp = Array();
+function get_roominfo($pdo, $serie_id){
+    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE id = ?');
+    $stmt->execute([$room_id]);
+    $room_info = $stmt->fetch();
+    $room_info_exp = Array();
 
     /* Create array with htmlspecialchars */
-    foreach ($serie_info as $key => $value){
-        $serie_info_exp[$key] = htmlspecialchars($value);
+    foreach ($room_info as $key => $value){
+        $room_info_exp[$key] = htmlspecialchars($value);
     }
-    return $serie_info_exp;
+    return $room_info_exp;
 }
 
 /**

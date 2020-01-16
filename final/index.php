@@ -84,7 +84,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/overview/', 'get')) {
     /* Page content */
     $page_subtitle = 'The overview of all available rooms';
     $page_content = 'Here you find all rooms listed on ROOM.NET';
-    $left_content = get_room_table(get_rooms($db), $db);
+    $left_content = get_room_table(get_available_rooms($db), $db);
 
     /* Get error msg from remove post route */
     if ( isset($_GET['error_msg']) ) {
@@ -95,28 +95,27 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/overview/', 'get')) {
     include use_template('main');
 }
 
-/* Single Serie */
+/* Single Room */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
     /* Get series from db */
-    $serie_id = $_GET['serie_id'];
-    $serie_info = get_serieinfo($db, $serie_id);
+    $room_id = $_GET['room_id'];
+    $room_info = get_roominfo($db, $room_id);
 
     /* Page info */
-    $page_title = $serie_info['name'];
+    $page_title = $room_info['street_address'];
     $breadcrumbs = get_breadcrumbs([
         'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
         'Week 2' => na('/DDWT19_FINAL_PROJECT/final', False),
         'Overview' => na('/DDWT19_FINAL_PROJECT/final/overview/', False),
-        $serie_info['name'] => na('/DDWT19_FINAL_PROJECT/final/room/?room_id='.$serie_id, True)
+        $room_info['street_address'] => na('/DDWT19_FINAL_PROJECT/final/room/?room_id='.$room_id, True)
     ]);
     $navigation = get_navigation($nav_array,2);
 
     /* Page content */
-    $page_subtitle = sprintf("Information about %s", $serie_info['name']);
-    $page_content = $serie_info['abstract'];
-    $nbr_seasons = $serie_info['seasons'];
-    $creators = $serie_info['creator'];
-    $added_by = get_user_name($db, $serie_info['id']);
+    $page_subtitle = sprintf("Information about %s", $room_info['street_address']);
+    $page_content = $room_info['description'];
+    $nbr_seasons = $room_info['seasons'];
+    $added_by = get_user_name($db, $room_info['owner_id']);
     $display_button =  check_if_users($serie_info['user']);
 
 
@@ -125,7 +124,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
         $error_msg = get_error($_GET['error_msg']);
     }
     /* Choose Template */
-    include use_template('serie');
+    include use_template('room');
 }
 
 /* Add serie GET */
