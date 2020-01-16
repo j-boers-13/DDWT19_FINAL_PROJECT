@@ -417,6 +417,20 @@ function get_roominfo($pdo, $room_id){
 }
 
 /**
+ * count  all listed rooms by owner_id
+ * @param object $pdo database object
+ * @return array Associative array with all listed rooms by owner
+ */
+function count_rooms_by_owner($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE owner_id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $rooms = $stmt->rowCount();
+    return $rooms;
+}
+
+
+
+/**
  * Creates HTML alert code with information about the success or failure
  * @param array $feedback Array with keys 'type' and 'message'.
  * @return string
