@@ -47,7 +47,7 @@
                         </div>
                         <div class="card-body">
                             <p>You're logged in to Account Overview.</p>
-                            <a href="/DDWT19/week2/logout/" class="btn btn-primary">Logout</a>
+                            <a href="/DDWT19_FINAL_PROJECT/final/logout/" class="btn btn-primary">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="card-body">
                             <p>Post a room for rent!</p>
-                            <a href="/DDWT19/week2/add/" class="btn btn-primary">Post a room!</a>
+                            <a href="/DDWT19_FINAL_PROJECT/final/add/" class="btn btn-primary">Post a room!</a>
                         </div>
                     </div>
                 </div>
