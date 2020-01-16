@@ -43,6 +43,10 @@ else {
         4 => Array(
             'name' => 'Register',
             'url' => '/DDWT19_FINAL_PROJECT/final/register'
+        ),
+        5 => Array(
+        'name' => 'Log in',
+        'url' => '/DDWT19_FINAL_PROJECT/final/login'
         ));
 }
 
