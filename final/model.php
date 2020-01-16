@@ -47,7 +47,11 @@ function register_user($pdo, $form_data){
         empty($form_data['username']) or
         empty($form_data['password']) or
         empty($form_data['firstname']) or
-        empty($form_data['lastname'])
+        empty($form_data['lastname']) or
+        empty($form_data['birthdate']) or
+        empty($form_data['profession']) or
+        empty($form_data['languages']) or
+        empty($form_data['telephone'])
     ) {
         return [
             'type' => 'danger',
@@ -75,8 +79,8 @@ function register_user($pdo, $form_data){
     $password = password_hash($form_data['password'], PASSWORD_DEFAULT);
     /* Save user to the database */
     try {
-        $stmt = $pdo->prepare('INSERT INTO users (username, password,firstname,lastname) VALUES (?, ?, ?, ?)');
-        $stmt->execute([$form_data['username'], $password, $form_data['firstname'], $form_data['lastname']]);
+        $stmt = $pdo->prepare('INSERT INTO users (username, password, firstname, lastname, birthdate, profession, languages, biography, telephone, email, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$form_data['username'], $password, $form_data['firstname'], $form_data['lastname'], $form_data['birthdate'],$form_data['profession'], $form_data['languages'], $form_data['biography'], $form_data['telephone'], $form_data['email'], $form_data['role']]);
         $user_id = $pdo->lastInsertId();
     } catch (\PDOException $e) {
         return [
@@ -92,7 +96,7 @@ function register_user($pdo, $form_data){
         'message' => sprintf('%s, your account was successfully created!',
          get_user_name($pdo, $_SESSION['user_id']))
     ];
-    redirect(sprintf('/DDWT19/week2/myaccount/?error_msg=%s',
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/myaccount/?error_msg=%s',
     json_encode($feedback)));
 }
 
@@ -145,7 +149,7 @@ function login_user($pdo, $form_data){
             'message' => sprintf('%s, you were logged in successfully!',
             get_user_name($pdo,$_SESSION['user_id']))
         ];
-        redirect(sprintf('/DDWT19/week2/myaccount/?error_msg=%s',
+        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/myaccount/?error_msg=%s',
         json_encode($feedback)));
     }
 }
@@ -297,7 +301,7 @@ function get_serie_table($series,$pdo){
             <th scope="row">'.$value['name'].'</th>
              <th scope="row"></th>
             <td>'.get_user_name($pdo,$value['id']).'</td>
-            <td><a href="/DDWT19/week2/serie/?serie_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
+            <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
         </tr>
         ';
     }
@@ -323,7 +327,7 @@ function logout_user(){
     } else {
 
     }
-    redirect(sprintf('/DDWT19/week2/?error_msg=%s',
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/?error_msg=%s',
         json_encode($feedback)));
 }
 

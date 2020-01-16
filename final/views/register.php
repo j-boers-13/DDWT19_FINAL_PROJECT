@@ -35,22 +35,26 @@
 
                     <div class="pd-15">&nbsp;</div>
 
-                    <form action="/DDWT19/week2/register/" method="POST">
+                    <form action="/DDWT19_FINAL_PROJECT/final/register/" method="POST">
                         <div class="form-group">
+                            <div class="col-xs-2">
                             <label for="inputUsername">Username</label>
                             <input type="text" class="form-control" id="inputUsername" placeholder="j.jansen" name="username" required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword">Password</label>
-                            <input type="password" class="form-control" id="inputPassword" placeholder="******" name="password" required>
+                            <input type="password" class="form-control" size="small" id="inputPassword" placeholder="******" name="password" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group row">
+                            <div class="col-xs-2">
                             <label for="inputUsername">First name</label>
                             <input type="text" class="form-control" id="inputUsername" placeholder="Jan" name="firstname" required>
-                        </div>
-                        <div class="form-group">
+                            </div>
+                            <div class="col-xs-2">
                             <label for="inputUsername">Last name</label>
                             <input type="text" class="form-control" id="inputUsername" placeholder="Jansen" name="lastname" required>
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputBirthdate" class="col-2 col-form-label">Birthdate</label>
@@ -64,7 +68,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputLanguages">Language(s)</label>
-                            <input type="text" class="form-control" id="inputLanguages" placeholder="English,Dutch,Etc" name="language" required>
+                            <input type="text" class="form-control" id="inputLanguages" placeholder="English,Dutch,Etc" name="languages" required>
                         </div>
                         <div class="form-group">
                             <label for="inputBiography">Biography</label>
