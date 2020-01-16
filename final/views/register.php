@@ -33,8 +33,9 @@
                     <h1><?= $page_title ?></h1>
                     <h5><?= $page_subtitle ?></h5>
 
-                    <div class="pd-15">&nbsp;</div>
 
+                </div>
+                <div class="col-md-12">
                     <form action="/DDWT19_FINAL_PROJECT/final/register/" method="POST">
                         <div class="form-group">
                             <div class="col-md-3">
@@ -50,25 +51,28 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group">
                             <div class="col-md-3">
                             <label for="inputUsername">First name</label>
                             <input type="text" class="form-control" id="inputUsername" placeholder="Jan" name="firstname" required>
                             </div>
+                        </div>
+
+                        <div class="form-group">
                             <div class="col-md-3">
                             <label for="inputUsername">Last name</label>
                             <input type="text" class="form-control" id="inputUsername" placeholder="Jansen" name="lastname" required>
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group">
                             <div class="col-md-3">
                                 <label for="inputBirthdate">Birthdate</label>
                                 <input class="form-control" type="date" value="year-month-day" id="birthdate" name="birthdate" required>
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group">
                             <div class="col-md-3">
                                 <label for="inputProfession">Profession</label>
                                 <input type="text" class="form-control"  placeholder = "carpenter" id="inputProfession" name="profession" required>
@@ -112,9 +116,14 @@
                                 <textarea placeholder="Write a short introduction about yourself!" class="form-control" id="inputBiography" name="biography" required></textarea>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Register now</button>
-                    </form>
 
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary">Register now</button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
                 </div>
 
             </div>
