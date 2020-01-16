@@ -55,15 +55,35 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            Add series
+                            Quick overview
                         </div>
+                        <?php if(check_owner($db) === True) { ?>
                         <div class="card-body">
-                            <p>Post a room for rent!</p>
-                            <a href="/DDWT19_FINAL_PROJECT/final/add/" class="btn btn-primary">Post a room!</a>
+                            <p class="count"> You currently have</p>
+                            <h2> (Number of rooms listed by an OWNER</h2>
+                            <p> Rooms listed</p>
+                            <a href="/DDWT19_FINAL_PROJECT/final/add" class="btn btn-primary">List another room</a>
+                            <p class="count"> You currently have</p>
+                            <h3> (number of viewing days planned)</h3>
+                            <p>Viewing activities planned</p>
+                            <p> Place a button here that leads to the viewing activity overview</p>
+                        </div>
+                        <?php } else { ?>
+                            <div class="card-body">
+                                <p class="count"> You currently have</p>
+                                <h2> (Number of rooms opted-in to)</h2>
+                                <p> Number of optins</p>
+                                <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary">Go to opt-in overview</a>
+                                <p class="count"> You currently have</p>
+                                <h3> (number of viewing days planned)</h3>
+                                <p>Viewing activities planned</p>
+                                <<a href="/DDWT19_FINAL_PROJECT/final/viewings" class="btn btn-primary">go to viewing overview</a>
+                            </div>
+                        <?php } ?>
+
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 

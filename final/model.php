@@ -312,8 +312,8 @@ function get_navigation($template,$active_id){
 }
 
 /**
- * Creates a Bootstrap table with a list of series
- * @param array $series with series from the db
+ * Creates a Bootstrap table with a list of rooms
+ * @param array $rooms with rooms from the db
  * @return string
  */
 function get_room_table($rooms,$pdo){
