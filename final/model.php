@@ -181,7 +181,7 @@ function check_owner($pdo) {
 
 function check_if_owner($owner_id) {
     if (isset($_SESSION['user_id'])){
-        if ($_SESSION['user_id'] == $owner_id) {
+        if ($_SESSION['user_id'] === $owner_id) {
             return True;
         }
         else {
@@ -322,6 +322,8 @@ function get_room_table($rooms,$pdo){
     <thead
     <tr>
         <th scope="col">Address</th>
+        <th scope="col">Price</th>
+        <th scope="col">Temporary</th>
         <th scope="col">Square Meters</th>
         <th scope="col">Added By</th>
     </tr>
@@ -331,6 +333,8 @@ function get_room_table($rooms,$pdo){
         $table_exp .= '
         <tr>
             <th scope="row">'.$value['street_address'].'</th>
+            <td>'.$value['price'].'</td>
+            <td>'.$value['temporary'].'</td>
             <td>'.$value['square_meters'].'</td>
             <td>'.get_user_name($pdo,$value['owner_id']).'</td>
             <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
@@ -491,7 +495,7 @@ function add_room($pdo, $room_info){
     if (!is_numeric($room_info['square_meters']) or !is_numeric($room_info['price'])) {
         return [
             'type' => 'danger',
-            'message' => 'There was an error. You should enter a number in the fields for square meters, and price.'
+            'message' => 'There was an error. You should enter a number in the fields for square meters and price.'
         ];
     }
     /* Check if all fields are set */

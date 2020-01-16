@@ -33,49 +33,48 @@
                     <h1><?= $page_title ?></h1>
                     <h5><?= $page_subtitle ?></h5>
                     <p><?= $page_content ?></p>
-                <?php if ($display_button) { ?>
-                    <div class='row'}>
-                        <div class ='col-sm-2'>
-                            <a href="/DDWT19_FINAL_PROJECT/final/edit/?room_id=<?=
-                            $room_id ?>" role="button" class="btn btn-warning">Edit</a>
-                        </div>
-                        <div class="col-sm-2">
-                            <form action="/DDWT19_FINAL_PROJECT/final/remove/" method="POST">
-                                <input type="hidden" value="<?=$room_id
-                                ?>" name="room_id">
-                                <button type="submit" class="btn btn-danger">Remove</button>
-                            </form>
-                        </div>
-                    </div>
-                <?php } ?>
                     <table class="table">
                         <tbody>
                         <tr>
-                            <th scope="row">Creators</th>
-                            <td><?= $creators ?></td>
+                            <th scope="row">Square Meters</th>
+                            <td><?= $room_info['square_meters'] ?></td>
                         </tr>
                         <tr>
-                            <th scope="row">Number of seasons</th>
-                            <td><?= $nbr_seasons ?></td>
+                            <th scope="row">Price</th>
+                            <td><?= $room_info['price'] ?></td>
                         </tr>
                         <tr>
-                            <th scope="row"> Added by User</th>
+                            <th scope="row">Temporary</th>
+                            <td><?= $room_info['temporary'] ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Added by User</th>
                             <td><?= $added_by ?></td>
                         </tr>
                         </tbody>
                     </table>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <a href="/DDWT19_FINAL_PROJECT/final/edit/?room_id=<?= $room_id ?>" role="button" class="btn btn-warning">Edit</a>
+                    <?php if ($is_owner) { ?>
+                        <div class='row'>
+                            <div class ='col-sm-2'>
+                                <a href="/DDWT19_FINAL_PROJECT/final/edit/?room_id=<?=
+                                $room_id ?>" role="button" class="btn btn-warning">Edit</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <form action="/DDWT19_FINAL_PROJECT/final/remove/" method="POST">
+                                    <input type="hidden" value="<?=$room_id
+                                    ?>" name="room_id">
+                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="col-sm-2">
-                            <form action="/DDWT19_FINAL_PROJECT/final/remove/" method="POST">
-                                <input type="hidden" value="<?= $room_id ?>" name="room_id">
-                                <button type="submit" class="btn btn-danger">Remove</button>
-                            </form>
+                    <?php } else { ?>
+                    <div class='row'>
+                        <div class ='col-sm-2'>
+                            <a href="/DDWT19_FINAL_PROJECT/final/optin/?room_id=<?=
+                            $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                         </div>
                     </div>
-
+                    <?php } ?>
                 </div>
 
                 <!-- Right column -->

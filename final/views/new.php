@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <div class="col-md-3">
                                 <label for="inputTemp">Is the room temporary?</label>
-                                <select class="form-control" id="inputTemp" name="role">
+                                <select class="form-control" id="inputTemp" name="temporary">
                                     <option>Yes</option>
                                     <option>No</option>
                                 </select>
