@@ -60,6 +60,7 @@ $nbr_rooms = count_rooms($db);
 $nbr_users = count_users($db);
 $nbr_owners = count_owners($db);
 $nbr_tenants = count_tenants($db);
+$nbr_optins = count_optins($db);
 
 /* set the right column as default on every route instead constantly calling it */
 $right_column = use_template('cards');
@@ -397,6 +398,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/logout', 'get')) {
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/', 'get')) {
 
     /* Page info */
+
     $page_title = 'Opt-ins';
     $breadcrumbs = get_breadcrumbs([
         'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),

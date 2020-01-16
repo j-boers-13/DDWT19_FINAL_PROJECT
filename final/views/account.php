@@ -71,8 +71,8 @@
                         <?php } else { ?>
                             <div class="card-body">
                                 <p class="count"> You currently have</p>
-                                <h2> (Number of rooms opted-in to)</h2>
-                                <p> Number of optins</p>
+                                <h2> <?= $nbr_optins ?></h2>
+                                <p> Number of opt-ins</p>
                                 <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary">Go to opt-in overview</a>
                                 <p class="count"> You currently have</p>
                                 <h3> (number of viewing days planned)</h3>

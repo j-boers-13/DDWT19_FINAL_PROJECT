@@ -721,6 +721,18 @@ function count_tenants($pdo){
 }
 
 /**
+ * Count the number of optins for a user
+ * @param object $pdo database object
+ * @return mixed
+ */
+function count_optins($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $tenants = $stmt->rowCount();
+    return $tenants;
+}
+
+/**
  * Changes the HTTP Header to a given location
  * @param string $location location to be redirected to
  */
