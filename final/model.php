@@ -319,7 +319,6 @@ function get_room_table($rooms,$pdo){
         $table_exp .= '
         <tr>
             <th scope="row">'.$value['address'].'</th>
-             <th scope="row"></th>
             <td>'.get_user_name($pdo,$value['id']).'</td>
             <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
         </tr>
