@@ -59,7 +59,7 @@
                         <div class="form-group row">
                             <label for="inputBirthdate" class="col-2 col-form-label">Birthdate</label>
                             <div class="col-10">
-                                <input class="form-control" type="datetime-local" value="year-month-day" id="birthdate" name="birthdate" required>
+                                <input class="form-control" type="date" value="year-month-day" id="birthdate" name="birthdate" required>
                             </div>
                         </div>
                         <div class="form-group row">
