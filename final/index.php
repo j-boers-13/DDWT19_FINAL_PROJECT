@@ -16,12 +16,10 @@ $nav_array = Array(
         'name' => 'Rooms',
         'url' => '/DDWT19_FINAL_PROJECT/final/overview'
     ),
-
-        3 => Array(
-            'name' => 'My Account',
-            'url' => '/DDWT19_FINAL_PROJECT/final/myaccount'
-        ),
-
+    3 => Array(
+        'name' => 'My Account',
+        'url' => '/DDWT19_FINAL_PROJECT/final/myaccount'
+    ),
     4 => Array(
         'name' => 'Add a room',
         'url' => '/DDWT19_FINAL_PROJECT/final/add'

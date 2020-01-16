@@ -353,9 +353,9 @@ function get_room_table($rooms,$pdo){
  * Logout user
  */
 function logout_user(){
+    session_start();
     if (isset($_SESSION['user_id']) ) {
         session_destroy();
-
         $feedback = [
             'type' => 'succes',
             'message' => 'You were logged out succesfully'
