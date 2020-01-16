@@ -7,28 +7,48 @@
  */
 
 include 'model.php';
-$nav_array = Array(
-    1 => Array (
-        'name' => 'Home',
-        'url' => '/DDWT19_FINAL_PROJECT/final/'
-    ),
-    2 => Array(
-        'name' => 'Rooms',
-        'url' => '/DDWT19_FINAL_PROJECT/final/overview'
-    ),
-    3 => Array(
-        'name' => 'My Account',
-        'url' => '/DDWT19_FINAL_PROJECT/final/myaccount'
-    ),
-    4 => Array(
-        'name' => 'Register',
-        'url' => '/DDWT19_FINAL_PROJECT/final/register'
-    ),
-    5 => Array(
-        'name' => 'Add a room',
-        'url' => '/DDWT19_FINAL_PROJECT/final/add'
-    )
-);
+if(check_login() === true){
+    $nav_array = Array(
+        1 => Array (
+            'name' => 'Home',
+            'url' => '/DDWT19_FINAL_PROJECT/final/'
+        ),
+        2 => Array(
+            'name' => 'Rooms',
+            'url' => '/DDWT19_FINAL_PROJECT/final/overview'
+        ),
+        3 => Array(
+            'name' => 'My Account',
+            'url' => '/DDWT19_FINAL_PROJECT/final/myaccount'
+        ),
+        4 => Array(
+            'name' => 'Add a room',
+            'url' => '/DDWT19_FINAL_PROJECT/final/add'
+        ),
+        5 => Array(
+        'name' => 'Log out',
+        'url' => '/DDWT19_FINAL_PROJECT/final/logout'
+        ));
+    }
+else {
+    $nav_array = Array(
+        1 => Array (
+            'name' => 'Home',
+            'url' => '/DDWT19_FINAL_PROJECT/final/'
+        ),
+        2 => Array(
+            'name' => 'Rooms',
+            'url' => '/DDWT19_FINAL_PROJECT/final/overview'
+        ),
+        4 => Array(
+            'name' => 'Register',
+            'url' => '/DDWT19_FINAL_PROJECT/final/register'
+        ),
+        5 => Array(
+        'name' => 'Log in',
+        'url' => '/DDWT19_FINAL_PROJECT/final/login'
+        ));
+}
 
 /* Connect to DB */
 $db = connect_db('remotemysql.com', '1cJD522I73', '1cJD522I73','MHJUWcQxxb');
