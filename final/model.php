@@ -361,7 +361,10 @@ function logout_user(){
             'message' => 'You were logged out succesfully'
         ];
     } else {
-
+        $feedback = [
+            'type' => 'danger',
+            'message' => 'You were not logged out succesfully!'
+            ];
     }
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/?error_msg=%s',
         json_encode($feedback)));
