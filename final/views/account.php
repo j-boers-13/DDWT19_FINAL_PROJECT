@@ -55,15 +55,20 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            Add series
+                            Quick overview
                         </div>
                         <div class="card-body">
-                            <p>Post a room for rent!</p>
-                            <a href="/DDWT19_FINAL_PROJECT/final/add/" class="btn btn-primary">Post a room!</a>
+                            <p class="count"> You currently have</p>
+                            <h2> (Number of rooms listed by an OWNER</h2>
+                            <p> Rooms listed</p>
+                            <a href="/DDWT19_FINAL_PROJECT/final/add" class="btn btn-primary">List another room</a>
+                            <p class="count"> You currently have</p>
+                            <h3> (number of viewing days planned)</h3>
+                            <p>Viewing activities planned</p>
+                            <p> Place a button here that leads to the viewing activity overview</p>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
