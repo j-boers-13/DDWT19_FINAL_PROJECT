@@ -181,7 +181,7 @@ function check_owner($pdo) {
 
 function check_if_owner($owner_id) {
     if (isset($_SESSION['user_id'])){
-        if ($_SESSION['user_id'] == $owner_id) {
+        if ($_SESSION['user_id'] === $owner_id) {
             return True;
         }
         else {
@@ -441,7 +441,7 @@ function add_room($pdo, $room_info){
     if (!is_numeric($room_info['square_meters']) or !is_numeric($room_info['price'])) {
         return [
             'type' => 'danger',
-            'message' => 'There was an error. You should enter a number in the fields for square meters, and price.'
+            'message' => 'There was an error. You should enter a number in the fields for square meters and price.'
         ];
     }
     /* Check if all fields are set */

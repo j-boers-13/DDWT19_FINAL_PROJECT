@@ -112,12 +112,11 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
     $navigation = get_navigation($nav_array,2);
 
     /* Page content */
-    $page_subtitle = sprintf("Information about %s", $room_info['street_address']);
+    $page_subtitle = $room_info['city'];
     $page_content = $room_info['description'];
-    $city = $room_info['city'];
     $added_by = get_user_name($db, $room_info['owner_id']);
     $date_added = $room_info['created_at'];
-    $display_button = check_if_owner($room_info['owner_id']);
+    $is_owner = check_if_owner($room_info['owner_id']);
 
 
     /* Get error msg from POST route */
@@ -137,7 +136,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/add/', 'get')) {
     if ( !check_owner($db) ) {
         $feedback = [
             'type' => 'error',
-            'message' => 'Tenants can\'t add rooms.'
+            'message' => 'Tenants can\'t add or edit rooms.'
         ];;
         /* Redirect to serie GET route */
         redirect(sprintf('/DDWT19_FINAL_PROJECT/final/?error_msg=%s',
