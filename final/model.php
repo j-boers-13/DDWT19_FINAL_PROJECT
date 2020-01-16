@@ -322,6 +322,7 @@ function get_room_table($rooms,$pdo){
     <thead
     <tr>
         <th scope="col">Address</th>
+        <th scope="col">Square Meters</th>
         <th scope="col">Added By</th>
     </tr>
     </thead>
@@ -330,6 +331,7 @@ function get_room_table($rooms,$pdo){
         $table_exp .= '
         <tr>
             <th scope="row">'.$value['street_address'].'</th>
+            <td>'.$value['square_meters'].'</td>
             <td>'.get_user_name($pdo,$value['owner_id']).'</td>
             <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
         </tr>
@@ -431,13 +433,22 @@ function get_error($feedback){
  * @return array with message feedback
  */
 function add_room($pdo, $room_info){
-    session_start();
+    /* Check data type */
+    if (!is_numeric($room_info['square_meters']) or !is_numeric($room_info['price'])) {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. You should enter a number in the fields for square meters, and price.'
+        ];
+    }
     /* Check if all fields are set */
     if (
         empty($room_info['street_address']) or
         empty($room_info['city']) or
+        empty($room_info['zipcode']) or
         empty($room_info['description']) or
-        empty($room_info['zipcode'])
+        empty($room_info['price']) or
+        empty($room_info['temporary']) or
+        empty($room_info['square_meters'])
     ) {
         return [
             'type' => 'danger',
@@ -464,12 +475,15 @@ function add_room($pdo, $room_info){
     }
 
     /* Add Room */
-    $stmt = $pdo->prepare("INSERT INTO rooms (street_address, city, description, zipcode, owner_id) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO rooms (street_address, city, description, zipcode, price, temporary, square_meters, owner_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([
         $room_info['street_address'],
         $room_info['city'],
         $room_info['description'],
         $room_info['zipcode'],
+        $room_info['price'],
+        $room_info['temporary'],
+        $room_info['square_meters'],
         $_SESSION['user_id']
     ]);
     $inserted = $stmt->rowCount();
@@ -494,13 +508,22 @@ function add_room($pdo, $room_info){
  * @return array
  */
 function update_room($pdo, $room_info){
-    session_start();
+    /* Check data type */
+    if (!is_numeric($room_info['square_meters']) or !is_numeric($room_info['price'])) {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. You should enter a number in the fields for square meters, and price.'
+        ];
+    }
     /* Check if all fields are set */
     if (
         empty($room_info['street_address']) or
         empty($room_info['city']) or
         empty($room_info['zipcode']) or
         empty($room_info['description']) or
+        empty($room_info['price']) or
+        empty($room_info['temporary']) or
+        empty($room_info['square_meters']) or
         empty($room_info['room_id'])
     ) {
         return [
@@ -535,12 +558,15 @@ function update_room($pdo, $room_info){
     }
 
     /* Update Serie */
-    $stmt = $pdo->prepare('UPDATE rooms SET street_address = ?, city = ?, zipcode = ?, description = ?, owner_id = ? WHERE id = ?');
+    $stmt = $pdo->prepare('UPDATE rooms SET street_address = ?, city = ?, zipcode = ?, description = ?, price = ?, square_meters = ?, temporary = ?, owner_id = ? WHERE id = ?');
     $stmt->execute([
         $room_info['street_address'],
         $room_info['city'],
         $room_info['zipcode'],
         $room_info['description'],
+        $room_info['price'],
+        $room_info['square_meters'],
+        $room_info['temporary'],
         $_SESSION['user_id'],
         $room_info['room_id']
     ]);
