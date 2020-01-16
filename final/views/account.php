@@ -72,7 +72,7 @@
                                 <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary">Go to opt-in overview</a>
                                 <p class="count"> You currently have</p>
                                 <h3> (number of viewing days planned)</h3>
-                                <p>Viewing activities planned</p>
+                                <p>Number of opt-ins accepted</p>
                                 <<a href="/DDWT19_FINAL_PROJECT/final/viewings" class="btn btn-primary">go to viewing overview</a>
                             </div>
                         <?php } ?>

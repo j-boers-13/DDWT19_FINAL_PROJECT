@@ -452,6 +452,9 @@ function get_error($feedback){
  * @return array Associative array with all series
  */
 function get_optin_rooms($pdo){
+    if(!isset($_SESSION)) {
+        session_start();
+    }
     $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ?');
     $stmt->execute([$_SESSION['user_id']]);
     $rooms = $stmt->fetchAll();
