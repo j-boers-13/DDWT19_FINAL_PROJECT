@@ -726,11 +726,19 @@ function count_tenants($pdo){
  * @return mixed
  */
 function count_optins($pdo){
-    $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ?');
-    $stmt->execute([$_SESSION['user_id']]);
-    $tenants = $stmt->rowCount();
-    return $tenants;
-}
+    if (isset($_SESSION['user_id'])){
+        $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ?');
+        $stmt->execute([$_SESSION['user_id']]);
+        $tenants = $stmt->rowCount();
+        return $tenants;
+        }
+        else {
+            return 0;
+        }
+    }
+
+
+
 
 /**
  * Changes the HTTP Header to a given location
