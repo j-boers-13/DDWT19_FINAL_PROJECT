@@ -114,8 +114,8 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myrooms/', 'get')) {
     $page_title = 'All your rooms';
     $breadcrumbs = get_breadcrumbs([
         'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'Week 2' => na('/DDWT19/final/', False),
-        'Overview' => na('/DDWT19_FINAL_PROJECT/final/myrooms', True)
+        'final' => na('/DDWT19/final/', False),
+        'My Rooms' => na('/DDWT19_FINAL_PROJECT/final/myrooms', True)
     ]);
     $navigation = get_navigation($nav_array, 2);
 
@@ -162,6 +162,32 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
     }
     /* Choose Template */
     include use_template('room');
+}
+
+/* profile page */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/', 'get')) {
+
+    /* Page info */
+    $page_title = 'Profile';
+    $breadcrumbs = get_breadcrumbs([
+        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
+        'final' => na('/DDWT19/final/', False),
+        'Profile' => na('/DDWT19_FINAL_PROJECT/final/profile', True)
+    ]);
+    $navigation = get_navigation($nav_array, 2);
+
+    /* Page content */
+    $page_subtitle = 'Your profile';
+    $page_content = 'Here you can look at your profile and edit information that might have changed';
+    $left_content = get_userinfo($db);
+
+    /* Get error msg from remove post route */
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+
+    /* Choose Template */
+    include use_template('main');
 }
 
 /* Add room GET */

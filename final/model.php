@@ -222,6 +222,25 @@ function get_user_name($pdo, $user_id){
     $user_name = $user_info['firstname'] . ' ' . $user_info['lastname'];
     return $user_name;
 }
+/**
+ * Generates an array with user information
+ * @param object $pdo db object
+ * @param int $user_id from the user
+ * @return mixed
+ */
+function get_userinfo($pdo) {
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $user_info = $stmt->fetch();
+    $user_info_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($user_info as $key => $value){
+        $user_info_exp[$key] = htmlspecialchars($value);
+    }
+    return $user_info_exp;
+}
+
 
 /**
  * Check if the route exist
