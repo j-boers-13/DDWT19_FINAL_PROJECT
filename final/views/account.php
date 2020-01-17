@@ -60,7 +60,7 @@
                         <?php if(check_owner($db) === True) { ?>
                         <div class="card-body">
                             <p class="count"> You currently have</p>
-                            <h2> <?= $nbr_rooms ?></h2>
+                            <h2> <?= $nbr_rooms_by_owner ?></h2>
                             <p> Rooms listed</p>
                             <a href="/DDWT19_FINAL_PROJECT/final/add" class="btn btn-primary">List another room</a>
                         </div>
