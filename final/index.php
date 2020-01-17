@@ -107,7 +107,31 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/overview/', 'get')) {
     /* Choose Template */
     include use_template('main');
 }
+/* Owner overview page */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/myrooms/', 'get')) {
 
+    /* Page info */
+    $page_title = 'All your roomsw';
+    $breadcrumbs = get_breadcrumbs([
+        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
+        'Week 2' => na('/DDWT19/final/', False),
+        'Overview' => na('/DDWT19_FINAL_PROJECT/final/myrooms', True)
+    ]);
+    $navigation = get_navigation($nav_array, 2);
+
+    /* Page content */
+    $page_subtitle = 'The Overview of all the rooms you have posted';
+    $page_content = 'Here you find all your rooms listed on ROOM.NET';
+    $left_content = get_room_table(get_owner_rooms($db), $db);
+
+    /* Get error msg from remove post route */
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+
+    /* Choose Template */
+    include use_template('main');
+}
 /* Single Room */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
     /* Get series from db */

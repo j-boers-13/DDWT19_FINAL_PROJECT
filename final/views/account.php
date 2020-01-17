@@ -63,6 +63,7 @@
                             <h2> <?= $nbr_rooms_by_owner ?></h2>
                             <p> Rooms listed</p>
                             <a href="/DDWT19_FINAL_PROJECT/final/add" class="btn btn-primary">List another room</a>
+                            <a href="/DDWT19_FINAL_PROJECT/final/myrooms" class="btn btn-primary">View all the rooms you posted</a>
                         </div>
                         <?php } else { ?>
                             <div class="card-body">

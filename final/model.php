@@ -401,7 +401,7 @@ function get_available_rooms($pdo){
 }
 
 /**
- * Generates an array with serie information
+ * Generates an array with room information
  * @param object $pdo db object
  * @param int $room_id id from the serie
  * @return mixed
@@ -417,6 +417,26 @@ function get_roominfo($pdo, $room_id){
         $room_info_exp[$key] = htmlspecialchars($value);
     }
     return $room_info_exp;
+}
+
+/**
+ * Get array with all rooms added by current user
+ * @param object $pdo database object
+ * @return array Associative array with all series
+ */
+function get_owner_rooms($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE owner_id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $rooms = $stmt->fetchAll();
+    $room_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($rooms as $key => $value){
+        foreach ($value as $user_key => $user_input) {
+            $room_exp[$key][$user_key] = htmlspecialchars($user_input);
+        }
+    }
+    return $room_exp;
 }
 
 /**
