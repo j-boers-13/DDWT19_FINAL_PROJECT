@@ -111,7 +111,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/overview/', 'get')) {
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/myrooms/', 'get')) {
 
     /* Page info */
-    $page_title = 'All your roomsw';
+    $page_title = 'All your rooms';
     $breadcrumbs = get_breadcrumbs([
         'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
         'Week 2' => na('/DDWT19/final/', False),

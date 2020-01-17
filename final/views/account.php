@@ -48,6 +48,8 @@
                         <div class="card-body">
                             <p>You're logged in to Account Overview.</p>
                             <a href="/DDWT19_FINAL_PROJECT/final/logout/" class="btn btn-primary">Logout</a>
+                            <p></p>
+                            <a href="/DDWT19_FINAL_PROJECT/final/profile/" class="btn btn-primary">My Profile</a>
                         </div>
                     </div>
                 </div>
