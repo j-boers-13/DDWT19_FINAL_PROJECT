@@ -71,7 +71,9 @@ if (new_route('/DDWT19_FINAL_PROJECT/final/', 'get')) {
 
     /* Page content */
     $page_subtitle = 'The online platform for room tenants and -owners!';
-    $page_content = 'On room overview you can see all rooms.';
+    $page_content = 'Latest added rooms:';
+    $left_content = get_room_table(get_available_rooms($db, true), $db);
+
 
     /* Get error msg from remove post route */
     if ( isset($_GET['error_msg']) ) {
@@ -97,7 +99,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/overview/', 'get')) {
     /* Page content */
     $page_subtitle = 'The overview of all available rooms';
     $page_content = 'Here you find all rooms listed on ROOM.NET';
-    $left_content = get_room_table(get_available_rooms($db), $db);
+    $left_content = get_room_table(get_available_rooms($db, false), $db);
 
     /* Get error msg from remove post route */
     if ( isset($_GET['error_msg']) ) {

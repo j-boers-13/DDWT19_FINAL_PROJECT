@@ -401,11 +401,16 @@ function p_print($input){
 
 /**
  * Get array with all listed series from the database
- * @param object $pdo database object
+ * @param object $pdo database object, bool $limit quantity of rows (if false then show all rows)
  * @return array Associative array with all series
  */
-function get_available_rooms($pdo){
-    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE is_available = 1');
+function get_available_rooms($pdo, $limit){
+    if($limit === true) {
+        $stmt = $pdo->prepare('SELECT * FROM rooms WHERE is_available = 1 ORDER BY id DESC LIMIT 5');
+    }
+    else{
+        $stmt = $pdo->prepare('SELECT * FROM rooms WHERE is_available = 1 ORDER BY id DESC');
+    }
     $stmt->execute();
     $rooms = $stmt->fetchAll();
     $room_exp = Array();
