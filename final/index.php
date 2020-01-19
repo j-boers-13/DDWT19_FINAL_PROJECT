@@ -441,10 +441,11 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/edit', 'post')) {
     /* Update register in database */
     $error_msg = update_profile($db, $_POST);
 
-    /* Redirect to register get route */
-    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/profile/edit/?error_msg=%s',
-        json_encode($error_msg)));
+    /* Redirect to profileget route */
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/profile/?error_msg=%s&room_id=%s',
+        json_encode($feedback), $_POST['room_id']));
 }
+
 
 /* Login GET */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/login/', 'get')) {
