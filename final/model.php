@@ -92,7 +92,7 @@ function register_user($pdo, $form_data){
     session_start();
     $_SESSION['user_id'] = $user_id;
     $feedback = [
-        'type' => 'succes',
+        'type' => 'success',
         'message' => sprintf('%s, your account was successfully created!',
          get_user_name($pdo, $_SESSION['user_id']))
     ];
@@ -107,9 +107,9 @@ function register_user($pdo, $form_data){
  * @return array
  */
 function login_user($pdo, $form_data){
-    /* check if all fields are set */
+    /*check if all fields are set */
     if (
-        empty($form_data['username']) or
+        empty($form_data ['username']) or
         empty($form_data['password'])
     ) {
         return [
@@ -117,7 +117,7 @@ function login_user($pdo, $form_data){
             'message' => 'You should enter a username and password.'
         ];
     }
-    /* check if user exists */
+    /* Check if user exists */
     try {
         $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
         $stmt->execute([$form_data['username']]);
@@ -129,39 +129,38 @@ function login_user($pdo, $form_data){
         ];
     }
     /* Return error message for wrong username */
-    if (empty(user_info) ) {
+    if ( empty($user_info) ) {
         return [
             'type' => 'danger',
             'message' => 'The username you entered does not exist!'
         ];
     }
     /* Check password */
-    if (!password_verify($form_data['password'], $user_info['password']) ) {
+    if ( !password_verify($form_data['password'], $user_info['password'])){
         return [
             'type' => 'danger',
             'message' => 'The password you entered is incorrect!'
         ];
-    } else {
+    }
+    else {
         session_start();
         $_SESSION['user_id'] = $user_info['id'];
         $feedback = [
-            'type' => 'succes',
+            'type' => 'success',
             'message' => sprintf('%s, you were logged in successfully!',
-            get_user_name($pdo,$_SESSION['user_id']))
+                get_user_name($pdo, $_SESSION['user_id']))
         ];
         redirect(sprintf('/DDWT19_FINAL_PROJECT/final/myaccount/?error_msg=%s',
-        json_encode($feedback)));
+            json_encode($feedback)));
     }
 }
-
 
 /**
  * Check Login
  *
  */
 function check_login(){
-    if(!isset($_SESSION))
-    {
+    if (!isset($_SESSION)) {
         session_start();
     }
     if (isset($_SESSION['user_id'])){
@@ -200,6 +199,13 @@ function get_user_role($user_id, $pdo){
     return $user_info['role'];
 }
 
+
+function check_room_owners($room_ownerid){
+    if ($_SESSION['user_id'] == $room_ownerid){
+        return True;
+    }
+}
+
 /**
  * Get the first and last name of the a user based on a specific user_id
  * @param object $pdo database object
@@ -216,6 +222,25 @@ function get_user_name($pdo, $user_id){
     $user_name = $user_info['firstname'] . ' ' . $user_info['lastname'];
     return $user_name;
 }
+/**
+ * Generates an array with user information
+ * @param object $pdo db object
+ * @param int $user_id from the user
+ * @return mixed
+ */
+function get_userinfo($pdo) {
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $user_info = $stmt->fetch();
+    $user_info_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($user_info as $key => $value){
+        $user_info_exp[$key] = htmlspecialchars($value);
+    }
+    return $user_info_exp;
+}
+
 
 /**
  * Check if the route exist
@@ -321,6 +346,7 @@ function get_room_table($rooms,$pdo){
         <th scope="col">Temporary</th>
         <th scope="col">Square Meters</th>
         <th scope="col">Added By</th>
+        <th scope="col">Date Added</th>
     </tr>
     </thead>
     <tbody>';
@@ -332,6 +358,7 @@ function get_room_table($rooms,$pdo){
             <td>'.$value['temporary'].'</td>
             <td>'.$value['square_meters'].'</td>
             <td>'.get_user_name($pdo,$value['owner_id']).'</td>
+            <td>'.$value['created_at'].'</td>
             <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
         </tr>
         ';
@@ -350,13 +377,15 @@ function logout_user(){
     session_start();
     if (isset($_SESSION['user_id']) ) {
         session_destroy();
-
         $feedback = [
-            'type' => 'succes',
+            'type' => 'success',
             'message' => 'You were logged out succesfully'
         ];
     } else {
-
+        $feedback = [
+            'type' => 'danger',
+            'message' => 'You were not logged out succesfully, you might be logged out already!'
+            ];
     }
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/?error_msg=%s',
         json_encode($feedback)));
@@ -374,11 +403,16 @@ function p_print($input){
 
 /**
  * Get array with all listed series from the database
- * @param object $pdo database object
+ * @param object $pdo database object, bool $limit quantity of rows (if false then show all rows)
  * @return array Associative array with all series
  */
-function get_available_rooms($pdo){
-    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE is_available = 1');
+function get_available_rooms($pdo, $limit){
+    if($limit === true) {
+        $stmt = $pdo->prepare('SELECT * FROM rooms WHERE is_available = 1 ORDER BY id DESC LIMIT 5');
+    }
+    else{
+        $stmt = $pdo->prepare('SELECT * FROM rooms WHERE is_available = 1 ORDER BY id DESC');
+    }
     $stmt->execute();
     $rooms = $stmt->fetchAll();
     $room_exp = Array();
@@ -393,7 +427,7 @@ function get_available_rooms($pdo){
 }
 
 /**
- * Generates an array with serie information
+ * Generates an array with room information
  * @param object $pdo db object
  * @param int $room_id id from the serie
  * @return mixed
@@ -412,6 +446,40 @@ function get_roominfo($pdo, $room_id){
 }
 
 /**
+ * Get array with all rooms added by current user
+ * @param object $pdo database object
+ * @return array Associative array with all series
+ */
+function get_owner_rooms($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE owner_id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $rooms = $stmt->fetchAll();
+    $room_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($rooms as $key => $value){
+        foreach ($value as $user_key => $user_input) {
+            $room_exp[$key][$user_key] = htmlspecialchars($user_input);
+        }
+    }
+    return $room_exp;
+}
+
+/**
+ * count  all listed rooms by owner_id
+ * @param object $pdo database object
+ * @return array Associative array with all listed rooms by owner
+ */
+function count_rooms_by_owner($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE owner_id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $rooms = $stmt->rowCount();
+    return $rooms;
+}
+
+
+
+/**
  * Creates HTML alert code with information about the success or failure
  * @param array $feedback Array with keys 'type' and 'message'.
  * @return string
@@ -424,6 +492,64 @@ function get_error($feedback){
         </div>';
     return $error_exp;
 }
+/**
+ * Get array with the rooms a user has opted-in for
+ * @param object $pdo database object
+ * @return array Associative array with all series
+ */
+function get_optin_rooms($pdo){
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $rooms = $stmt->fetchAll();
+    $optins_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($rooms as $key => $value){
+        foreach ($value as $user_key => $user_input) {
+            $room_exp[$key][$user_key] = htmlspecialchars($user_input);
+        }
+    }
+    return $optins_exp;
+}
+
+/**
+ * Creates a Bootstrap table with a list of opted-in rooms for the user
+ * @param array $rooms with rooms from the db
+ * @return string
+ */
+function get_optin_table($optins,$pdo){
+    $table_exp = '
+    <table class="table table-hover">
+    <thead
+    <tr>
+        <th scope="col">Address</th>
+        <th scope="col">Square Meters</th>
+        <th scope="col">Added By</th>
+    </tr>
+    </thead>
+    <tbody>';
+    foreach($optins as $key => $value){
+        $table_exp .= '
+        <tr>
+            <th scope="row">'.$value['street_address'].'</th>
+            <td>'.$value['square_meters'].'</td>
+            <td>'.get_user_name($pdo,$value['owner_id']).'</td>
+            <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
+        </tr>
+        ';
+    }
+    $table_exp .= '
+    </tbody>
+    </table>
+    ';
+    return $table_exp;
+}
+
+
+
 
 /**
  * Add room to the database
@@ -625,39 +751,14 @@ function count_users($pdo) {
 }
 
 /**
- * Count the number of viewing invites where the user is owner
- * @param object $pdo database object
- * @param int $user_id id of the user
- * @return mixed
- */
-function count_viewing_inv_owner($pdo, $user_id) {
-    $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE owner_id = ?');
-    $stmt->execute([$user_id]);
-    $viewing_invites = $stmt->rowCount();
-    return $viewing_invites;
-}
-
-/**
  * Count the number of rooms
  * @param object $pdo database object
  * @return mixed
  */
 function count_rooms($pdo){
+    /* Get series */
     $stmt = $pdo->prepare('SELECT * FROM rooms');
     $stmt->execute();
-    $rooms = $stmt->rowCount();
-    return $rooms;
-}
-
-/**
- * Count the number of rooms a user has (owner)
- * @param object $pdo database object
- * @return mixed
- */
-function count_owner_rooms($pdo, $user_id)
-{
-    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE owner_id = ?');
-    $stmt->execute([$user_id]);
     $rooms = $stmt->rowCount();
     return $rooms;
 }
@@ -687,6 +788,26 @@ function count_tenants($pdo){
 }
 
 /**
+ * Count the number of optins for a user
+ * @param object $pdo database object
+ * @return mixed
+ */
+function count_optins($pdo){
+    if (isset($_SESSION['user_id'])){
+        $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ?');
+        $stmt->execute([$_SESSION['user_id']]);
+        $tenants = $stmt->rowCount();
+        return $tenants;
+        }
+        else {
+            return 0;
+        }
+    }
+
+
+
+
+/**
  * Changes the HTTP Header to a given location
  * @param string $location location to be redirected to
  */
@@ -700,10 +821,11 @@ function redirect($location){
  * @return bool current user id or False if not logged in
  */
 function get_user_id(){
-    session_start();
     if (isset($_SESSION['user_id'])){
         return $_SESSION['user_id'];
     } else {
         return False;
     }
 }
+
+

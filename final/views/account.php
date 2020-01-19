@@ -21,7 +21,7 @@
         <div class="container">
             <!-- Breadcrumbs -->
             <div class="pd-15">&nbsp</div>
-            <?= $breadcrumbs ?>
+
 
             <div class="row">
 
@@ -48,6 +48,8 @@
                         <div class="card-body">
                             <p>You're logged in to Account Overview.</p>
                             <a href="/DDWT19_FINAL_PROJECT/final/logout/" class="btn btn-primary">Logout</a>
+                            <p></p>
+                            <a href="/DDWT19_FINAL_PROJECT/final/profile/" class="btn btn-primary">My Profile</a>
                         </div>
                     </div>
                 </div>
@@ -60,24 +62,23 @@
                         <?php if(check_owner($db) === True) { ?>
                         <div class="card-body">
                             <p class="count"> You currently have</p>
-                            <h2> <?= $nr_rooms_owner ?></h2>
+                            <h2> <?= $nbr_rooms_by_owner ?></h2>
                             <p> Rooms listed</p>
                             <a href="/DDWT19_FINAL_PROJECT/final/add" class="btn btn-primary">List another room</a>
-                            <p class="count"> You currently have</p>
-                            <h3><?= $nr_viewing_inv ?></h3>
-                            <p>Viewing activities planned</p>
-                            <p> Place a button here that leads to the viewing activity overview</p>
+                            <p>
+                            </p>
+                            <a href="/DDWT19_FINAL_PROJECT/final/myrooms" class="btn btn-primary">View all the rooms you posted</a>
                         </div>
                         <?php } else { ?>
                             <div class="card-body">
                                 <p class="count"> You currently have</p>
-                                <h2> (Number of rooms opted-in to)</h2>
-                                <p> Number of optins</p>
+                                <h2> <?= $nbr_optins ?></h2>
+                                <p> Number of opt-ins</p>
                                 <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary">Go to opt-in overview</a>
                                 <p class="count"> You currently have</p>
                                 <h3> (number of viewing days planned)</h3>
-                                <p>Viewing activities planned</p>
-                                <<a href="/DDWT19_FINAL_PROJECT/final/viewings" class="btn btn-primary">go to viewing overview</a>
+                                <p>Number of opt-ins accepted</p>
+                                <a href="/DDWT19_FINAL_PROJECT/final/viewings" class="btn btn-primary">Go to viewing overview</a>
                             </div>
                         <?php } ?>
 

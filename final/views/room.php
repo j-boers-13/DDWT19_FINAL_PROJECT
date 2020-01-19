@@ -21,7 +21,7 @@
         <div class="container">
             <!-- Breadcrumbs -->
             <div class="pd-15">&nbsp</div>
-            <?= $breadcrumbs ?>
+
 
             <div class="row">
 
@@ -67,14 +67,14 @@
                                 </form>
                             </div>
                         </div>
-                    <?php } else { ?>
+                    <?php } else { if(isset($_SESSION['user_id']) AND !($user_is_owner)) {?>
                     <div class='row'>
                         <div class ='col-sm-2'>
-                            <a href="/DDWT19_FINAL_PROJECT/final/optin/?room_id=<?=
+                            <a href="/DDWT19_FINAL_PROJECT/final/optins/?room_id=<?=
                             $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                         </div>
                     </div>
-                    <?php } ?>
+                    <?php } } ?>
                 </div>
 
                 <!-- Right column -->

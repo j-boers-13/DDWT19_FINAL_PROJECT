@@ -22,6 +22,7 @@
             <!-- Breadcrumbs -->
             <div class="pd-15">&nbsp</div>
 
+
             <div class="row">
 
                 <!-- Left column -->
@@ -32,16 +33,50 @@
                     <h1><?= $page_title ?></h1>
                     <h5><?= $page_subtitle ?></h5>
                     <p><?= $page_content ?></p>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Full Name</th>
+                            <td><?= $user ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Biography</th>
+                            <td><?= $user_info['biography'] ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Languages</th>
+                            <td><?= $user_info['languages'] ?></td>
+                        </tr>
 
-                    <?php if(isset($left_content)){echo $left_content;} ?>
 
-                    <?php $host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-                    if($host === 'localhost/DDWT19_FINAL_PROJECT/final/') {
-                        echo "<div class ='col-sm-2'>
-                        <a href='/DDWT19_FINAL_PROJECT/final/overview/' role='button' class='btn btn-info'>Click to see all available rooms</a>
-                    </div>"
-                     ;}?>
+                        <?php if ($user_info['role'] == "Owner")
+                        /* only display number of rooms owned if the user is a landlord */
+                        { ?>
+                        <tr>
+                            <th scope="row">Number of rooms owned</th>
+                            <td><?= $nbr_rooms_by_owner ?></td>
+                        </tr>
 
+                        </tbody>
+                    </table>
+
+                <?php }
+                /* only display edit and remove buttons if the user page is in ownership of the session user*/
+                if($_SESSION['user_id'] === $user_info['id']) {?>
+                        <div class='row'>
+                            <div class ='col-sm-2'>
+                                <a href="/DDWT19_FINAL_PROJECT/final/profile/edit/?user_id=<?=
+                                $user_info['id'] ?>" role="button" class="btn btn-warning">Edit</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <form action="/DDWT19_FINAL_PROJECT/final/profile/remove/" method="POST">
+                                    <input type="hidden" value="<?=$user_info['id']
+                                    ?>" name="user_id">
+                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                    <?php } ?>
                 </div>
 
                 <!-- Right column -->

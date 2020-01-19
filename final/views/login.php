@@ -21,7 +21,7 @@
         <div class="container">
             <!-- Breadcrumbs -->
             <div class="pd-15">&nbsp</div>
-            <?= $breadcrumbs ?>
+
 
             <div class="row">
 
