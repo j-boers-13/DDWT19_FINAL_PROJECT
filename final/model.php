@@ -507,7 +507,7 @@ function get_available_rooms($pdo, $limit){
  * @return mixed
  */
 function get_roominfo($pdo, $room_id){
-    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE id = ?');
+    $stmt = $pdo->prepare('SELECT rooms.* FROM rooms JOIN adres ON rooms.adress_id, rooms.city = adres.street-address, adres.city WHERE rooms.id = ? ');
     $stmt->execute([$room_id]);
     $room_info = $stmt->fetch();
     $room_info_exp = Array();
@@ -518,6 +518,7 @@ function get_roominfo($pdo, $room_id){
     }
     return $room_info_exp;
 }
+
 
 /**
  * Get array with all rooms added by current user
