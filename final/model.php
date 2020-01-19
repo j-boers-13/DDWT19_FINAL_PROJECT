@@ -196,7 +196,7 @@ function update_profile($pdo, $user_info){
     $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');
     $stmt->execute([$user_info['email']]);
     $user = $stmt->fetch();
-    if ($user_info['email'] == $user['email'] and $user['email'] != $current_email){
+    if ($user_info['email'] == $user['email'] and $user_info['email'] != $current_email){
         return [
             'type' => 'danger',
             'message' => sprintf("your email cannot be changed. Since %s already exists for another account.", $user_info['email'])
