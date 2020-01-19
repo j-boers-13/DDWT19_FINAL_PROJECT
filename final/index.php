@@ -382,6 +382,8 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/register', 'get')) {
     /* Page content */
     $page_subtitle = sprintf("Register an account");
     $page_content = "Fill in the form below";
+    $submit_btn = "Register Account";
+    $form_action = "/DDWT19_FINAL_PROJECT/final/register/";
 
     /* Get Error msg from POST route */
     if ( isset($_GET['error_msg']) ) {
@@ -399,6 +401,45 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/register/', 'post')) {
     /* Redirect to register get route */
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/register/?error_msg=%s',
     json_encode($error_msg)));
+}
+
+/* edit profile GET */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/edit', 'get')) {
+    /* check if logged in */
+    if ( !check_login()) {
+        redirect('/DDWT19_FINAL_PROJECT/final/login/');
+    }
+
+    /* Get room info from db */
+    $user_info = get_userinfo($db);
+
+    /* Page info */
+    $page_title = 'Edit Profile';
+    $navigation = get_navigation($nav_array,6);
+
+    /* Page content */
+    $page_subtitle = sprintf("Edit %s", $user_info['username']);
+    $page_content = 'Edit the profile below.';
+    $submit_btn = "Edit Profile";
+    $form_action = '/DDWT19_FINAL_PROJECT/final/edit/';
+
+
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+
+    /* Choose Template */
+    include use_template('register');
+}
+
+/* Edit profile POST */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/edit', 'post')) {
+    /* Update register in database */
+    $error_msg = update_profile($db, $_POST);
+
+    /* Redirect to register get route */
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/profile/edit/?error_msg=%s',
+        json_encode($error_msg)));
 }
 
 /* Login GET */
