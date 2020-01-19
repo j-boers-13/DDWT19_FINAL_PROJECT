@@ -67,7 +67,7 @@
                                 </form>
                             </div>
                         </div>
-                    <?php } else { if(isset($_SESSION['user_id'])) {?>
+                    <?php } else { if(isset($_SESSION['user_id']) AND !($user_is_owner)) {?>
                     <div class='row'>
                         <div class ='col-sm-2'>
                             <a href="/DDWT19_FINAL_PROJECT/final/optins/?room_id=<?=

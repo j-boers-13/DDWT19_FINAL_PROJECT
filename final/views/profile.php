@@ -49,7 +49,7 @@
                         </tr>
 
 
-                        <?php if ($is_owner)
+                        <?php if ($user_info['role'] == "Owner")
                         /* only display number of rooms owned if the user is a landlord */
                         { ?>
                         <tr>

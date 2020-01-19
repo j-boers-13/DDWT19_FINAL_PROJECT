@@ -156,7 +156,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
     $added_by = get_user_name($db, $room_info['owner_id']);
     $date_added = $room_info['created_at'];
     $is_owner = check_if_owner($room_info['owner_id']);
-
+    $user_is_owner = check_owner($db);
 
     /* Get error msg from POST route */
     if ( isset($_GET['error_msg']) ) {
@@ -169,7 +169,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
 /* profile page */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/', 'get')) {
     $user_info = get_userinfo($db);
-    $is_owner = check_owner($db);
+    $user_is_owner = check_owner($db);
     var_dump($user_info);
 
     /* Page info */
