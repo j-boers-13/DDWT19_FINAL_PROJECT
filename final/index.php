@@ -410,7 +410,11 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/edit', 'get')) {
         redirect('/DDWT19_FINAL_PROJECT/final/login/');
     }
 
-    /* Get room info from db */
+    /* Get user info from db */
+
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+}
     $user_info = get_userinfo($db);
 
     /* Page info */
