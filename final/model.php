@@ -177,8 +177,8 @@ function update_profile($pdo, $user_info){
             'message' => 'There was an error. Not all fields were filled in.'
         ];
     }
-    $user_info = get_userinfo($pdo);
-    if ($_SESSION['user_id'] !== $user_info['id']){
+    $user_data = get_userinfo($pdo);
+    if ($_SESSION['user_id'] !== $user_data['id']){
         return[
             'type' => 'danger',
             'message' => 'There was an error. You cannot edit this room'
@@ -188,7 +188,7 @@ function update_profile($pdo, $user_info){
 
     /* check if email already exists before editing */
     $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?');
-    $stmt->execute([$user_info['id']]);
+    $stmt->execute([$user_data['id']]);
     $user = $stmt->fetch();
     $current_email = $user['email'];
 
@@ -197,7 +197,7 @@ function update_profile($pdo, $user_info){
     $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');
     $stmt->execute([$user_info['email']]);
     $user = $stmt->fetch();
-    if ($user_info['email'] == $user['email'] and $user['email'] != $current_email){
+    if ($user_data['email'] == $user['email'] and $user['email'] != $current_email){
         return [
             'type' => 'danger',
             'message' => sprintf("your email cannot be changed. Since %s already exists for another account.", $user_info['email'])
@@ -220,7 +220,7 @@ function update_profile($pdo, $user_info){
     if ($updated ==  1) {
         return [
             'type' => 'success',
-            'message' => sprintf("Profile '%s' was edited!", $user_info['username'])
+            'message' => sprintf("Profile '%s' was edited!", $user_data['username'])
         ];
     }
     else {
