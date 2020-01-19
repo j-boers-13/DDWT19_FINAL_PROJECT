@@ -32,10 +32,16 @@
                     <h1><?= $page_title ?></h1>
                     <h5><?= $page_subtitle ?></h5>
                     <p><?= $page_content ?></p>
+
                     <?php if(isset($left_content)){echo $left_content;} ?>
-                    <div class ='col-sm-2'>
-                        <a href="/DDWT19_FINAL_PROJECT/final/overview/" role="button" class="btn btn-info">Click to see all available rooms</a>
-                    </div>
+
+                    <?php $host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+                    if($host === 'localhost/DDWT19_FINAL_PROJECT/final/') {
+                        echo "<div class ='col-sm-2'>
+                        <a href='/DDWT19_FINAL_PROJECT/final/overview/' role='button' class='btn btn-info'>Click to see all available rooms</a>
+                    </div>"
+                     ;}?>
+
                 </div>
 
                 <!-- Right column -->

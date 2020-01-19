@@ -548,6 +548,7 @@ function get_optin_table($optins,$pdo){
 
 
 
+
 /**
  * Add room to the database
  * @param object $pdo db object

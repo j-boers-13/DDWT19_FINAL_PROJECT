@@ -1,9 +1,6 @@
 <!-- Room count -->
 <!-- Room count -->
 <div class="card">
-    <div class="card-header">
-        Series
-    </div>
     <div class="card-body">
         <p class="count">We currently have</p>
         <h2><?= $nbr_rooms ?></h2>
@@ -13,9 +10,6 @@
 </div>
 <!-- Users count -->
 <div class="card">
-    <div class="card-header">
-        Users
-    </div>
     <div class="card-body">
         <p class="count">We currently have</p>
         <h2><?= $nbr_users ?></h2>
