@@ -674,31 +674,46 @@ function add_room($pdo, $room_info){
     }
 
     /* Add Room */
-    $stmt = $pdo->prepare("INSERT INTO rooms (street_address, city, description, zipcode, price, temporary, square_meters, owner_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO adres (street_address, city, zipcode) VALUES (?, ?, ?)");
     $stmt->execute([
         $room_info['street_address'],
         $room_info['city'],
-        $room_info['description'],
         $room_info['zipcode'],
-        $room_info['price'],
-        $room_info['temporary'],
-        $room_info['square_meters'],
-        $_SESSION['user_id']
     ]);
     $inserted = $stmt->rowCount();
     if ($inserted ==  1) {
-        return [
-            'type' => 'success',
-            'message' => sprintf("Room '%s' added to Room Overview.", $room_info['street_address'])
-        ];
-    }
-    else {
+        $stmt = $pdo->prepare("INSERT INTO rooms (street_address, city, description, price, temporary, square_meters, owner_id) VALUES (?, ?, ?, ?, ?, ?, ? )");
+        $stmt->execute([
+            $room_info['street_address'],
+            $room_info['city'],
+            $room_info['description'],
+            $room_info['price'],
+            $room_info['temporary'],
+            $room_info['square_meters'],
+            $_SESSION['user_id']
+        ]);
+        $inserted = $stmt->rowCount();
+        if ($inserted ==  1) {
+            return [
+                'type' => 'success',
+                'message' => sprintf("Room '%s' added to Room Overview.", $room_info['street_address'])
+            ];
+        }
+        else {
+            return [
+                'type' => 'danger',
+                'message' => 'There was an error. The series was not added. Try it again.'
+            ];
+        }
+    }     else {
         return [
             'type' => 'danger',
-            'message' => 'There was an error. The series was not added. Try it again.'
+            'message' => 'There was an error executing the sql statement for the adress barr. check if the inputs are correct'
         ];
     }
 }
+
+
 
 /**
  * Updates a serie in the database using post array
