@@ -732,19 +732,18 @@ function update_room($pdo, $room_info){
             'message' => 'There was an error. Not all fields were filled in.'
         ];
     }
-    $room_data = get_roominfo($pdo, $room_info['room_id']);
-    if ($_SESSION['user_id'] !== $room_data['owner_id']){
-        return[
-            'type' => 'danger',
-            'message' => 'There was an error. You cannot edit this room'
-        ];
-    }
 
 
     /* Get current room name */
     $stmt = $pdo->prepare('SELECT * FROM rooms WHERE id = ?');
     $stmt->execute([$room_info['room_id']]);
     $room = $stmt->fetch();
+    if ($_SESSION['user_id'] !== $room['owner_id']) {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. You cannot edit this room'
+        ];
+    }
     $current_address = $room['street_address'];
 
     /* Check if room already exists */
