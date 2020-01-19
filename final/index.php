@@ -46,7 +46,7 @@ else{
 
 
 /* Redudant code is added here */
-/* Get Number of Series */
+/* Get Number of rooms */
 $nbr_rooms = count_rooms($db);
 /* Get Number of Users */
 $nbr_users = count_users($db);
@@ -136,7 +136,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myrooms/', 'get')) {
 }
 /* Single Room */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
-    /* Get series from db */
+    /* Get rooms from db */
     $room_id = $_GET['room_id'];
     $room_info = get_roominfo($db, $room_id);
 
@@ -209,7 +209,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/add/', 'get')) {
             'type' => 'error',
             'message' => 'Tenants can\'t add or edit rooms.'
         ];;
-        /* Redirect to serie GET route */
+        /* Redirect to room GET route */
         redirect(sprintf('/DDWT19_FINAL_PROJECT/final/?error_msg=%s',
             json_encode($feedback)));
     }
@@ -243,9 +243,9 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/add/', 'post')) {
     if ( !check_login()) {
         redirect('/DDWT19_FINAL_PROJECT/final/login/');
     }
-    /* add serie to database */
+    /* add room to database */
     $feedback = add_room($db, $_POST);
-    /* Redirect to serie GET route */
+    /* Redirect to room GET route */
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/add/?error_msg=%s',
         json_encode($feedback)));
 }
@@ -266,7 +266,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/edit/', 'get')) {
             json_encode($feedback)));
     }
 
-    /* Get serie info from db */
+    /* Get room info from db */
     $room_id = $_GET['room_id'];
     $room_info = get_roominfo($db, $room_id);
 
@@ -305,30 +305,30 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/edit/', 'post')) {
             'type' => 'error',
             'message' => 'Tenants can\'t add rooms.'
         ];;
-        /* Redirect to serie GET route */
+        /* Redirect to room GET route */
         redirect(sprintf('/DDWT19_FINAL_PROJECT/final/edit?error_msg=%s',
             json_encode($feedback)));
     }
-    /* Update serie in database */
+    /* Update room in database */
     $feedback = update_room($db, $_POST);
 
-    /* Get serie info from db */
+    /* Get room info from db */
     $room_id = $_POST['room_id'];
     $room_info = get_roominfo($db, $room_id);
 
-    /* Redirect to serie get route */
+    /* Redirect to room get route */
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/room/?error_msg=%s&room_id=%s',
         json_encode($feedback), $_POST['room_id']));
 }
 
-/* Remove serie POST */
+/* Remove room POST */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/remove/', 'post')) {
     /* check if logged in */
     if ( !check_login()) {
         redirect('/DDWT19_FINAL_PROJECT/final/login/');
     }
 
-    /* Remove serie in database */
+    /* Remove room in database */
     $room_id = $_POST['room_id'];
     $feedback = remove_room($db, $room_id);
 
@@ -393,10 +393,10 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/register', 'get')) {
 }
 /* Register POST */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/register/', 'post')) {
-    /* Update serie in database */
+    /* Update register in database */
     $error_msg = register_user($db, $_POST);
 
-    /* Redirect to serie get route */
+    /* Redirect to register get route */
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/register/?error_msg=%s',
     json_encode($error_msg)));
 }
