@@ -308,6 +308,8 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myaccount/', 'get')) {
     $page_subtitle = sprintf("Check out your account");
     $page_content = "Check out your account below";
     $user = get_user_name ($db, $_SESSION['user_id']);
+    $nr_rooms_owner = count_owner_rooms($db, $_SESSION['user_id']);
+    $nr_viewing_inv = count_viewing_inv_owner($db, $_SESSION['user_id']);
     /* Get Error msg from POST route */
     if ( isset($_GET['error_msg']) ) {
         $error_msg = get_error($_GET['error_msg']);

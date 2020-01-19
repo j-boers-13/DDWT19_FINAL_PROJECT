@@ -60,11 +60,11 @@
                         <?php if(check_owner($db) === True) { ?>
                         <div class="card-body">
                             <p class="count"> You currently have</p>
-                            <h2> (Number of rooms listed by an OWNER</h2>
+                            <h2> <?= $nr_rooms_owner ?></h2>
                             <p> Rooms listed</p>
                             <a href="/DDWT19_FINAL_PROJECT/final/add" class="btn btn-primary">List another room</a>
                             <p class="count"> You currently have</p>
-                            <h3> (number of viewing days planned)</h3>
+                            <h3><?= $nr_viewing_inv ?></h3>
                             <p>Viewing activities planned</p>
                             <p> Place a button here that leads to the viewing activity overview</p>
                         </div>

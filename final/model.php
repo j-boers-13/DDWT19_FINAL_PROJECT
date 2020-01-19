@@ -160,7 +160,10 @@ function login_user($pdo, $form_data){
  *
  */
 function check_login(){
-    session_start();
+    if(!isset($_SESSION))
+    {
+        session_start();
+    }
     if (isset($_SESSION['user_id'])){
         return True;
     } else {
@@ -195,14 +198,6 @@ function get_user_role($user_id, $pdo){
     $stmt->execute([$user_id]);
     $user_info = $stmt->fetch();
     return $user_info['role'];
-}
-
-
-function check_room_owners($room_ownerid){
-    session_start();
-    if ($_SESSION['user_id'] == $room_ownerid){
-        return True;
-    }
 }
 
 /**
@@ -630,14 +625,39 @@ function count_users($pdo) {
 }
 
 /**
+ * Count the number of viewing invites where the user is owner
+ * @param object $pdo database object
+ * @param int $user_id id of the user
+ * @return mixed
+ */
+function count_viewing_inv_owner($pdo, $user_id) {
+    $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE owner_id = ?');
+    $stmt->execute([$user_id]);
+    $viewing_invites = $stmt->rowCount();
+    return $viewing_invites;
+}
+
+/**
  * Count the number of rooms
  * @param object $pdo database object
  * @return mixed
  */
 function count_rooms($pdo){
-    /* Get series */
     $stmt = $pdo->prepare('SELECT * FROM rooms');
     $stmt->execute();
+    $rooms = $stmt->rowCount();
+    return $rooms;
+}
+
+/**
+ * Count the number of rooms a user has (owner)
+ * @param object $pdo database object
+ * @return mixed
+ */
+function count_owner_rooms($pdo, $user_id)
+{
+    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE owner_id = ?');
+    $stmt->execute([$user_id]);
     $rooms = $stmt->rowCount();
     return $rooms;
 }
