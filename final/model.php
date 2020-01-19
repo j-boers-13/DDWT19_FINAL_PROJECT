@@ -206,20 +206,20 @@ function update_profile($pdo, $user_info){
     /* Update Serie */
     $stmt = $pdo->prepare('UPDATE users SET firstname = ?, lastname = ?, profession = ?, languages = ?, telephone = ?, email = ?, biography = ? WHERE id = ?');
     $stmt->execute([
-        $room_info['firstname'],
-        $room_info['lastname'],
-        $room_info['profession'],
-        $room_info['languages'],
-        $room_info['telephone'],
-        $room_info['email'],
-        $room_info['biography'],
+        $user_info['firstname'],
+        $user_info['lastname'],
+        $user_info['profession'],
+        $user_info['languages'],
+        $user_info['telephone'],
+        $user_info['email'],
+        $user_info['biography'],
         $_SESSION['user_id']
     ]);
     $updated = $stmt->rowCount();
     if ($updated ==  1) {
         return [
             'type' => 'success',
-            'message' => sprintf("Profile '%s' was edited!", $room_info['username'])
+            'message' => sprintf("Profile '%s' was edited!", $user_info['username'])
         ];
     }
     else {

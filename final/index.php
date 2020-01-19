@@ -421,7 +421,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/edit', 'get')) {
     $page_subtitle = sprintf("Edit %s", $user_info['username']);
     $page_content = 'Edit the profile below.';
     $submit_btn = "Edit Profile";
-    $form_action = '/DDWT19_FINAL_PROJECT/final/edit/';
+    $form_action = '/DDWT19_FINAL_PROJECT/final/profile/edit/';
 
 
     if ( isset($_GET['error_msg']) ) {
