@@ -37,18 +37,16 @@
                 </div>
                 <div class="col-md-12">
                     <form action="<?= $form_action ?>" method="POST">
-                        <?php $host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-                        if($host === 'localhost/DDWT19_FINAL_PROJECT/final/register') {
-                            echo '<div class="form-group">
+                        <?php if(!isset($_SESSION['user_id'])) { ?>
+                            <div class="form-group">
                             <div class="col-md-3">
                             <label for="inputUsername">Username</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="jannejanzz" name="username" value="<?php if (isset($user_info)){echo $user_info[\'username\'];} ?>" required>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="jannejanzz" name="username" value="<?php if (isset($user_info)) { echo ($user_info['username']); } ?>" required>
                             </div>
-                        </div>'
-                            ;}?>
+                        </div>
+                            <?php }; ?>
 
-                        <?php $host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-                        if($host === 'localhost/DDWT19_FINAL_PROJECT/final/register') {
+                        <?php if(!isset($_SESSION['user_id'])) {
                             echo '<div class="form-group">
                             <div class="col-md-3">
                             <label for="inputPassword">Password</label>
@@ -71,15 +69,14 @@
                             </div>
                         </div>
 
-                        <?php $host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-                        if($host === 'localhost/DDWT19_FINAL_PROJECT/final/register') {
-                            echo '<div class=\"form-group\">
-                            <div class=\"col-md-3\">
-                                <label for=\"inputBirthdate\">Birthdate</label>
-                                <input class=\"form-control\" type=\"date\" value=\"year-month-day\" id=\"birthdate\" name=\"birthdate\" required>
+                        <?php if(!isset($_SESSION['user_id'])) { ?>
+                            <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputBirthdate">Birthdate</label>
+                                <input class="form-control" type="date" value="year-month-day" id="birthdate" name="birthdate" required>
                             </div>
-                        </div>'
-                            ;}?>
+                        </div>
+                            <?php }; ?>
 
                         <div class="form-group">
                             <div class="col-md-3">
@@ -108,17 +105,16 @@
                             <input type="text" class="form-control" id="inputEmail" placeholder="johnnyxxx@gmail.com" name="email" value="<?php if (isset($user_info)){echo $user_info['email'];} ?>" required>
                             </div>
                         </div>
-                        <?php $host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-                            if($host === 'localhost/DDWT19_FINAL_PROJECT/final/register') {
-                                echo "<div class=\"form-group\">
-                            <div class=\"col-md-3\">
-                            <label for=\"InputRole\">Role</label>
-                            <select class=\"form-control\" id=\"Role\" name=\"role\">
+                        <?php if(!isset($_SESSION['user_id'])) { ?>
+                            <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="InputRole">Role</label>
+                            <select class="form-control" id="Role" name="role">
                                 <option>Owner</option>
                                 <option>Tenant</option>
                             </select>
-                            </div>"
-                                ;}?>
+                            </div>
+                        <?php } ?>
 
                         <div class="form-group">
                             <div class="col-md-3">

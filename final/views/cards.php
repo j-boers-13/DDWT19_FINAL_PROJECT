@@ -18,6 +18,8 @@
         <p>are tenants, and </p>
         <h3><?=$nbr_owners?></h3>
         <p>are owners. </p>
+        <?php if(isset($user_id)){ ?>
         <a href="/DDWT19_FINAL_PROJECT/final/register/" class="btn btn-primary">Join now!</a>
+        <?php } ?>
     </div>
 </div>

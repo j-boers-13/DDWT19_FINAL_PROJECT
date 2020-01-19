@@ -477,15 +477,16 @@ function p_print($input){
 
 /**
  * Get array with all listed series from the database
- * @param object $pdo database object, bool $limit quantity of rows (if false then show all rows)
+ * @param object $pdo database object,
+ * @param bool $limit quantity of rows (if false then show all rows)
  * @return array Associative array with all series
  */
 function get_available_rooms($pdo, $limit){
     if($limit === true) {
-        $stmt = $pdo->prepare('SELECT * FROM rooms WHERE is_available = 1 ORDER BY id DESC LIMIT 5');
+        $stmt = $pdo->prepare('SELECT rooms.* FROM rooms JOIN address ON rooms.street_address = address.street_address AND rooms.city = address.city WHERE is_available = 1 ORDER BY id DESC LIMIT 5');
     }
     else{
-        $stmt = $pdo->prepare('SELECT * FROM rooms WHERE is_available = 1 ORDER BY id DESC');
+        $stmt = $pdo->prepare('SELECT rooms.* FROM rooms JOIN address ON rooms.street_address = address.street_address AND rooms.city = address.city WHERE is_available = 1 ORDER BY id DESC');
     }
     $stmt->execute();
     $rooms = $stmt->fetchAll();
@@ -507,7 +508,7 @@ function get_available_rooms($pdo, $limit){
  * @return mixed
  */
 function get_roominfo($pdo, $room_id){
-    $stmt = $pdo->prepare('SELECT rooms.* FROM rooms JOIN adres ON rooms.adress_id, rooms.city = adres.street-address, adres.city WHERE rooms.id = ? ');
+    $stmt = $pdo->prepare('SELECT * FROM rooms JOIN address ON rooms.street_address = address.street_address AND rooms.city = address.city WHERE rooms.id = ? ');
     $stmt->execute([$room_id]);
     $room_info = $stmt->fetch();
     $room_info_exp = Array();
@@ -526,7 +527,7 @@ function get_roominfo($pdo, $room_id){
  * @return array Associative array with all series
  */
 function get_owner_rooms($pdo){
-    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE owner_id = ?');
+    $stmt = $pdo->prepare('SELECT rooms.* FROM rooms JOIN address ON rooms.street_address = address.street_address AND rooms.city = address.city WHERE rooms.owner_id = ? ');
     $stmt->execute([$_SESSION['user_id']]);
     $rooms = $stmt->fetchAll();
     $room_exp = Array();
@@ -567,6 +568,7 @@ function get_error($feedback){
         </div>';
     return $error_exp;
 }
+
 /**
  * Get array with the rooms a user has opted-in for
  * @param object $pdo database object
@@ -592,7 +594,8 @@ function get_optin_rooms($pdo){
 
 /**
  * Creates a Bootstrap table with a list of opted-in rooms for the user
- * @param array $rooms with rooms from the db
+ * @param array $optins with rooms from the db
+ * @param object $pdo database object
  * @return string
  */
 function get_optin_table($optins,$pdo){
@@ -675,7 +678,7 @@ function add_room($pdo, $room_info){
     }
 
     /* Add Room */
-    $stmt = $pdo->prepare("INSERT INTO adres (street_address, city, zipcode) VALUES (?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO address (street_address, city, zipcode) VALUES (?, ?, ?)");
     $stmt->execute([
         $room_info['street_address'],
         $room_info['city'],
@@ -717,7 +720,7 @@ function add_room($pdo, $room_info){
 
 
 /**
- * Updates a serie in the database using post array
+ * Updates a room in the database using post array
  * @param object $pdo db object
  * @param array $room_info post array
  * @return array
@@ -770,21 +773,29 @@ function update_room($pdo, $room_info){
         ];
     }
 
-    /* Update Serie */
-    $stmt = $pdo->prepare('UPDATE rooms SET street_address = ?, city = ?, zipcode = ?, description = ?, price = ?, square_meters = ?, temporary = ?, owner_id = ? WHERE id = ?');
+    /* Update Room */
+    $stmt = $pdo->prepare('UPDATE address SET street_address = ?, city = ?, zipcode = ? WHERE street_address = ? AND city = ?');
     $stmt->execute([
         $room_info['street_address'],
         $room_info['city'],
         $room_info['zipcode'],
+        $room['street_address'],
+        $room['street_address']
+    ]);
+    $updated = $stmt->rowCount();
+    $stmt = $pdo->prepare('UPDATE rooms SET description = ?, price = ?, square_meters = ?, temporary = ?, owner_id = ?, street_address= ?, city = ? WHERE id = ?');
+    $stmt->execute([
         $room_info['description'],
         $room_info['price'],
         $room_info['square_meters'],
         $room_info['temporary'],
         $_SESSION['user_id'],
+        $room_info['street_address'],
+        $room_info['city'],
         $room_info['room_id']
     ]);
-    $updated = $stmt->rowCount();
-    if ($updated ==  1) {
+    $updated = $updated + $stmt->rowCount();
+    if ($updated >=  1) {
         return [
             'type' => 'success',
             'message' => sprintf("Room '%s' was edited!", $room_info['street_address'])
@@ -799,16 +810,16 @@ function update_room($pdo, $room_info){
 }
 
 /**
- * Removes a room with a specific series-ID
+ * Removes a room with a specific room-ID
  * @param object $pdo db object
- * @param int $room_id id of the to be deleted series
+ * @param int $room_id id of the to be deleted room
  * @return array
  */
 function remove_room($pdo, $room_id){
-    /* Get series info */
+    /* Get room info */
     $room_info = get_roominfo($pdo, $room_id);
 
-    /* Delete Serie */
+    /* Delete Room */
     $stmt = $pdo->prepare("DELETE FROM rooms WHERE id = ?");
     $stmt->execute([$room_id]);
     $deleted = $stmt->rowCount();
