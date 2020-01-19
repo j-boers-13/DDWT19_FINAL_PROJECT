@@ -156,6 +156,81 @@ function login_user($pdo, $form_data){
 }
 
 /**
+ * Updates a users profile in the database using post array
+ * @param object $pdo db object
+ * @param array $room_info post array
+ * @return array
+ */
+function update_profile($pdo, $user_info){
+    /* Check if all fields are set */
+    if (
+        empty($user_info['firstname']) or
+        empty($user_info['lastname']) or
+        empty($user_info['profession']) or
+        empty($user_info['languages']) or
+        empty($user_info['telephone']) or
+        empty($user_info['email']) or
+        empty($user_info['biography'])
+    ) {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. Not all fields were filled in.'
+        ];
+    }
+    $user_data = get_userinfo($pdo);
+    if ($_SESSION['user_id'] !== $user_data['id']){
+        return[
+            'type' => 'danger',
+            'message' => 'There was an error. You cannot edit this room'
+        ];
+    }
+
+
+    /* check if email already exists before editing */
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?');
+    $stmt->execute([$user_info['id']]);
+    $user = $stmt->fetch();
+    $current_email = $user['email'];
+
+    /* Check if room already exists */
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');
+    $stmt->execute([$user_info['email']]);
+    $user = $stmt->fetch();
+    if ($user_info['email'] == $user['email'] and $user['email'] != $current_email){
+        return [
+            'type' => 'danger',
+            'message' => sprintf("your email cannot be changed. Since %s already exists for another account.", $user_info['email'])
+        ];
+    }
+
+    /* Update Serie */
+    $stmt = $pdo->prepare('UPDATE users SET firstname = ?, lastname = ?, profession = ?, languages = ?, telephone = ?, email = ?, biography = ? WHERE id = ?');
+    $stmt->execute([
+        $room_info['firstname'],
+        $room_info['lastname'],
+        $room_info['profession'],
+        $room_info['languages'],
+        $room_info['telephone'],
+        $room_info['email'],
+        $room_info['biography'],
+        $_SESSION['user_id']
+    ]);
+    $updated = $stmt->rowCount();
+    if ($updated ==  1) {
+        return [
+            'type' => 'success',
+            'message' => sprintf("Profile '%s' was edited!", $room_info['username'])
+        ];
+    }
+    else {
+        return [
+            'type' => 'danger',
+            'message' => 'The room was not edited. No changes were detected.'
+        ];
+    }
+}
+
+/**
  * Check Login
  *
  */

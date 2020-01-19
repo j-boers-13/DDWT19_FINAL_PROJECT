@@ -36,79 +36,89 @@
 
                 </div>
                 <div class="col-md-12">
-                    <form action="/DDWT19_FINAL_PROJECT/final/register/" method="POST">
-                        <div class="form-group">
+                    <form action="<?= $form_action ?>" method="POST">
+                        <?php $host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+                        if($host === 'localhost/DDWT19_FINAL_PROJECT/final/register') {
+                            echo '<div class="form-group">
                             <div class="col-md-3">
                             <label for="inputUsername">Username</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="jannejanzz" name="username" required>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="jannejanzz" name="username" value="<?php if (isset($user_info)){echo $user_info[\'username\'];} ?>" required>
                             </div>
-                        </div>
+                        </div>'
+                            ;}?>
 
-                        <div class="form-group">
+                        <?php $host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+                        if($host === 'localhost/DDWT19_FINAL_PROJECT/final/register') {
+                            echo '<div class="form-group">
                             <div class="col-md-3">
                             <label for="inputPassword">Password</label>
-                            <input type="password" class="form-control"  id="inputPassword" placeholder="******" name="password" required>
+                            <input type="password" class="form-control"  id="inputPassword" placeholder="******" name="password" value="<?php if (isset($user_info)){echo $user_info[\'password\'];} ?>" required>
                             </div>
-                        </div>
+                        </div>'
+                            ;}?>
 
                         <div class="form-group">
                             <div class="col-md-3">
                             <label for="inputUsername">First name</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="Jan" name="firstname" required>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="Jan" name="firstname" value="<?php if (isset($user_info)){echo $user_info['firstname'];} ?>" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-3">
                             <label for="inputUsername">Last name</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="Jansen" name="lastname" required>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="Jansen" name="lastname" value="<?php if (isset($user_info)){echo $user_info['lastname'];} ?>" required>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <label for="inputBirthdate">Birthdate</label>
-                                <input class="form-control" type="date" value="year-month-day" id="birthdate" name="birthdate" required>
+                        <?php $host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+                        if($host === 'localhost/DDWT19_FINAL_PROJECT/final/register') {
+                            echo '<div class=\"form-group\">
+                            <div class=\"col-md-3\">
+                                <label for=\"inputBirthdate\">Birthdate</label>
+                                <input class=\"form-control\" type=\"date\" value=\"year-month-day\" id=\"birthdate\" name=\"birthdate\" required>
                             </div>
-                        </div>
+                        </div>'
+                            ;}?>
 
                         <div class="form-group">
                             <div class="col-md-3">
                                 <label for="inputProfession">Profession</label>
-                                <input type="text" class="form-control"  placeholder = "carpenter" id="inputProfession" name="profession" required>
+                                <input type="text" class="form-control"  placeholder = "carpenter" id="inputProfession" name="profession" value="<?php if (isset($user_info)){echo $user_info['profession'];} ?>" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-3">
                             <label for="inputLanguages">Language(s)</label>
-                            <input type="text" class="form-control" id="inputLanguages" placeholder="English,Dutch,Etc" name="languages" required>
+                            <input type="text" class="form-control" id="inputLanguages" placeholder="English,Dutch,Etc" name="languages" value="<?php if (isset($user_info)){echo $user_info['languages'];} ?>" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-3">
                             <label for="inputTelephone">Telephone</label>
-                            <input type="text" class="form-control" id="inputTelephone" placeholder="+316 67567491" name="telephone" required>
+                            <input type="text" class="form-control" id="inputTelephone" placeholder="+316 67567491" name="telephone" value="<?php if (isset($user_info)){echo $user_info['telephone'];} ?>" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-3">
                             <label for="inputEmail">E-mail</label>
-                            <input type="text" class="form-control" id="inputEmail" placeholder="johnnyxxx@gmail.com" name="email" required>
+                            <input type="text" class="form-control" id="inputEmail" placeholder="johnnyxxx@gmail.com" name="email" value="<?php if (isset($user_info)){echo $user_info['email'];} ?>" required>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <div class="col-md-3">
-                            <label for="InputRole">Role</label>
-                            <select class="form-control" id="Role" name="role">
+                        <?php $host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+                            if($host === 'localhost/DDWT19_FINAL_PROJECT/final/register') {
+                                echo "<div class=\"form-group\">
+                            <div class=\"col-md-3\">
+                            <label for=\"InputRole\">Role</label>
+                            <select class=\"form-control\" id=\"Role\" name=\"role\">
                                 <option>Owner</option>
                                 <option>Tenant</option>
                             </select>
-                            </div>
-                        </div>
+                            </div>"
+                                ;}?>
 
                         <div class="form-group">
                             <div class="col-md-3">
@@ -119,7 +129,7 @@
 
                         <div class="form-group">
                             <div class="col-md-3">
-                            <button type="submit" class="btn btn-primary">Register now</button>
+                            <button type="submit" class="btn btn-primary"><?= $submit_btn ?></button>
                             </div>
                         </div>
                     </form>
