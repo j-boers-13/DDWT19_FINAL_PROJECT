@@ -158,7 +158,7 @@ function login_user($pdo, $form_data){
 /**
  * Updates a users profile in the database using post array
  * @param object $pdo db object
- * @param array $room_info post array
+ * @param array $user_info post array
  * @return array
  */
 function update_profile($pdo, $user_info){
@@ -185,13 +185,11 @@ function update_profile($pdo, $user_info){
         ];
     }
 
-
     /* check if email already exists before editing */
     $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?');
     $stmt->execute([$user_data['id']]);
     $user = $stmt->fetch();
     $current_email = $user['email'];
-
 
     /* Check if room already exists */
     $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');
@@ -732,7 +730,7 @@ function update_room($pdo, $room_info){
             'message' => 'There was an error. Not all fields were filled in.'
         ];
     }
-    
+
     /* Get current room name */
     $stmt = $pdo->prepare('SELECT * FROM rooms WHERE id = ?');
     $stmt->execute([$room_info['room_id']]);

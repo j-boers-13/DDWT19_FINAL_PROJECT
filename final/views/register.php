@@ -123,7 +123,7 @@
                         <div class="form-group">
                             <div class="col-md-3">
                                 <label for="inputBiography">Biography</label>
-                                <textarea placeholder="Write a short introduction about yourself!" class="form-control" id="inputBiography" name="biography" value="<?php if (isset($user_info)){echo $user_info['biography'];} ?>" required></textarea>
+                                <textarea placeholder="Write a short introduction about yourself!" class="form-control" id="inputBiography" name="biography" required><?php if (isset($user_info)){echo $user_info['biography'];} ?></textarea>
                             </div>
                         </div>
                         <?php if(isset($user_id)){ ?><input type="hidden" name="user_id" value="<?php echo $user_id ?>"><?php } ?>
