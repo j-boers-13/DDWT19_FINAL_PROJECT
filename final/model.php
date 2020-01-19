@@ -177,8 +177,8 @@ function update_profile($pdo, $user_info){
             'message' => 'There was an error. Not all fields were filled in.'
         ];
     }
-    $user_data = get_userinfo($pdo);
-    if ($_SESSION['user_id'] !== $user_data['id']){
+    $user_info = get_userinfo($pdo);
+    if ($_SESSION['user_id'] !== $user_info['id']){
         return[
             'type' => 'danger',
             'message' => 'There was an error. You cannot edit this room'
@@ -191,6 +191,7 @@ function update_profile($pdo, $user_info){
     $stmt->execute([$user_info['id']]);
     $user = $stmt->fetch();
     $current_email = $user['email'];
+
 
     /* Check if room already exists */
     $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');

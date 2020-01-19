@@ -126,6 +126,7 @@
                                 <textarea placeholder="Write a short introduction about yourself!" class="form-control" id="inputBiography" name="biography" required></textarea>
                             </div>
                         </div>
+                        <?php if(isset($user_id)){ ?><input type="hidden" name="user_id" value="<?php echo $user_id ?>"><?php } ?>
 
                         <div class="form-group">
                             <div class="col-md-3">
