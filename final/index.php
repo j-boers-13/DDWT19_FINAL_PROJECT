@@ -1,9 +1,9 @@
 <?php
 /**
  * Controller
- * User: reinardvandalen
- * Date: 05-11-18
- * Time: 15:25
+ * User: Jeroen Boers, Yoni Hollander, Quin Kroon
+ * Date: 1/19/2020
+ * Time: 14:23
  */
 
 include 'model.php';
@@ -168,6 +168,9 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
 
 /* profile page */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/', 'get')) {
+    $user_info = get_userinfo($db);
+    $is_owner = check_owner($db);
+    var_dump($user_info);
 
     /* Page info */
     $page_title = 'Profile';
@@ -178,10 +181,13 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/', 'get')) {
     ]);
     $navigation = get_navigation($nav_array, 2);
 
+
     /* Page content */
     $page_subtitle = 'Your profile';
     $page_content = 'Here you can look at your profile and edit information that might have changed';
-    $left_content = get_userinfo($db);
+    #$left_content = get_userinfo($db);
+    $user = get_user_name($db, $_SESSION['user_id']);
+    $nbr_rooms_by_owner = count_rooms_by_owner($db);
 
     /* Get error msg from remove post route */
     if ( isset($_GET['error_msg']) ) {
@@ -189,7 +195,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/', 'get')) {
     }
 
     /* Choose Template */
-    include use_template('main');
+    include use_template('profile');
 }
 
 /* Add room GET */
