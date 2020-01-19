@@ -708,7 +708,7 @@ function add_room($pdo, $room_info){
     }     else {
         return [
             'type' => 'danger',
-            'message' => 'There was an error executing the sql statement for the adress barr. check if the inputs are correct'
+            'message' => 'There was an error executing the sql statement for the address bar. check if the inputs are correct'
         ];
     }
 }

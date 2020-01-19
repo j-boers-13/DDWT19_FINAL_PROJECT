@@ -442,8 +442,8 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/edit', 'post')) {
     $error_msg = update_profile($db, $_POST);
 
     /* Redirect to profileget route */
-    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/profile/?error_msg=%s&room_id=%s',
-        json_encode($feedback), $_POST['room_id']));
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/profile/?error_msg=%s&user_id=%s',
+        json_encode($error_msg), $_POST['user_id']));
 }
 
 
