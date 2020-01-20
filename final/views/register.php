@@ -41,19 +41,21 @@
                             <div class="form-group">
                             <div class="col-md-3">
                             <label for="inputUsername">Username</label>
-                            <input type="text" class="form-control" id="inputUsername" placeholder="jannejanzz" name="username" value="<?php if (isset($user_info)) { echo ($user_info['username']); } ?>" required>
+                            <input type="text" class="form-control" id="inputUsername" placeholder="jannejanzz" name="username" value="<?php
+                            if (isset($user_info)) { echo ($user_info['username']); } ?>" required>
                             </div>
                         </div>
                             <?php }; ?>
 
-                        <?php if(!isset($_SESSION['user_id'])) {
-                            echo '<div class="form-group">
+                        <?php if(!isset($_SESSION['user_id'])) { ?>
+                            <div class="form-group">
                             <div class="col-md-3">
                             <label for="inputPassword">Password</label>
-                            <input type="password" class="form-control"  id="inputPassword" placeholder="******" name="password" value="<?php if (isset($user_info)){echo $user_info[\'password\'];} ?>" required>
+                            <input type="password" class="form-control"  id="inputPassword" placeholder="******" name="password" value="<?php
+                            if (isset($user_info)){echo $user_info['password'];} ?>" required>
                             </div>
-                        </div>'
-                            ;}?>
+                        </div>
+                            <?php ;}?>
 
                         <div class="form-group">
                             <div class="col-md-3">
