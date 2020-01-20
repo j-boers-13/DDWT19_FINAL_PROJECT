@@ -1,8 +1,10 @@
+
 .pd-15 {
     padding: 15px 0 0 0;
+    display: inline;
 }
 
-.card-body h2{
+.card-body h2 {
     margin: 0;
 }
 
@@ -10,9 +12,10 @@
     margin: 0;
 }
 
-.card-body .emphasis{
-    margin: 0;
+.emphasis {
     font-weight: bold;
+    display: inline;
+    font-size: 125%;
 }
 
 nav {
