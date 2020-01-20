@@ -67,21 +67,25 @@
                                 </form>
                             </div>
                         </div>
-                    <?php } else { if(isset($_SESSION['user_id']) AND !($user_is_owner)) {?>
-                    <div class='row'>
+                        <?php } else { if(isset($_SESSION['user_id']) AND !($user_is_owner)) {?>
+                        <div class='row'>
                         <?php if (!($user_is_invited)){ ?>
                         <div class ='col-sm-2'>
                             <a href="/DDWT19_FINAL_PROJECT/final/optins/add/?room_id=<?=
                             $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                         </div>
-                        <?php ;} ?>
+                        <?php } ?>
+                        <div class ='col-sm-2'>
+                            <form action="/DDWT19_FINAL_PROJECT/final/invites/confirm" method="POST">
+                                <input type="hidden" value='. $value['id'] .' name="invite_id">
+                                <button type="submit" class="btn btn-primary">Confirm</button> </form>
+                        </div>
+                        <?php ;}
+                        ;} ?>
                         <div class ='col-sm-2'>
                             <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $room_info['owner_id'] ?>" role="button" class="btn btn-info">Show owners' profile</a></td>
                         </div>
-                    </div>
-
-
-                    <?php } } ?>
+                        </div>
                 </div>
 
                 <!-- Right column -->
