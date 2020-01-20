@@ -1276,9 +1276,9 @@ function confirm_viewing($pdo,$invite_id) {
     /* change is_confirmed */
 
 
-    $pdo->prepare('UPDATE viewing_invites SET is_confirmed = ? WHERE id = ?');
-    $pdo->execute([$invite_id]);
-    $updated = $pdo->rowCount();
+    $stmt = $pdo->prepare('UPDATE viewing_invites SET is_confirmed = ? WHERE id = ?');
+    $stmt->execute([$invite_id]);
+    $updated = $stmt->rowCount();
     if ($updated >=  1) {
         return [
             'type' => 'success',
