@@ -1267,6 +1267,36 @@ function remove_optin($pdo, $optin_id){
 }
 
 /**
+ * Change the is_confirmed value in the database
+ * @param object $pdo database object
+ * @return mixed
+ */
+
+function confirm_viewing($pdo,$invite_id) {
+    /* change is_confirmed */
+
+
+    $stmt = $pdo->prepare('UPDATE viewing_invites SET is_confirmed = ? WHERE id = ?');
+    $stmt->execute([$invite_id]);
+    $updated = $stmt->rowCount();
+    if ($updated >=  1) {
+        return [
+            'type' => 'success',
+            'message' => 'You signed up for the viewing date!'
+        ];
+    }
+    else {
+        return [
+            'type' => 'danger',
+            'message' => 'Something went wrong please try again!'
+        ];
+    }
+}
+
+
+
+
+/**
  * Count the number of users
  * @param object $pdo database object
  * @return mixed
