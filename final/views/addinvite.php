@@ -37,7 +37,7 @@
                 <div class="form-group row">
                     <div class="col-md-3">
                         <label for="inputDate">Viewing date</label>
-                        <input class="form-control" type="datetime-local" value="year-month-day" id="date" name="date" required>
+                        <input class="form-control" type="date" value="year-month-day" id="date" name="date" required>
                     </div>
                 </div>
                 <?php if(isset($room_id)){ ?><input type="hidden" name="room_id" value="<?php echo $room_id ?>"><?php } ?>
