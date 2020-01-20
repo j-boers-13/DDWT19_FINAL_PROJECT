@@ -66,3 +66,7 @@ a.btn-success:hover{
     border-color: #6a6b6b;
     color: white;
 }
+
+a.nav-link:hover {
+    color: white;
+}

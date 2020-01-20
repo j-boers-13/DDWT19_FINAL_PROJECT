@@ -457,7 +457,7 @@ function get_navigation($template,$active_id){
     $navigation_exp = '
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #c3babc;">
     <a class="navbar-brand">ROOM.NET</a>
-    <button class="navbar-toggler bordered" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -465,7 +465,7 @@ function get_navigation($template,$active_id){
     foreach ($template as $id => $array) {
         if ($id[$active_id]){
             $navigation_exp .= '<li class="nav-item active">';
-            $navigation_exp .= '<a class="nav-link bordered" href="'.$array['url'].'">'.$array['name'].'</a>';
+            $navigation_exp .= '<a class="nav-link" href="'.$array['url'].'">'.$array['name'].'</a>';
         }else{
             $navigation_exp .= '<li class="nav-item">';
             $navigation_exp .= '<a class="nav-link" href="'.$array['url'].'">'.$array['name'].'</a>';
@@ -844,6 +844,7 @@ function get_invite_table($invites ,$pdo, $is_owner){
         <tr>
             <th scope="col">Address</th>
             <th scope="col">Square Meters</th>
+            <th scope="col">Viewing Date</th>
             <th scope="col">Sent by</th>
         </tr>
         </thead>
@@ -855,7 +856,8 @@ function get_invite_table($invites ,$pdo, $is_owner){
                 <th scope="row">' . $value['street_address'] . '</th>
                 <td>' . $value['square_meters'] . '</td>
                 <td>' . get_user_name($pdo, $value['tenant_id']) . '</td>
-                <td><a href="/DDWT19_FINAL_PROJECT/final/optin/?optin_id=' . $value['id'] . '" role="button" class="btn btn-primary">Show message and respond</a></td>
+                <td>'. $value['date'] .'</td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/invite/?invite_id=' . $value['invite_id'] . '" role="button" class="btn btn-primary">Show message and respond</a></td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['tenant_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
 
             </tr>

@@ -65,7 +65,7 @@
                             <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary"><span class = "emphasis"> <?= $nbr_optins ?></span> Opt-ins received. </a>
                             <?php } else { ?>
                             <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary"> <span class = "emphasis"> <?=$nbr_optins?> </span> opt-ins </a>
-                            <a href="/DDWT19_FINAL_PROJECT/final/viewings" class="btn btn-primary"> <span class = "emphasis"> 0 </span> invites </a>
+                            <a href="/DDWT19_FINAL_PROJECT/final/invites" class="btn btn-primary"> <span class = "emphasis"> 0 </span> invites </a>
                             <?php } ?>
                         </div>
 
