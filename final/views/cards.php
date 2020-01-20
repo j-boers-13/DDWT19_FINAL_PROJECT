@@ -1,4 +1,5 @@
 <!-- Room count -->
+
 <div class="card">
     <div class="card-body">
         <p class="count">We currently have <span class = "emphasis"> <?= $nbr_rooms ?> </span> rooms listed. </p>
