@@ -41,7 +41,7 @@
                         </tr>
                         <tr>
                             <th scope="row">Biography</th>
-                            <td><?= $user_info['biography'] ?></td>
+                            <td style="word-break:break-all;"><?= $user_info['biography'] ?></td>
                         </tr>
                         <tr>
                             <th scope="row">Languages</th>
