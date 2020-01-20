@@ -230,18 +230,17 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optin/', 'post')) {
         json_encode($feedback), $_POST['room_id']));
 }
 
-/* profile page */
-elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/', 'get')) {
+/* My profile page */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/myprofile/', 'get')) {
     $user_info = get_userinfo($db);
     $user_is_owner = check_owner($db);
-    var_dump($user_info);
 
     /* Page info */
     $page_title = 'Profile';
     $breadcrumbs = get_breadcrumbs([
         'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
         'final' => na('/DDWT19/final/', False),
-        'Profile' => na('/DDWT19_FINAL_PROJECT/final/profile', True)
+        'Profile' => na('/DDWT19_FINAL_PROJECT/final/myprofile', True)
     ]);
     $navigation = get_navigation($nav_array, 2);
 
@@ -251,6 +250,38 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/', 'get')) {
     $page_content = 'Here you can look at your profile and edit information that might have changed';
     #$left_content = get_userinfo($db);
     $user = get_user_name($db, $_SESSION['user_id']);
+    $nbr_rooms_by_owner = count_rooms_by_owner($db);
+
+    /* Get error msg from remove post route */
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+
+    /* Choose Template */
+    include use_template('profile');
+}
+
+/* Other user profile page */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/', 'get')) {
+    $user_id = $_GET['user_id'];
+    $user_info = get_other_userinfo($user_id, $db);
+    $user_is_owner = check_owner($db);
+
+    /* Page info */
+    $page_title = get_user_name($db, $user_id);
+    $breadcrumbs = get_breadcrumbs([
+        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
+        'final' => na('/DDWT19/final/', False),
+        'Profile' => na('/DDWT19_FINAL_PROJECT/final/myprofile', True)
+    ]);
+    $navigation = get_navigation($nav_array, 2);
+
+
+    /* Page content */
+    $page_subtitle = '';
+    $page_content = 'Here you can look at a users profile';
+    #$left_content = get_userinfo($db);
+    $user = get_user_name($db, $user_id);
     $nbr_rooms_by_owner = count_rooms_by_owner($db);
 
     /* Get error msg from remove post route */
@@ -467,7 +498,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/register/', 'post')) {
 }
 
 /* edit profile GET */
-elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/edit', 'get')) {
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/myprofile/edit', 'get')) {
     /* check if logged in */
     if ( !check_login()) {
         redirect('/DDWT19_FINAL_PROJECT/final/login/');
@@ -488,7 +519,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/edit', 'get')) {
     $page_subtitle = sprintf("Edit %s", $user_info['username']);
     $page_content = 'Edit the profile below.';
     $submit_btn = "Edit Profile";
-    $form_action = '/DDWT19_FINAL_PROJECT/final/profile/edit/';
+    $form_action = '/DDWT19_FINAL_PROJECT/final/myprofile/edit/';
 
 
     if ( isset($_GET['error_msg']) ) {
@@ -500,12 +531,12 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/edit', 'get')) {
 }
 
 /* Edit profile POST */
-elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/edit', 'post')) {
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/myprofile/edit', 'post')) {
     /* Update register in database */
     $error_msg = update_profile($db, $_POST);
 
     /* Redirect to profileget route */
-    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/profile/?error_msg=%s&user_id=%s',
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/myprofile/?error_msg=%s&user_id=%s',
         json_encode($error_msg), $_POST['user_id']));
 }
 
@@ -558,7 +589,11 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/logout', 'get')) {
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/', 'get')) {
 
     /* Page info */
+    if ( !check_login()) {
+        redirect('/DDWT19_FINAL_PROJECT/final/myaccount/');
+    }
 
+    $is_owner = check_owner($db);
     $page_title = 'Opt-ins';
     $breadcrumbs = get_breadcrumbs([
         'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
@@ -570,7 +605,12 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/', 'get')) {
     /* Page content */
     $page_subtitle = 'The overview of all your opt-ins';
     $page_content = 'This is an overview of all the rooms you opted-in for';
-    $left_content = get_optin_table(get_optins($db), $db);
+    if (!$is_owner) {
+        $left_content = get_optin_table(get_tenant_optins($db), $db, $is_owner);
+    }
+    else {
+        $left_content = get_optin_table(get_owner_optins($db), $db, $is_owner);
+    }
 
     if ( isset($_GET['error_msg']) ) {
         $error_msg = get_error($_GET['error_msg']);

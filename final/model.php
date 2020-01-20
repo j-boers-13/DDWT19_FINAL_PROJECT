@@ -315,6 +315,18 @@ function get_userinfo($pdo) {
     return $user_info_exp;
 }
 
+function get_other_userinfo($user_id, $pdo) {
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?');
+    $stmt->execute([$user_id]);
+    $user_info = $stmt->fetch();
+    $user_info_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($user_info as $key => $value){
+        $user_info_exp[$key] = htmlspecialchars($value);
+    }
+    return $user_info_exp;
+}
 
 /**
  * Check if the route exist
@@ -570,15 +582,38 @@ function get_error($feedback){
 }
 
 /**
- * Get array with the rooms a user has opted-in for
+ * Get array with the rooms a tenant has opted-in for
  * @param object $pdo database object
  * @return array Associative array with all series
  */
-function get_optins($pdo){
+function get_tenant_optins($pdo){
     if(!isset($_SESSION)) {
         session_start();
     }
     $stmt = $pdo->prepare('SELECT * FROM opt_ins INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE tenant_id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $optins = $stmt->fetchAll();
+    $optins_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($optins as $key => $value){
+        foreach ($value as $user_key => $user_input) {
+            $optins_exp[$key][$user_key] = htmlspecialchars($user_input);
+        }
+    }
+    return $optins_exp;
+}
+
+/**
+ * Get array with the rooms a user has opted-in for
+ * @param object $pdo database object
+ * @return array Associative array with all series
+ */
+function get_owner_optins($pdo){
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    $stmt = $pdo->prepare('SELECT * FROM opt_ins INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE owner_id = ?');
     $stmt->execute([$_SESSION['user_id']]);
     $optins = $stmt->fetchAll();
     $optins_exp = Array();
@@ -598,31 +633,63 @@ function get_optins($pdo){
  * @param object $pdo database object
  * @return string
  */
-function get_optin_table($optins,$pdo){
-    $table_exp = '
-    <table class="table table-hover">
-    <thead
-    <tr>
-        <th scope="col">Address</th>
-        <th scope="col">Square Meters</th>
-        <th scope="col">Added By</th>
-    </tr>
-    </thead>
-    <tbody>';
-    foreach($optins as $key => $value){
-        $table_exp .= '
+function get_optin_table($optins,$pdo, $is_owner){
+    if ($is_owner) {
+        $table_exp = '
+        <table class="table table-hover">
+        <thead
         <tr>
-            <th scope="row">'.$value['street_address'].'</th>
-            <td>'.$value['square_meters'].'</td>
-            <td>'.get_user_name($pdo,$value['owner_id']).'</td>
-            <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['room_id'].'" role="button" class="btn btn-primary">More info</a></td>
+            <th scope="col">Address</th>
+            <th scope="col">Square Meters</th>
+            <th scope="col">Sent by</th>
         </tr>
+        </thead>
+        <tbody>';
+
+        foreach ($optins as $key => $value) {
+            $table_exp .= '
+            <tr>
+                <th scope="row">' . $value['street_address'] . '</th>
+                <td>' . $value['square_meters'] . '</td>
+                <td>' . get_user_name($pdo, $value['tenant_id']) . '</td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/viewing_invite/?room_id=' . $value['room_id'] . '" role="button" class="btn btn-primary">Invite to viewing</a></td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['tenant_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
+
+            </tr>
+            ';
+        }
+        $table_exp .= '
+        </tbody>
+        </table>
         ';
     }
-    $table_exp .= '
-    </tbody>
-    </table>
-    ';
+    else {
+        $table_exp = '
+        <table class="table table-hover">
+        <thead
+        <tr>
+            <th scope="col">Address</th>
+            <th scope="col">Square Meters</th>
+            <th scope="col">Added By</th>
+        </tr>
+        </thead>
+        <tbody>';
+
+        foreach ($optins as $key => $value) {
+            $table_exp .= '
+            <tr>
+                <th scope="row">' . $value['street_address'] . '</th>
+                <td>' . $value['square_meters'] . '</td>
+                <td>' . get_user_name($pdo, $value['owner_id']) . '</td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id=' . $value['room_id'] . '" role="button" class="btn btn-primary">More info</a></td>
+            </tr>
+            ';
+        }
+        $table_exp .= '
+        </tbody>
+        </table>
+        ';
+    }
     return $table_exp;
 }
 
