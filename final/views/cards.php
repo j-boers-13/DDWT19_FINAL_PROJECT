@@ -2,7 +2,7 @@
 
 <div class="card">
     <div class="card-body">
-        <p class="count">We currently have <span class = "emphasis"> <?= $nbr_rooms ?> </span> rooms listed. </p>
+        <p class="count"> There are <span class = "emphasis"> <?= $nbr_rooms ?> </span> rooms listed. </p>
         <div class = "pd-15">
         <a href="/DDWT19_FINAL_PROJECT/final/add/" class="btn btn-success">Add yours!</a>
         </div>
@@ -12,9 +12,12 @@
 <div class="card">
     <div class="card-body">
         <p class="count">
-            We currently have: <span class = "emphasis"> <?= $nbr_users ?> </span> registered users, of which
-            <span class = "emphasis"> <?=$nbr_tenants?> </span> are tenants, and <span class = "emphasis"><?=$nbr_owners?>
-            </span> are owners.
+        There are:
+        <span class = "emphasis"> <?= $nbr_users ?> </span> registered users
+        </p>
+        <p class="count">
+        (<span class = "emphasis"> <?=$nbr_tenants?> </span> tenants / <span class = "emphasis"><?=$nbr_owners?>
+        </span> owners  )
         </p>
         <?php if(isset($user_id)){ ?>
         <div class = "pd-15">

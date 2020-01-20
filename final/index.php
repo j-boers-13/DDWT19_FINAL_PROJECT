@@ -190,11 +190,16 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optin/', 'get')) {
     $navigation = get_navigation($nav_array,2);
 
     /* Page content */
-    $page_subtitle = "Opt-in send to the room owner";
+    $is_owner = check_owner($db);
+    if ($is_owner) {
+        $page_subtitle = "Opt-in sent by ";
+    }
+    else {
+        $page_subtitle = "Opt-in sent to the room owner";
+    }
     $page_content = $optin_info['message'];
     $sent_by = get_user_name($db, $optin_info['owner_id']);
     $date_sent = $optin_info['created_at'];
-    $is_owner = check_owner($db);
     $user_is_sender = check_if_sender($db, $optin_info['tenant_id']);
 
     /* Get error msg from POST route */
@@ -268,67 +273,125 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/add/', 'post')) {
         json_encode($feedback), $_POST['room_id']));
 }
 
-/* Viewing invite for Room GET */
-elseif (new_route('/DDWT19_FINAL_PROJECT/final/invite/', 'get')) {
-    /* check if logged in */
+/* Single Viewing Invite */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/viewing_invite/', 'get')) {
     if ( !check_login()) {
         redirect('/DDWT19_FINAL_PROJECT/final/login/');
     }
-    if ( check_owner($db) ) {
-        $feedback = [
-            'type' => 'error',
-            'message' => 'Owners can\'t send opt-ins.'
-        ];;
-        /* Redirect to room GET route */
-        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/optins/?error_msg=%s',
-            json_encode($feedback)));
-    }
-
     /* Get rooms from db */
-    $room_id = $_GET['room_id'];
-    $room_info = get_roominfo($db, $room_id);
+    $invite_id = $_GET['invite_id'];
+    $invite_info = get_inviteinfo($db, $invite_id);
 
     /* Page info */
-    $page_title = "Send opt-in message";
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'Week 2' => na('/DDWT19_FINAL_PROJECT/final', False),
-        'Overview' => na('/DDWT19_FINAL_PROJECT/final/overview/', False),
-        $room_info['street_address'] => na('/DDWT19_FINAL_PROJECT/final/optin/?room_id='.$room_id, True)
-    ]);
+    $page_title = $invite_info['street_address'];
     $navigation = get_navigation($nav_array,2);
 
     /* Page content */
-    $page_subtitle = $room_info['street_address'];
-    $page_content = $room_info['city'];
-    $added_by = get_user_name($db, $room_info['owner_id']);
-    $date_added = $room_info['created_at'];
-    $user_is_owner = check_owner($db);
-    $owner_name = get_user_name($db, $room_info['owner_id']);
-    $submit_btn = "Opt-in and send message";
-    $form_action = '/DDWT19_FINAL_PROJECT/final/optin/';
+    $is_owner = check_owner($db);
+    if ($is_owner) {
+        $page_subtitle = "Invite sent";
+    }
+    else {
+        $page_subtitle = "Sent to the tenant";
+    }
+    $page_content = $invite_info['owner_id'];
+    $sent_by = get_user_name($db, $invite_info['owner_id']);
+    $date_sent = $invite_info['created_at'];
+    $user_is_sender = check_if_sender($db, $invite_info['owner_id']);
 
     /* Get error msg from POST route */
     if ( isset($_GET['error_msg']) ) {
         $error_msg = get_error($_GET['error_msg']);
     }
     /* Choose Template */
-    include use_template('optin');
+    include use_template('invite');
 }
 
-/* Opt-in for room POST */
-elseif (new_route('/DDWT19_FINAL_PROJECT/final/invite/', 'post')) {
+/* Add viewing invite for Room GET */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/invites/add/', 'get')) {
+    /* check if logged in */
+    if ( !check_login()) {
+        redirect('/DDWT19_FINAL_PROJECT/final/login/');
+    }
+    if ( !check_owner($db) ) {
+        $feedback = [
+            'type' => 'error',
+            'message' => 'Tenants can\'t send viewing invites.'
+        ];;
+        /* Redirect to room GET route */
+        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/invites/add/?error_msg=%s',
+            json_encode($feedback)));
+    }
+
+    /* Get rooms from db */
+    $room_id = $_GET['room_id'];
+    $tenant_id = $_GET['tenant_id'];
+    $room_info = get_roominfo($db, $room_id);
+
+    /* Page info */
+    $page_title = "Send viewing invite to " . get_user_name($db, $tenant_id);
+    $navigation = get_navigation($nav_array,2);
+
+    /* Page content */
+    $page_subtitle = $room_info['street_address'];
+    $page_content = "Select a date to invite the possible tenant!";
+    $user_is_owner = check_owner($db);
+    $owner_name = get_user_name($db, $room_info['owner_id']);
+    $submit_btn = "Send invite";
+    $form_action = '/DDWT19_FINAL_PROJECT/final/invites/add/';
+
+    /* Get error msg from POST route */
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+    /* Choose Template */
+    include use_template('addinvite');
+}
+
+/* Add Viewing-invite for room POST */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/invites/add/', 'post')) {
 
     /* Update room in database */
-    $feedback = send_optin($db, $_POST);
+    $feedback = send_viewing_invite($db, $_POST);
 
     /* Get room info from db */
     $room_id = $_POST['room_id'];
     $room_info = get_roominfo($db, $room_id);
 
     /* Redirect to room get route */
-    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/optin/?error_msg=%s&room_id=%s',
-        json_encode($feedback), $_POST['room_id']));
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/invites/add/?error_msg=%s&room_id=%s&tenant_id=%s',
+        json_encode($feedback), $_POST['room_id'], $_POST['tenant_id']));
+}
+
+/* Get viewing-invites page */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/invites/', 'get')) {
+
+    /* Page info */
+    if ( !check_login()) {
+        redirect('/DDWT19_FINAL_PROJECT/final/myaccount/');
+    }
+
+    $is_owner = check_owner($db);
+    $page_title = 'Invites';
+    $navigation = get_navigation($nav_array, 2);
+
+    /* Page content */
+    $page_subtitle = 'The overview of all your invites';
+    if (!$is_owner) {
+        $left_content = get_invite_table(get_tenant_invites($db), $db, $is_owner);
+        $page_content = 'This is an overview of all the viewing invites you received.';
+    }
+    else {
+        $left_content = get_invite_table(get_owner_invites($db), $db, $is_owner);
+        $page_content = 'This is an overview of all the viewing invites you sent.';
+    }
+
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+
+    /* Choose Template */
+    include use_template('main');
 }
 
 /* My profile page */

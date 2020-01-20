@@ -31,38 +31,32 @@
             <?php if (isset($error_msg)){echo $error_msg;} ?>
 
             <h1><?= $page_title ?></h1>
-            <h5><?= $page_subtitle ?><?= $sent_by ?></h5>
+            <h5><?= $page_subtitle ?></h5>
             <p><?= $page_content ?></p>
-            <p></p>
-            <p><?= $date_sent ?></p>
-            <?php if ($user_is_sender) { ?>
-                <div class='row'>
-                    <div class="col-sm-2">
-                        <form action="/DDWT19_FINAL_PROJECT/final/optins/remove" method="POST">
-                            <input type="hidden" value="<?=$room_id ?>" name="room_id">
-                            <button type="submit" class="btn btn-danger">Remove</button>
-                        </form>
+            <form action="<?= $form_action ?>" method="POST">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="inputDate">Viewing date</label>
+                        <input class="form-control" type="date" value="year-month-day" id="date" name="date" required>
                     </div>
                 </div>
-            <?php } else { if(isset($_SESSION['user_id']) AND ($is_owner)) {?>
-                <div class='row'>
-                    <div class ='col-sm-2'>
-                        <a href="/DDWT19_FINAL_PROJECT/final/invites/add/?room_id=<?=
-                        $optin_info["room_id"] ?>&tenant_id=<?= $optin_info["tenant_id"] ?>" role="button" class="btn btn-warning">Respond</a>
-                    </div>
-                    <div class ='col-sm-2'>
-                        <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $optin_info['tenant_id'] ?>" role="button" class="btn btn-info">Show users' profile</a></td>
+                <?php if(isset($room_id)){ ?><input type="hidden" name="room_id" value="<?php echo $room_id ?>"><?php } ?>
+                <?php if(isset($tenant_id)){ ?><input type="hidden" name="tenant_id" value="<?php echo $tenant_id ?>"><?php } ?>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary"><?= $submit_btn ?></button>
                     </div>
                 </div>
-
-
-            <?php } } ?>
+            </form>
         </div>
 
         <!-- Right column -->
         <div class="col-md-4">
+
             <?php include $right_column ?>
+
         </div>
+
     </div>
 </div>
 

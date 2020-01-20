@@ -611,6 +611,19 @@ function get_optininfo($pdo, $optin_id){
     return $optin_info_exp;
 }
 
+function get_inviteinfo($pdo, $invite_id){
+    $stmt = $pdo->prepare('SELECT invites.*, rooms.owner_id, address.street_address, address.city, address.zipcode FROM invites JOIN rooms ON invites.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE opt_ins.id = ?');
+    $stmt->execute([$invite_id]);
+    $optin_info = $stmt->fetch();
+    $optin_info_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($optin_info as $key => $value){
+        $optin_info_exp[$key] = htmlspecialchars($value);
+    }
+    return $optin_info_exp;
+}
+
 /**
  * Get array with all rooms added by current user
  * @param object $pdo database object
@@ -642,8 +655,6 @@ function count_rooms_by_owner($pdo){
     $rooms = $stmt->rowCount();
     return $rooms;
 }
-
-
 
 /**
  * Creates HTML alert code with information about the success or failure
@@ -683,6 +694,29 @@ function get_tenant_optins($pdo){
 }
 
 /**
+ * Get array with the rooms a tenant has opted-in for
+ * @param object $pdo database object
+ * @return array Associative array with all series
+ */
+function get_tenant_invites($pdo){
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    $stmt = $pdo->prepare('SELECT viewing_invites.*, rooms.square_meters, address.street_address, address.city, address.zipcode FROM viewing_invites INNER JOIN rooms ON viewing_invites.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE tenant_id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $optins = $stmt->fetchAll();
+    $optins_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($optins as $key => $value){
+        foreach ($value as $user_key => $user_input) {
+            $optins_exp[$key][$user_key] = htmlspecialchars($user_input);
+        }
+    }
+    return $optins_exp;
+}
+
+/**
  * Get array with the rooms a user has opted-in for
  * @param object $pdo database object
  * @return array Associative array with all series
@@ -692,6 +726,29 @@ function get_owner_optins($pdo){
         session_start();
     }
     $stmt = $pdo->prepare('SELECT opt_ins.*, rooms.owner_id, rooms.square_meters, address.street_address, address.city, address.zipcode FROM opt_ins INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE owner_id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $optins = $stmt->fetchAll();
+    $optins_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($optins as $key => $value){
+        foreach ($value as $user_key => $user_input) {
+            $optins_exp[$key][$user_key] = htmlspecialchars($user_input);
+        }
+    }
+    return $optins_exp;
+}
+
+/**
+ * Get array with the rooms a user has opted-in for
+ * @param object $pdo database object
+ * @return array Associative array with all series
+ */
+function get_owner_invites($pdo){
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    $stmt = $pdo->prepare('SELECT viewing_invites.*, rooms.square_meters, address.street_address, address.city, address.zipcode FROM viewing_invites INNER JOIN rooms ON viewing_invites.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE viewing_invites.owner_id = ?');
     $stmt->execute([$_SESSION['user_id']]);
     $optins = $stmt->fetchAll();
     $optins_exp = Array();
@@ -773,7 +830,73 @@ function get_optin_table($optins,$pdo, $is_owner){
     return $table_exp;
 }
 
+/**
+ * Creates a Bootstrap table with a list of viewing invites for the user
+ * @param array $invites with rooms from the db
+ * @param object $pdo database object
+ * @return string
+ */
+function get_invite_table($invites ,$pdo, $is_owner){
+    if ($is_owner) {
+        $table_exp = '
+        <table class="table table-hover">
+        <thead
+        <tr>
+            <th scope="col">Address</th>
+            <th scope="col">Square Meters</th>
+            <th scope="col">Sent by</th>
+        </tr>
+        </thead>
+        <tbody>';
 
+        foreach ($invites as $key => $value) {
+            $table_exp .= '
+            <tr>
+                <th scope="row">' . $value['street_address'] . '</th>
+                <td>' . $value['square_meters'] . '</td>
+                <td>' . get_user_name($pdo, $value['tenant_id']) . '</td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/optin/?optin_id=' . $value['id'] . '" role="button" class="btn btn-primary">Show message and respond</a></td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['tenant_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
+
+            </tr>
+            ';
+        }
+        $table_exp .= '
+        </tbody>
+        </table>
+        ';
+    }
+    else {
+        $table_exp = '
+        <table class="table table-hover">
+        <thead
+        <tr>
+            <th scope="col">Address</th>
+            <th scope="col">Square Meters</th>
+            <th scope="col">Added By</th>
+        </tr>
+        </thead>
+        <tbody>';
+
+        foreach ($invites as $key => $value) {
+            $table_exp .= '
+            <tr>
+                <th scope="row">' . $value['street_address'] . '</th>
+                <td>' . $value['square_meters'] . '</td>
+                <td>' . get_user_name($pdo, $value['owner_id']) . '</td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/optin/?optin_id=' . $value['id'] . '" role="button" class="btn btn-primary">Show</a></td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['owner_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
+
+            </tr>
+            ';
+        }
+        $table_exp .= '
+        </tbody>
+        </table>
+        ';
+    }
+    return $table_exp;
+}
 
 
 /**
@@ -916,6 +1039,63 @@ function send_optin($pdo, $opt_in_form)
         ];
     }
 }
+
+
+function send_viewing_invite($pdo, $invite_form)
+{
+    /* Check if all fields are set */
+    if (
+        empty($invite_form['room_id']) or
+        empty($invite_form['date'])
+    ) {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. Not all fields were filled in.'
+        ];
+    }
+    $room = get_roominfo($pdo, $invite_form['room_id']);
+    if (!check_if_owner($room['owner_id'])) {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. You can\'t invite someone for this room.'
+        ];
+
+    }
+
+    /* Check if room already exists */
+    $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE tenant_id = ? AND room_id = ?');
+    $stmt->execute([$invite_form['tenant_id'], $invite_form['room_id']]);
+    $invite = $stmt->rowCount();
+    if ($invite) {
+        return [
+            'type' => 'danger',
+            'message' => 'You already invited this tenant for this room.'
+        ];
+    }
+
+    /* Add Opt-in */
+    $stmt = $pdo->prepare("INSERT INTO viewing_invites (room_id, tenant_id, owner_id, date) VALUES (?, ?, ?, ?)");
+    $stmt->execute([
+        $invite_form['room_id'],
+        $invite_form['tenant_id'],
+        $_SESSION['user_id'],
+        $invite_form['date']
+    ]);
+
+    $inserted = $stmt->rowCount();
+    if ($inserted == 1) {
+        return [
+            'type' => 'success',
+            'message' =>"Invite sent!"
+        ];
+    } else {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. The invite was not sent. Try it again.'
+        ];
+    }
+}
+
 
 /**
  * Updates a room in the database using post array

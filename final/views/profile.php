@@ -20,16 +20,13 @@
         <!-- Content -->
         <div class="container">
             <!-- Breadcrumbs -->
-            <div class="pd-15">&nbsp</div>
-
-
+            <div class="pd-15">&nbsp
+            </div>
             <div class="row">
-
                 <!-- Left column -->
                 <div class="col-md-8">
                     <!-- Error message -->
                     <?php if (isset($error_msg)){echo $error_msg;} ?>
-
                     <h1><?= $page_title ?></h1>
                     <h5><?= $page_subtitle ?></h5>
                     <p><?= $page_content ?></p>
@@ -59,10 +56,6 @@
                             <th scope="row">Email</th>
                             <td><?= $user_info['email'] ?> </td>
                         </tr>
-
-
-
-
                         <?php if ($user_info['role'] == "Owner")
                         /* only display number of rooms owned if the user is a landlord */
                         { ?>
@@ -70,38 +63,30 @@
                             <th scope="row">Number of rooms owned</th>
                             <td><?= $nbr_rooms_by_owner ?></td>
                         </tr>
-
                         </tbody>
                     </table>
-
                 <?php }
                 /* only display edit and remove buttons if the user page is in ownership of the session user*/
                 if($_SESSION['user_id'] === $user_info['id']) {?>
-                        <div class='row'>
-                            <div class ='col-sm-2'>
-                                <a href="/DDWT19_FINAL_PROJECT/final/myprofile/edit/?user_id=<?=
-                                $user_info['id'] ?>" role="button" class="btn btn-warning">Edit</a>
-                            </div>
-                            <div class="col-sm-2">
-                                <form action="/DDWT19_FINAL_PROJECT/final/myprofile/remove/" method="POST">
-                                    <input type="hidden" value="<?=$user_info['id']
-                                    ?>" name="user_id">
-                                    <button type="submit" class="btn btn-danger">Remove</button>
-                                </form>
-                            </div>
+                    <div class='row'>
+                        <div class ='col-sm-2'>
+                            <a href="/DDWT19_FINAL_PROJECT/final/myprofile/edit/?user_id=<?=
+                            $user_info['id'] ?>" role="button" class="btn btn-warning">Edit</a>
                         </div>
-                    <?php } ?>
+                        <div class="col-sm-2">
+                            <form action="/DDWT19_FINAL_PROJECT/final/myprofile/remove/" method="POST">
+                                <input type="hidden" value="<?=$user_info['id']
+                                ?>" name="user_id">
+                                <button type="submit" class="btn btn-danger">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                <?php } ?>
                 </div>
-
-
-
                 <!-- Right column -->
                 <div class="col-md-4">
-
                     <?php include $right_column ?>
-
                 </div>
-
             </div>
         </div>
 
