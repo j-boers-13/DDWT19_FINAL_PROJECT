@@ -39,7 +39,7 @@
                 <div class='row'>
                     <div class="col-sm-2">
                         <form action="/DDWT19_FINAL_PROJECT/final/optins/remove" method="POST">
-                            <input type="hidden" value="<?=$room_id ?>" name="room_id">
+                            <input type="hidden" value="<?=$optin_info['id'] ?>" name="optin_id">
                             <button type="submit" class="btn btn-danger">Remove</button>
                         </form>
                     </div>

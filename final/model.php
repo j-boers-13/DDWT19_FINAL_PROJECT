@@ -657,12 +657,24 @@ function count_rooms_by_owner($pdo){
 }
 
 /**
- * count  all sent invites by user_id
+ * count  all sent invites by owner_id
  * @param object $pdo database object
  * @return array Associative array with sent invites by owner
  */
-function count_invites_by_user($pdo){
-    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE owner_id = ?');
+function count_invites_by_owner($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM invites WHERE owner_id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $invites = $stmt->rowCount();
+    return $invites;
+}
+
+/**
+ * count  all sent invites by tenant_id
+ * @param object $pdo database object
+ * @return array Associative array with sent invites by tentant
+ */
+function count_invites_by_tenant($pdo){
+    $stmt = $pdo->prepare('SELECT * FROM invites WHERE owner_id = ?');
     $stmt->execute([$_SESSION['user_id']]);
     $invites = $stmt->rowCount();
     return $invites;
@@ -1351,6 +1363,30 @@ function count_optins($pdo){
     }
 }
 
+/**
+ * Count the number of optins for a user
+ * @param object $pdo database object
+ * @return mixed
+ */
+function count_invites($pdo){
+    if (isset($_SESSION['user_id'])){
+        if (!check_owner($pdo)) {
+            $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE tenant_id = ?');
+            $stmt->execute([$_SESSION['user_id']]);
+            $optins = $stmt->rowCount();
+            return $optins;
+        }
+        else {
+            $stmt = $pdo->prepare('SELECT * FROM viewing_invites INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE owner_id = ?');
+            $stmt->execute([$_SESSION['user_id']]);
+            $optins = $stmt->rowCount();
+            return $optins;
+        }
+    }
+    else {
+        return 0;
+    }
+}
 
 /**
  * Changes the HTTP Header to a given location
