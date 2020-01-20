@@ -39,8 +39,17 @@
                     if($host === 'localhost/DDWT19_FINAL_PROJECT/final/') {
                         echo "<div class ='col-sm-2'>
                         <a href='/DDWT19_FINAL_PROJECT/final/overview/' role='button' class='btn btn-info'>Click to see all available rooms</a>
-                    </div>"
+                        </div>"
                      ;}?>
+
+                    <?php $host = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+                    if($host === 'localhost/DDWT19_FINAL_PROJECT/final/myrooms') {
+                        echo "<div class ='col-sm-2'>
+                        <a href='/DDWT19_FINAL_PROJECT/final/add' role='button' class='btn btn-primary'>List another room</a>
+                        </div>"
+                        ;}?>
+
+
 
                 </div>
 

@@ -47,9 +47,8 @@
                         </div>
                         <div class="card-body">
                             <p>You're logged in to Account Overview.</p>
-                            <a href="/DDWT19_FINAL_PROJECT/final/logout/" class="btn btn-primary">Logout</a>
-                            <p></p>
                             <a href="/DDWT19_FINAL_PROJECT/final/myprofile/" class="btn btn-primary">My Profile</a>
+                            <a href="/DDWT19_FINAL_PROJECT/final/logout/" class="btn btn-warning">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -59,34 +58,17 @@
                         <div class="card-header">
                             Quick overview
                         </div>
-                        <?php if(check_owner($db) === True) { ?>
                         <div class="card-body">
-                            <p> You currently have <?= $nbr_rooms_by_owner ?> rooms listed.</p>
-                            <div class ="row">
-                            <a href="/DDWT19_FINAL_PROJECT/final/add" class="btn btn-primary">List another room</a>
-                            </div>
-                            <div class ="row">
-                            <a href="/DDWT19_FINAL_PROJECT/final/myrooms" class="btn btn-primary">View all the rooms you posted</a>
-                            </div>
-                            <div class ="row">
-                            <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary">Show opt-ins and respond</a>
-                            </div>
-
-                            <p> <?= $nbr_optins ?> Opt-ins received.</p>
-
+                            <p> You currently have: </p>
+                            <?php if(check_owner($db) === True) { ?>
+                            <a href="/DDWT19_FINAL_PROJECT/final/myrooms" class="btn btn-primary"> <span class = "emphasis"> <?=$nbr_rooms_by_owner?> </span> rooms listed.</a>
+                            <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary"><span class = "emphasis"> <?= $nbr_optins ?></span> Opt-ins received. </a>
+                            <?php } else { ?>
+                            <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary"> <span class = "emphasis"> <?=$nbr_optins?> </span> opt-ins </a>
+                            <a href="/DDWT19_FINAL_PROJECT/final/viewings" class="btn btn-primary"> <span class = "emphasis"> 0 </span> invites </a>
+                            <?php } ?>
                         </div>
-                        <?php } else { ?>
-                            <div class="card-body">
-                                <p class="count"> You currently have</p>
-                                <h2> <?= $nbr_optins ?></h2>
-                                <p> Number of opt-ins</p>
-                                <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary">Go to opt-in overview</a>
-                                <p class="count"> You currently have</p>
-                                <h3> (number of viewing days planned)</h3>
-                                <p>Number of opt-ins accepted</p>
-                                <a href="/DDWT19_FINAL_PROJECT/final/viewings" class="btn btn-primary">Go to viewing overview</a>
-                            </div>
-                        <?php } ?>
+
 
                         </div>
                     </div>

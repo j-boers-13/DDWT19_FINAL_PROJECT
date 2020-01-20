@@ -487,6 +487,7 @@ function get_navigation($template,$active_id){
  */
 function get_room_table($rooms,$pdo){
     $table_exp = '
+    <div class="table-responsive">
     <table class="table table-hover">
     <thead
     <tr>
@@ -516,6 +517,7 @@ function get_room_table($rooms,$pdo){
     $table_exp .= '
     </tbody>
     </table>
+    </div>
     ';
     return $table_exp;
 }
