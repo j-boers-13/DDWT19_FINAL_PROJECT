@@ -9,3 +9,8 @@
 .card-body .count {
     margin: 0;
 }
+
+.card-body .emphasis{
+    margin: 0;
+    font-weight: bold;
+}

@@ -61,16 +61,18 @@
                         </div>
                         <?php if(check_owner($db) === True) { ?>
                         <div class="card-body">
-                            <p class="count"> You currently have</p>
-                            <h2> <?= $nbr_rooms_by_owner ?></h2>
-                            <p> Rooms listed</p>
+                            <p> You currently have <?= $nbr_rooms_by_owner ?> rooms listed.</p>
+                            <div class ="row">
                             <a href="/DDWT19_FINAL_PROJECT/final/add" class="btn btn-primary">List another room</a>
-                            <p>
-                            </p>
+                            </div>
+                            <div class ="row">
                             <a href="/DDWT19_FINAL_PROJECT/final/myrooms" class="btn btn-primary">View all the rooms you posted</a>
-                            <h2> <?= $nbr_optins ?></h2>
-                            <p> Opt-ins received</p>
+                            </div>
+                            <div class ="row">
                             <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary">Show opt-ins and respond</a>
+                            </div>
+
+                            <p> <?= $nbr_optins ?> Opt-ins received.</p>
 
                         </div>
                         <?php } else { ?>

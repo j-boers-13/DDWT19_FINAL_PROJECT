@@ -476,6 +476,7 @@ function get_room_table($rooms,$pdo){
         <th scope="col">Square Meters</th>
         <th scope="col">Added By</th>
         <th scope="col">Date Added</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>';
@@ -488,7 +489,7 @@ function get_room_table($rooms,$pdo){
             <td>'.$value['square_meters'].'</td>
             <td>'.get_user_name($pdo,$value['owner_id']).'</td>
             <td>'.date_format(date_create($value['created_at']), "F j").'</td>
-            <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
+            <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-basic">More info</a></td>
         </tr>
         ';
     }
