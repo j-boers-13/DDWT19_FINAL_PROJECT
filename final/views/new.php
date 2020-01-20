@@ -35,14 +35,8 @@
                     <p><?= $page_content ?></p>
                     <form action="<?= $form_action ?>" method="POST">
                         <div class="form-group row">
-                            <label for="inputPrice" class="col-sm-2 col-form-label">Price</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputPrice" name="price" value="<?php if (isset($room_info)){echo $room_info['price'];} ?>" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <label for="inputTemp">Is the room temporary?</label>
+                            <label for="inputTemp" class="col-sm-2 col-form-label">Is the room temporary?</label>
+                            <div class="col-md-6">
                                 <select class="form-control" id="inputTemp" name="temporary">
                                     <option>Yes</option>
                                     <option>No</option>
@@ -50,38 +44,44 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="inputPrice" class="col-sm-2 col-form-label" >Price</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="inputPrice" name="price" placeholder="300" value="<?php if (isset($room_info)){echo $room_info['price'];} ?>" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="inputSquaremeters" class="col-sm-2 col-form-label">Amount of square meters</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputSquaremeters" name="square_meters" value="<?php if (isset($room_info)){echo $room_info['square_meters'];} ?>" required>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="inputSquaremeters" name="square_meters" placeholder="30" value="<?php if (isset($room_info)){echo $room_info['square_meters'];} ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputAddress" class="col-sm-2 col-form-label">Street Address</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputAddress" name="street_address" value="<?php if (isset($room_info)){echo $room_info['street_address'];} ?>" required>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="inputAddress" name="street_address" placeholder="Keizerstraat 23-a" value="<?php if (isset($room_info)){echo $room_info['street_address'];} ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputCity" class="col-sm-2 col-form-label">City</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputCity" name="city" value="<?php if (isset($room_info)){echo $room_info['city'];} ?>" required>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="inputCity" name="city" placeholder="Groningen" value="<?php if (isset($room_info)){echo $room_info['city'];} ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputZipcode" class="col-sm-2 col-form-label">Zip Code</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputZipcode" name="zipcode" value="<?php if (isset($room_info)){echo $room_info['zipcode'];} ?>" required>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="inputZipcode" name="zipcode" placeholder="2323 ZP" value="<?php if (isset($room_info)){echo $room_info['zipcode'];} ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" id="inputDescription" rows="3" name="description" required><?php if (isset($room_info)){echo $room_info['description'];} ?></textarea>
+                            <div class="col-md-6">
+                                <textarea class="form-control" id="inputDescription" rows="3" name="description" placeholder="Tell us something about the room!" required><?php if (isset($room_info)){echo $room_info['description'];} ?></textarea>
                             </div>
                         </div>
                         <?php if(isset($room_id)){ ?><input type="hidden" name="room_id" value="<?php echo $room_id ?>"><?php } ?>
                         <div class="form-group row">
-                            <div class="col-sm-10">
+                            <div class="col-md-6">
                                 <button type="submit" class="btn btn-primary"><?= $submit_btn ?></button>
                             </div>
                         </div>
