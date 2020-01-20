@@ -776,7 +776,7 @@ function get_optin_table($optins,$pdo, $is_owner){
         <tr>
             <th scope="col">Address</th>
             <th scope="col">Square Meters</th>
-            <th scope="col">Sent by</th>
+            <th scope="col">Sent to</th>
         </tr>
         </thead>
         <tbody>';
