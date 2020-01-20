@@ -23,7 +23,7 @@
         (<span class = "emphasis"> <?=$nbr_tenants?> </span> tenants / <span class = "emphasis"><?=$nbr_owners?>
         </span> owners  )
         </p>
-        <?php if(isset($user_id)){ ?>
+        <?php if(!isset($_SESSION['user_id'])){ ?>
         <div class = "pd-15">
         <a href="/DDWT19_FINAL_PROJECT/final/register/" class="btn btn-success">Join now!</a>
         </div>
