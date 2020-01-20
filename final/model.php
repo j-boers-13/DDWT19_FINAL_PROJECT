@@ -849,7 +849,6 @@ function get_invite_table($invites ,$pdo, $is_owner){
         </tr>
         </thead>
         <tbody>';
-
         foreach ($invites as $key => $value) {
             $table_exp .= '
             <tr>
@@ -893,7 +892,9 @@ function get_invite_table($invites ,$pdo, $is_owner){
                 <td>' . get_user_name($pdo, $value['owner_id']) . '</td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id=' . $value['room_id'] . '" role="button" class="btn btn-primary">Show invite</a></td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['owner_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
-
+                <td><form action="/DDWT19_FINAL_PROJECT/final/invites/confirm" method="POST">
+                            <input type="hidden" value='. $value['id'] .' name="invite_id">
+                            <button type="submit" class="btn btn-primary">Confirm</button> </form></td>
             </tr>
             ';
         }
