@@ -657,14 +657,14 @@ function count_rooms_by_owner($pdo){
 }
 
 /**
- * count  all sent invites by owner_id
+ * count  all sent invites by user_id
  * @param object $pdo database object
  * @return array Associative array with sent invites by owner
  */
-function count_invites_by_owner($pdo){
+function count_invites_by_user($pdo){
     $stmt = $pdo->prepare('SELECT * FROM rooms WHERE owner_id = ?');
     $stmt->execute([$_SESSION['user_id']]);
-    $rooms = $stmt->rowCount();
+    $invites = $stmt->rowCount();
     return $invites;
 }
 
