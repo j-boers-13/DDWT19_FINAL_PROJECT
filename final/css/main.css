@@ -1,7 +1,17 @@
 
 .pd-15 {
     padding: 15px 0 0 0;
-    display: inline;
+    text-align: center;
+
+}
+
+.card {
+    float: right;
+    width: 300px;
+    border: 1px solid #73AD21;
+    padding: 10px;
+    margin-top: 30px;
+    box-shadow: 0px 5px 5px -4px rgba(0,0,0,0.41)
 }
 
 .card-body h2 {
