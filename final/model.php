@@ -1347,13 +1347,13 @@ function count_optins($pdo){
 function count_invites($pdo){
     if (isset($_SESSION['user_id'])){
         if (!check_owner($pdo)) {
-            $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE tenant_id = ?');
+            $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE viewing_invites.tenant_id = ?');
             $stmt->execute([$_SESSION['user_id']]);
             $optins = $stmt->rowCount();
             return $optins;
         }
         else {
-            $stmt = $pdo->prepare('SELECT * FROM viewing_invites INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE owner_id = ?');
+            $stmt = $pdo->prepare('SELECT * FROM viewing_invites INNER JOIN rooms ON viewing_invites.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE viewing_invites.owner_id = ?');
             $stmt->execute([$_SESSION['user_id']]);
             $optins = $stmt->rowCount();
             return $optins;
