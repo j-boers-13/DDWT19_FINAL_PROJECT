@@ -65,6 +65,22 @@ a.btn-success:hover{
     color: white;
 }
 
+a.btn-basic {
+    background-color: #b8afb1;
+    border-color: #90898a;
+    color: black;
+    -webkit-box-shadow: 0px 14px 20px -2px rgba(0,0,0,0.24);
+    box-shadow: 3px 6px 10px -2px rgba(0,0,0,0.24);
+}
+
+a.btn-basic:hover{
+    background-color: #b0b2b2;
+    border-color: #6a6b6b;
+    color: white;
+}
+
+
+
 a.nav-link:hover {
     color: white;
 }
