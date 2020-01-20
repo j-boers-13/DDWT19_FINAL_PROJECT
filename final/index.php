@@ -798,6 +798,17 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/logout', 'get')) {
     json_encode($feedback)));
 }
 
+/* Confirm_invite POST */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/invites/confirm', 'post')) {
+    /* Remove room in database */
+    $invite_id = $_POST['invite_id'];
+    /* confirm  */
+    $error_msg = confirm_viewing($db, $invite_id);
+    /* Redirect to my account screen*/
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/myaccount/?error_msg=%s',
+        json_encode($error_msg)));
+}
+
 /* get opt-ins page */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/', 'get')) {
 
