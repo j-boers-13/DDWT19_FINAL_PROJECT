@@ -571,7 +571,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/', 'get')) {
     $page_subtitle = 'The overview of all your opt-ins';
     $page_content = 'This is an overview of all the rooms you opted-in for';
     $left_content = get_optin_table(get_optins($db), $db);
-    
+
     if ( isset($_GET['error_msg']) ) {
         $error_msg = get_error($_GET['error_msg']);
     }
