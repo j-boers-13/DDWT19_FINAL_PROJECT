@@ -455,9 +455,9 @@ function get_breadcrumbs($breadcrumbs) {
  */
 function get_navigation($template,$active_id){
     $navigation_exp = '
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #36faff;">
     <a class="navbar-brand">ROOM.NET</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler bordered" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -465,7 +465,7 @@ function get_navigation($template,$active_id){
     foreach ($template as $id => $array) {
         if ($id[$active_id]){
             $navigation_exp .= '<li class="nav-item active">';
-            $navigation_exp .= '<a class="nav-link" href="'.$array['url'].'">'.$array['name'].'</a>';
+            $navigation_exp .= '<a class="nav-link bordered" href="'.$array['url'].'">'.$array['name'].'</a>';
         }else{
             $navigation_exp .= '<li class="nav-item">';
             $navigation_exp .= '<a class="nav-link" href="'.$array['url'].'">'.$array['name'].'</a>';
@@ -496,6 +496,7 @@ function get_room_table($rooms,$pdo){
         <th scope="col">Square Meters</th>
         <th scope="col">Added By</th>
         <th scope="col">Date Added</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>';
@@ -508,7 +509,7 @@ function get_room_table($rooms,$pdo){
             <td>'.$value['square_meters'].'</td>
             <td>'.get_user_name($pdo,$value['owner_id']).'</td>
             <td>'.date_format(date_create($value['created_at']), "F j").'</td>
-            <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
+            <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-basic">More info</a></td>
         </tr>
         ';
     }
