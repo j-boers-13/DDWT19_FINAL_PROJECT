@@ -435,7 +435,7 @@ function get_breadcrumbs($breadcrumbs) {
  */
 function get_navigation($template,$active_id){
     $navigation_exp = '
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #36faff;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #c3babc;">
     <a class="navbar-brand">ROOM.NET</a>
     <button class="navbar-toggler bordered" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

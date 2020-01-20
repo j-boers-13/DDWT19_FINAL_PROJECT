@@ -18,9 +18,9 @@
 nav {
     border-bottom-style: solid;
     border-radius: 1px;
-    border-color: #dbd8cf;
-    background-color: #FAACA8;
-    background-image: linear-gradient(19deg, #dbdbde 0%, #DDD6F3 100%);
+    border-color: #b1a8aa;
+    -webkit-box-shadow: 0px 14px 20px -4px rgba(0,0,0,0.41);
+    box-shadow: 0px 14px 20px -4px rgba(0,0,0,0.41);
 
 }
 
