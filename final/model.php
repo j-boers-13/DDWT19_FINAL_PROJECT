@@ -612,7 +612,7 @@ function get_optininfo($pdo, $optin_id){
 }
 
 function get_inviteinfo($pdo, $invite_id){
-    $stmt = $pdo->prepare('SELECT invites.*, rooms.owner_id, address.street_address, address.city, address.zipcode FROM invites JOIN rooms ON invites.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE opt_ins.id = ?');
+    $stmt = $pdo->prepare('SELECT viewing_invites.*, rooms.owner_id, address.street_address, address.city, address.zipcode FROM viewing_invites JOIN rooms ON viewing_invites.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE viewing_invites.id = ?');
     $stmt->execute([$invite_id]);
     $optin_info = $stmt->fetch();
     $optin_info_exp = Array();
