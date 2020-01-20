@@ -301,16 +301,15 @@ function check_owner($pdo) {
     }
 }
 
-function check_invitation($pdo) {
+function check_invitation($pdo){
     $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE tenant_id = ? AND room_id = ?');
     $stmt->execute([$_SESSION['user_id'], $_SESSION['room_id']]);
-    $invite = $stmt->rowCount(); {
+    $invite = $stmt->rowCount();
     if ($invite > 0) {
         return True;
-        }
-        else {
-            return False;
-        }
+
+    else {
+        return False;
     }
     else {
         return null;
