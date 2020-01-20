@@ -48,8 +48,19 @@
                             <td><?= $user_info['languages'] ?></td>
                         </tr>
                         <tr>
-
+                            <th scope="row">Profession</th>
+                            <td><?= $user_info['profession'] ?> </td>
                         </tr>
+                        <tr>
+                            <th scope="row">Telephone</th>
+                            <td><?= $user_info['telephone'] ?> </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email</th>
+                            <td><?= $user_info['email'] ?> </td>
+                        </tr>
+
+
 
 
                         <?php if ($user_info['role'] == "Owner")
@@ -68,11 +79,11 @@
                 if($_SESSION['user_id'] === $user_info['id']) {?>
                         <div class='row'>
                             <div class ='col-sm-2'>
-                                <a href="/DDWT19_FINAL_PROJECT/final/profile/edit/?user_id=<?=
+                                <a href="/DDWT19_FINAL_PROJECT/final/myprofile/edit/?user_id=<?=
                                 $user_info['id'] ?>" role="button" class="btn btn-warning">Edit</a>
                             </div>
                             <div class="col-sm-2">
-                                <form action="/DDWT19_FINAL_PROJECT/final/profile/remove/" method="POST">
+                                <form action="/DDWT19_FINAL_PROJECT/final/myprofile/remove/" method="POST">
                                     <input type="hidden" value="<?=$user_info['id']
                                     ?>" name="user_id">
                                     <button type="submit" class="btn btn-danger">Remove</button>
