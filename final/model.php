@@ -1070,8 +1070,6 @@ function count_optins($pdo){
 }
 
 
-
-
 /**
  * Changes the HTTP Header to a given location
  * @param string $location location to be redirected to
