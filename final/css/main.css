@@ -2,7 +2,6 @@
 .pd-15 {
     padding: 15px 0 0 0;
     text-align: center;
-
 }
 
 .card {
@@ -19,6 +18,7 @@
 }
 
 .card-body .count {
+    text-align: center;
     margin: 0;
 }
 
