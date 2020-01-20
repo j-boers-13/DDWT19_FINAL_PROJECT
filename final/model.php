@@ -1274,8 +1274,6 @@ function remove_optin($pdo, $optin_id){
 
 function confirm_viewing($pdo,$invite_id) {
     /* change is_confirmed */
-
-
     $stmt = $pdo->prepare('UPDATE viewing_invites SET is_confirmed = ? WHERE id = ?');
     $stmt->execute([1,
         $invite_id
