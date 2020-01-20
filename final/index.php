@@ -649,10 +649,10 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/login/', 'get')) {
 /* Login POST */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/login/', 'post')) {
     /* Log in user */
-    $feedback = login_user($db, $_POST);
+    $error_msg = login_user($db, $_POST);
     /* Redirect to my account screen*/
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/myaccount/?error_msg=%s',
-    json_encode($feedback)));
+    json_encode($error_msg)));
 }
 
 /* Log out GET */

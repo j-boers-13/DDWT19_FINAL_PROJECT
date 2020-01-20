@@ -47,6 +47,9 @@
                             <th scope="row">Languages</th>
                             <td><?= $user_info['languages'] ?></td>
                         </tr>
+                        <tr>
+
+                        </tr>
 
 
                         <?php if ($user_info['role'] == "Owner")
