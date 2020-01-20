@@ -109,6 +109,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/overview/', 'get')) {
     /* Choose Template */
     include use_template('main');
 }
+
 /* Owner overview page */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/myrooms/', 'get')) {
 
@@ -137,6 +138,9 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myrooms/', 'get')) {
 
 /* Single Room */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
+    if ( !check_login()) {
+        redirect('/DDWT19_FINAL_PROJECT/final/login/');
+    }
     /* Get rooms from db */
     $room_id = $_GET['room_id'];
     $room_info = get_roominfo($db, $room_id);
@@ -167,7 +171,41 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
     include use_template('room');
 }
 
-/* Opt-In for Room GET */
+/* Single Opt-In */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/optin/', 'get')) {
+    if ( !check_login()) {
+        redirect('/DDWT19_FINAL_PROJECT/final/login/');
+    }
+    /* Get rooms from db */
+    $optin_id = $_GET['optin_id'];
+    $optin_info = get_optininfo($db, $optin_id);
+
+    /* Page info */
+    $page_title = $optin_info['street_address'];
+    $breadcrumbs = get_breadcrumbs([
+        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
+        'Week 2' => na('/DDWT19_FINAL_PROJECT/final', False),
+        $optin_info['street_address'] => na('/DDWT19_FINAL_PROJECT/final/optin/?optin_id='.$optin_id, True)
+    ]);
+    $navigation = get_navigation($nav_array,2);
+
+    /* Page content */
+    $page_subtitle = "Opt-in send to the room owner";
+    $page_content = $optin_info['message'];
+    $sent_by = get_user_name($db, $optin_info['owner_id']);
+    $date_sent = $optin_info['created_at'];
+    $is_owner = check_owner($db);
+    $user_is_sender = check_if_sender($db, $optin_info['tenant_id']);
+
+    /* Get error msg from POST route */
+    if ( isset($_GET['error_msg']) ) {
+        $error_msg = get_error($_GET['error_msg']);
+    }
+    /* Choose Template */
+    include use_template('optin');
+}
+
+/* Add Opt-In for Room GET */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/add/', 'get')) {
     /* check if logged in */
     if ( !check_login()) {
@@ -212,10 +250,10 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/add/', 'get')) {
         $error_msg = get_error($_GET['error_msg']);
     }
     /* Choose Template */
-    include use_template('optin');
+    include use_template('addoptin');
 }
 
-/* Opt-in for room POST */
+/* Add Opt-in for room POST */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/add/', 'post')) {
 
     /* Update room in database */
@@ -230,7 +268,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/add/', 'post')) {
         json_encode($feedback), $_POST['room_id']));
 }
 
-/* Opt-In for Room GET */
+/* Viewing invite for Room GET */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/invite/', 'get')) {
     /* check if logged in */
     if ( !check_login()) {
@@ -699,8 +737,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/', 'get')) {
     /* Choose Template */
     include use_template('main');
 }
-
-
 
 else {
     http_response_code(404);

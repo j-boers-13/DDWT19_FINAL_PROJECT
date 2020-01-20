@@ -296,6 +296,23 @@ function check_owner($pdo) {
             return False;
         }
     }
+    else {
+        return null;
+    }
+}
+
+function check_if_sender($pdo, $tenant_id) {
+    if (isset($_SESSION['user_id'])){
+        if ($_SESSION['user_id'] === $tenant_id) {
+            return True;
+        }
+        else {
+            return False;
+        }
+    }
+    else {
+        return null;
+    }
 }
 
 function check_if_owner($owner_id) {
@@ -306,6 +323,9 @@ function check_if_owner($owner_id) {
         else {
             return False;
         }
+    }
+    else {
+        return null;
     }
 }
 
@@ -576,6 +596,18 @@ function get_roominfo($pdo, $room_id){
     return $room_info_exp;
 }
 
+function get_optininfo($pdo, $optin_id){
+    $stmt = $pdo->prepare('SELECT opt_ins.*, rooms.owner_id, address.street_address, address.city, address.zipcode FROM opt_ins JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE opt_ins.id = ?');
+    $stmt->execute([$optin_id]);
+    $optin_info = $stmt->fetch();
+    $optin_info_exp = Array();
+
+    /* Create array with htmlspecialchars */
+    foreach ($optin_info as $key => $value){
+        $optin_info_exp[$key] = htmlspecialchars($value);
+    }
+    return $optin_info_exp;
+}
 
 /**
  * Get array with all rooms added by current user
@@ -634,7 +666,7 @@ function get_tenant_optins($pdo){
     if(!isset($_SESSION)) {
         session_start();
     }
-    $stmt = $pdo->prepare('SELECT * FROM opt_ins INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE tenant_id = ?');
+    $stmt = $pdo->prepare('SELECT opt_ins.*, rooms.owner_id, rooms.square_meters, address.street_address, address.city, address.zipcode FROM opt_ins INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE tenant_id = ?');
     $stmt->execute([$_SESSION['user_id']]);
     $optins = $stmt->fetchAll();
     $optins_exp = Array();
@@ -657,7 +689,7 @@ function get_owner_optins($pdo){
     if(!isset($_SESSION)) {
         session_start();
     }
-    $stmt = $pdo->prepare('SELECT * FROM opt_ins INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE owner_id = ?');
+    $stmt = $pdo->prepare('SELECT opt_ins.*, rooms.owner_id, rooms.square_meters, address.street_address, address.city, address.zipcode FROM opt_ins INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE owner_id = ?');
     $stmt->execute([$_SESSION['user_id']]);
     $optins = $stmt->fetchAll();
     $optins_exp = Array();
@@ -696,7 +728,7 @@ function get_optin_table($optins,$pdo, $is_owner){
                 <th scope="row">' . $value['street_address'] . '</th>
                 <td>' . $value['square_meters'] . '</td>
                 <td>' . get_user_name($pdo, $value['tenant_id']) . '</td>
-                <td><a href="/DDWT19_FINAL_PROJECT/final/viewing_invite/?room_id=' . $value['room_id'] . '" role="button" class="btn btn-primary">Invite to viewing</a></td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/optin/?optin_id=' . $value['id'] . '" role="button" class="btn btn-primary">Show message and respond</a></td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['tenant_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
 
             </tr>
@@ -725,7 +757,7 @@ function get_optin_table($optins,$pdo, $is_owner){
                 <th scope="row">' . $value['street_address'] . '</th>
                 <td>' . $value['square_meters'] . '</td>
                 <td>' . get_user_name($pdo, $value['owner_id']) . '</td>
-                <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id=' . $value['room_id'] . '" role="button" class="btn btn-primary">More info</a></td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/optin/?optin_id=' . $value['id'] . '" role="button" class="btn btn-primary">Show</a></td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['owner_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
 
             </tr>
