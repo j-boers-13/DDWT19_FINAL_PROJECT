@@ -169,6 +169,20 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
 
 /* Opt-In for Room GET */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/optin/', 'get')) {
+    /* check if logged in */
+    if ( !check_login()) {
+        redirect('/DDWT19_FINAL_PROJECT/final/login/');
+    }
+    if ( check_owner($db) ) {
+        $feedback = [
+            'type' => 'error',
+            'message' => 'Owners can\'t send opt-ins.'
+        ];;
+        /* Redirect to room GET route */
+        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/optins/?error_msg=%s',
+            json_encode($feedback)));
+    }
+
     /* Get rooms from db */
     $room_id = $_GET['room_id'];
     $room_info = get_roominfo($db, $room_id);
@@ -191,6 +205,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optin/', 'get')) {
     $user_is_owner = check_owner($db);
     $owner_name = get_user_name($db, $room_info['owner_id']);
     $submit_btn = "Opt-in and send message";
+    $form_action = '/DDWT19_FINAL_PROJECT/final/optin/';
 
     /* Get error msg from POST route */
     if ( isset($_GET['error_msg']) ) {
@@ -201,20 +216,8 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optin/', 'get')) {
 }
 
 /* Opt-in for room POST */
-elseif (new_route('/DDWT19_FINAL_PROJECT/optin/', 'post')) {
-    /* check if logged in */
-    if ( !check_login()) {
-        redirect('/DDWT19_FINAL_PROJECT/final/login/');
-    }
-    if ( check_owner($db) ) {
-        $feedback = [
-            'type' => 'error',
-            'message' => 'Owners can\'t send opt-ins.'
-        ];;
-        /* Redirect to room GET route */
-        redirect(sprintf('/DDWT19_FINAL_PROJECT/optins/?error_msg=%s',
-            json_encode($feedback)));
-    }
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/optin/', 'post')) {
+
     /* Update room in database */
     $feedback = send_optin($db, $_POST);
 
@@ -223,7 +226,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/optin/', 'post')) {
     $room_info = get_roominfo($db, $room_id);
 
     /* Redirect to room get route */
-    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/room/?error_msg=%s&room_id=%s',
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/optin/?error_msg=%s&room_id=%s',
         json_encode($feedback), $_POST['room_id']));
 }
 
@@ -396,9 +399,8 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/remove/', 'post')) {
     /* Redirect to overview GET route */
     redirect(sprintf('/DDWT19_FINAL_PROJECT/final/overview/?error_msg=%s',
     json_encode($feedback)));
-
-
 }
+
 /* Myaccount GET */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/myaccount/', 'get')) {
    /* check if logged in */
@@ -569,8 +571,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/', 'get')) {
     $page_subtitle = 'The overview of all your opt-ins';
     $page_content = 'This is an overview of all the rooms you opted-in for';
     $left_content = get_optin_table(get_optins($db), $db);
-
-    /* Get error msg from remove post route */
+    
     if ( isset($_GET['error_msg']) ) {
         $error_msg = get_error($_GET['error_msg']);
     }

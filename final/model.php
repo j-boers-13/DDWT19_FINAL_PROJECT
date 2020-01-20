@@ -578,15 +578,15 @@ function get_optins($pdo){
     if(!isset($_SESSION)) {
         session_start();
     }
-    $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ?');
+    $stmt = $pdo->prepare('SELECT * FROM opt_ins INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE tenant_id = ?');
     $stmt->execute([$_SESSION['user_id']]);
-    $rooms = $stmt->fetchAll();
+    $optins = $stmt->fetchAll();
     $optins_exp = Array();
 
     /* Create array with htmlspecialchars */
-    foreach ($rooms as $key => $value){
+    foreach ($optins as $key => $value){
         foreach ($value as $user_key => $user_input) {
-            $room_exp[$key][$user_key] = htmlspecialchars($user_input);
+            $optins_exp[$key][$user_key] = htmlspecialchars($user_input);
         }
     }
     return $optins_exp;
@@ -615,7 +615,7 @@ function get_optin_table($optins,$pdo){
             <th scope="row">'.$value['street_address'].'</th>
             <td>'.$value['square_meters'].'</td>
             <td>'.get_user_name($pdo,$value['owner_id']).'</td>
-            <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
+            <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['room_id'].'" role="button" class="btn btn-primary">More info</a></td>
         </tr>
         ';
     }
@@ -717,7 +717,58 @@ function add_room($pdo, $room_info){
     }
 }
 
+function send_optin($pdo, $opt_in_form)
+{
+    /* Check if all fields are set */
+    if (
+        empty($opt_in_form['room_id']) or
+        empty($opt_in_form['message'])
+    ) {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. Not all fields were filled in.'
+        ];
+    }
+    if (check_owner($pdo)) {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. You cannot opt-in as an owner.'
+        ];
 
+    }
+
+    /* Check if room already exists */
+    $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE room_id = ? AND tenant_id = ?');
+    $stmt->execute([$opt_in_form['room_id'], $_SESSION['user_id']]);
+    $room = $stmt->rowCount();
+    if ($room) {
+        return [
+            'type' => 'danger',
+            'message' => 'You already opted into this room.'
+        ];
+    }
+
+    /* Add Opt-in */
+    $stmt = $pdo->prepare("INSERT INTO opt_ins (room_id, tenant_id, message) VALUES (?, ?, ?)");
+    $stmt->execute([
+        $opt_in_form['room_id'],
+        $_SESSION['user_id'],
+        $opt_in_form['message'],
+    ]);
+
+    $inserted = $stmt->rowCount();
+    if ($inserted == 1) {
+        return [
+            'type' => 'success',
+            'message' =>"Optin sent!"
+        ];
+    } else {
+        return [
+            'type' => 'danger',
+            'message' => 'There was an error. The series was not added. Try it again.'
+        ];
+    }
+}
 
 /**
  * Updates a room in the database using post array
