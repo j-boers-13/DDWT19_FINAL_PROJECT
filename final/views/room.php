@@ -74,7 +74,7 @@
                             $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                         </div>
                         <div class ='col-sm-2'>
-                            <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $room_info['owner_id'] ?>" role="button" class="btn btn-info">Show owners's profile</a></td>
+                            <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $room_info['owner_id'] ?>" role="button" class="btn btn-info">Show owners' profile</a></td>
                         </div>
                     </div>
 
