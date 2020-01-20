@@ -871,6 +871,10 @@ function get_invite_table($invites ,$pdo, $is_owner){
                 <td>' . get_user_name($pdo, $value['tenant_id']) . '</td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id=' . $value['room_id'] . '" role="button" class="btn btn-primary">Show room</a></td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['tenant_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
+                <td><form action="/DDWT19_FINAL_PROJECT/final/optins/remove" method="POST">
+                            <input type="hidden" value='. $value['id'] .' name="room_id">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                </form></td>
 
             </tr>
             ';
