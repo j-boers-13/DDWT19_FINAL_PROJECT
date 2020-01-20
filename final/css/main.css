@@ -19,8 +19,8 @@ nav {
     border-bottom-style: solid;
     border-radius: 1px;
     border-color: #b1a8aa;
-    -webkit-box-shadow: 0px 14px 20px -4px rgba(0,0,0,0.41);
-    box-shadow: 0px 14px 20px -4px rgba(0,0,0,0.41);
+    -webkit-box-shadow: 0px 14px 20px -2px rgba(0,0,0,0.24);
+    box-shadow: 3px 6px 10px -2px rgba(0,0,0,0.24);
 
 }
 
