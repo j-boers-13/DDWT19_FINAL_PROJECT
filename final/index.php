@@ -622,8 +622,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myaccount/', 'get')) {
     if ( isset($_GET['error_msg']) ) {
         $error_msg = get_error($_GET['error_msg']);
     }
-    $nbr_invites_by_owner = count_invites_by_owner($db);
-    $nbr_invites_by_tenant = count_invites_by_tenant($db);
+    $nbr_invites= count_invites($db);
 
     /* choose template */
     include use_template('account');
