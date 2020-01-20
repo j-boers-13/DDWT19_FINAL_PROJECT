@@ -682,6 +682,8 @@ function get_optin_table($optins,$pdo, $is_owner){
                 <td>' . $value['square_meters'] . '</td>
                 <td>' . get_user_name($pdo, $value['owner_id']) . '</td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id=' . $value['room_id'] . '" role="button" class="btn btn-primary">More info</a></td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['owner_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
+
             </tr>
             ';
         }
@@ -1010,15 +1012,23 @@ function count_tenants($pdo){
  */
 function count_optins($pdo){
     if (isset($_SESSION['user_id'])){
-        $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ?');
-        $stmt->execute([$_SESSION['user_id']]);
-        $tenants = $stmt->rowCount();
-        return $tenants;
+        if (!check_owner($pdo)) {
+            $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ?');
+            $stmt->execute([$_SESSION['user_id']]);
+            $optins = $stmt->rowCount();
+            return $optins;
         }
         else {
-            return 0;
+            $stmt = $pdo->prepare('SELECT * FROM opt_ins INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE owner_id = ?');
+            $stmt->execute([$_SESSION['user_id']]);
+            $optins = $stmt->rowCount();
+            return $optins;
         }
     }
+    else {
+        return 0;
+    }
+}
 
 
 

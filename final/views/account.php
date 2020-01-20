@@ -68,6 +68,10 @@
                             <p>
                             </p>
                             <a href="/DDWT19_FINAL_PROJECT/final/myrooms" class="btn btn-primary">View all the rooms you posted</a>
+                            <h2> <?= $nbr_optins ?></h2>
+                            <p> Opt-ins received</p>
+                            <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary">Show opt-ins and respond</a>
+
                         </div>
                         <?php } else { ?>
                             <div class="card-body">
