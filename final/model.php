@@ -845,7 +845,7 @@ function get_invite_table($invites ,$pdo, $is_owner){
             <th scope="col">Address</th>
             <th scope="col">Square Meters</th>
             <th scope="col">Viewing Date</th>
-            <th scope="col">Sent by</th>
+            <th scope="col">Confirmed?</th>
         </tr>
         </thead>
         <tbody>';
@@ -855,7 +855,7 @@ function get_invite_table($invites ,$pdo, $is_owner){
                 <th scope="row">' . $value['street_address'] . '</th>
                 <td>' . $value['square_meters'] . '</td>
                 <td>'. $value['date'] .'</td>
-                <td>' . get_user_name($pdo, $value['tenant_id']) . '</td>
+                <td>' . $value['is_confirmed'] . '</td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id=' . $value['room_id'] . '" role="button" class="btn btn-primary">Show room</a></td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['tenant_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
                 <td><form action="/DDWT19_FINAL_PROJECT/final/invites/remove" method="POST">
@@ -878,7 +878,7 @@ function get_invite_table($invites ,$pdo, $is_owner){
         <tr>
             <th scope="col">Address</th>
             <th scope="col">Square Meters</th>
-            <th scope="col">Added By</th>
+            <th scope="col">Viewing Date</th>
         </tr>
         </thead>
         <tbody>';
@@ -1277,7 +1277,7 @@ function confirm_viewing($pdo,$invite_id) {
 
 
     $stmt = $pdo->prepare('UPDATE viewing_invites SET is_confirmed = ? WHERE id = ?');
-    $stmt->execute([1,
+    $stmt->execute(["Yes",
         $invite_id
         ]);
     $updated = $stmt->rowCount();
