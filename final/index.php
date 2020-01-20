@@ -274,7 +274,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/add/', 'post')) {
 }
 
 /* Single Viewing Invite */
-elseif (new_route('/DDWT19_FINAL_PROJECT/final/viewing_invite/', 'get')) {
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/invite/', 'get')) {
     if ( !check_login()) {
         redirect('/DDWT19_FINAL_PROJECT/final/login/');
     }
