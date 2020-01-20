@@ -37,7 +37,7 @@
                 <div class="form-group row">
                     <label class="control-label">Appointment Time</label>
                     <div class='input-group date' id='datetimepicker1'>
-                        <input type='text' class="form-control" />
+                        <input type='text' name="date" class="form-control" />
                         <span class="input-group-addon">
                      <span class="glyphicon glyphicon-calendar"></span>
                      </span>
