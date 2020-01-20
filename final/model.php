@@ -301,6 +301,23 @@ function check_owner($pdo) {
     }
 }
 
+function check_invitation($pdo) {
+    $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE tenant_id = ? AND room_id = ?');
+    $stmt->execute([$_SESSION['user_id'], $_SESSION['room_id']]);
+    $invite = $stmt->rowCount(); {
+    if ($invite > 0) {
+        return True;
+        }
+        else {
+            return False;
+        }
+    }
+    else {
+        return null;
+    }
+}
+
+
 function check_if_sender($pdo, $tenant_id) {
     if (isset($_SESSION['user_id'])){
         if ($_SESSION['user_id'] === $tenant_id) {
@@ -1070,7 +1087,7 @@ function send_viewing_invite($pdo, $invite_form)
 
     }
 
-    /* Check if room already exists */
+    /* Check if already invited */
     $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE tenant_id = ? AND room_id = ?');
     $stmt->execute([$invite_form['tenant_id'], $invite_form['room_id']]);
     $invite = $stmt->rowCount();
@@ -1103,6 +1120,7 @@ function send_viewing_invite($pdo, $invite_form)
         ];
     }
 }
+
 
 
 /**
