@@ -487,7 +487,7 @@ function get_room_table($rooms,$pdo){
             <td>'.$value['temporary'].'</td>
             <td>'.$value['square_meters'].'</td>
             <td>'.get_user_name($pdo,$value['owner_id']).'</td>
-            <td>'.$value['created_at'].'</td>
+            <td>'.date_create_from_format(,$value['created_at']).'</td>
             <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id='.$value['id'].'" role="button" class="btn btn-primary">More info</a></td>
         </tr>
         ';
