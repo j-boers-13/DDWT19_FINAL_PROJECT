@@ -11,7 +11,7 @@
 <div class="card">
     <div class="card-body">
         <p class="count">
-            We currently have <span class = "emphasis"> <?= $nbr_users ?> </span> registered users, of which
+            We currently have: <span class = "emphasis"> <?= $nbr_users ?> </span> registered users, of which
             <span class = "emphasis"> <?=$nbr_tenants?> </span> are tenants, and <span class = "emphasis"><?=$nbr_owners?>
             </span> are owners.
         </p>
