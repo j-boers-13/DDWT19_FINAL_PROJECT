@@ -657,30 +657,6 @@ function count_rooms_by_owner($pdo){
 }
 
 /**
- * count  all sent invites by owner_id
- * @param object $pdo database object
- * @return array Associative array with sent invites by owner
- */
-function count_invites_by_owner($pdo){
-    $stmt = $pdo->prepare('SELECT * FROM invites WHERE owner_id = ?');
-    $stmt->execute([$_SESSION['user_id']]);
-    $invites = $stmt->rowCount();
-    return $invites;
-}
-
-/**
- * count  all sent invites by tenant_id
- * @param object $pdo database object
- * @return array Associative array with sent invites by tentant
- */
-function count_invites_by_tenant($pdo){
-    $stmt = $pdo->prepare('SELECT * FROM invites WHERE owner_id = ?');
-    $stmt->execute([$_SESSION['user_id']]);
-    $invites = $stmt->rowCount();
-    return $invites;
-}
-
-/**
  * Creates HTML alert code with information about the success or failure
  * @param array $feedback Array with keys 'type' and 'message'.
  * @return string
@@ -1360,7 +1336,7 @@ function count_optins($pdo){
 }
 
 /**
- * Count the number of optins for a user
+ * Count the number of invites for a user
  * @param object $pdo database object
  * @return mixed
  */
