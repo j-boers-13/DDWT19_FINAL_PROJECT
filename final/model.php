@@ -855,9 +855,9 @@ function get_invite_table($invites ,$pdo, $is_owner){
             <tr>
                 <th scope="row">' . $value['street_address'] . '</th>
                 <td>' . $value['square_meters'] . '</td>
-                <td>' . get_user_name($pdo, $value['tenant_id']) . '</td>
                 <td>'. $value['date'] .'</td>
-                <td><a href="/DDWT19_FINAL_PROJECT/final/invite/?invite_id=' . $value['invite_id'] . '" role="button" class="btn btn-primary">Show message and respond</a></td>
+                <td>' . get_user_name($pdo, $value['tenant_id']) . '</td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id=' . $value['room_id'] . '" role="button" class="btn btn-primary">Show room</a></td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['tenant_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
 
             </tr>
@@ -885,8 +885,9 @@ function get_invite_table($invites ,$pdo, $is_owner){
             <tr>
                 <th scope="row">' . $value['street_address'] . '</th>
                 <td>' . $value['square_meters'] . '</td>
+                <td>'. $value['date'] .'</td>
                 <td>' . get_user_name($pdo, $value['owner_id']) . '</td>
-                <td><a href="/DDWT19_FINAL_PROJECT/final/optin/?optin_id=' . $value['id'] . '" role="button" class="btn btn-primary">Show</a></td>
+                <td><a href="/DDWT19_FINAL_PROJECT/final/room/?room_id=' . $value['room_id'] . '" role="button" class="btn btn-primary">Show invite</a></td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['owner_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
 
             </tr>
