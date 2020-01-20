@@ -47,8 +47,11 @@
                         </div>
                         <div class="card-body">
                             <p>You're logged in to Account Overview.</p>
+                            <div class = "pd-15">
                             <a href="/DDWT19_FINAL_PROJECT/final/myprofile/" class="btn btn-primary">My Profile</a>
+                            <p></p>
                             <a href="/DDWT19_FINAL_PROJECT/final/logout/" class="btn btn-warning">Logout</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -60,14 +63,19 @@
                         </div>
                         <div class="card-body">
                             <p> You currently have: </p>
+                            <div class = "pd-15">
                             <?php if(check_owner($db) === True) { ?>
                             <a href="/DDWT19_FINAL_PROJECT/final/myrooms" class="btn btn-primary"> <span class = "emphasis"> <?=$nbr_rooms_by_owner?> </span> rooms listed</a>
+                            <p></p>
                             <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary"><span class = "emphasis"> <?= $nbr_optins ?></span> opt-ins received </a>
+                            <p></p>
                             <a href="/DDWT19_FINAL_PROJECT/final/invites" class="btn btn-primary"><span class = "emphasis"> <?=  $nbr_invites?></span> invites sent </a>
                             <?php } else { ?>
                             <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary"> <span class = "emphasis"> <?=$nbr_optins?> </span> opt-ins </a>
+                            <p></p>
                             <a href="/DDWT19_FINAL_PROJECT/final/invites" class="btn btn-primary"><span class = "emphasis"> <?=  $nbr_invites?></span> invites recieved </a>
                             <?php } ?>
+                            </div>
                         </div>
                     </div>
                     </div>
