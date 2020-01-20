@@ -301,6 +301,19 @@ function check_owner($pdo) {
     }
 }
 
+function check_invitation($pdo, $room_id){
+    $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE tenant_id = ? AND room_id = ?');
+    $stmt->execute([$_SESSION['user_id'], $room_id]);
+    $invite = $stmt->rowCount();
+    if ($invite > 0) {
+        return True;
+    }
+    else {
+        return False;
+    }
+}
+
+
 function check_if_sender($pdo, $tenant_id) {
     if (isset($_SESSION['user_id'])){
         if ($_SESSION['user_id'] === $tenant_id) {
@@ -774,9 +787,10 @@ function get_optin_table($optins,$pdo, $is_owner){
         <table class="table table-hover">
         <thead
         <tr>
+            <th scope="col">Room nr.</th>
             <th scope="col">Address</th>
-            <th scope="col">Square Meters</th>
-            <th scope="col">Sent to</th>
+      
+            <th scope="col">Sent by</th>
         </tr>
         </thead>
         <tbody>';
@@ -784,8 +798,8 @@ function get_optin_table($optins,$pdo, $is_owner){
         foreach ($optins as $key => $value) {
             $table_exp .= '
             <tr>
+                <th scope="row">' . $value['id'] . '</th>
                 <th scope="row">' . $value['street_address'] . '</th>
-                <td>' . $value['square_meters'] . '</td>
                 <td>' . get_user_name($pdo, $value['tenant_id']) . '</td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/optin/?optin_id=' . $value['id'] . '" role="button" class="btn btn-primary">Show message and respond</a></td>
                 <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=' . $value['tenant_id'] . '" role="button" class="btn btn-primary">Show profile</a></td>
@@ -1070,7 +1084,7 @@ function send_viewing_invite($pdo, $invite_form)
 
     }
 
-    /* Check if room already exists */
+    /* Check if already invited */
     $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE tenant_id = ? AND room_id = ?');
     $stmt->execute([$invite_form['tenant_id'], $invite_form['room_id']]);
     $invite = $stmt->rowCount();
@@ -1103,6 +1117,7 @@ function send_viewing_invite($pdo, $invite_form)
         ];
     }
 }
+
 
 
 /**
