@@ -1347,6 +1347,30 @@ function count_optins($pdo){
     }
 }
 
+/**
+ * Count the number of optins for a user
+ * @param object $pdo database object
+ * @return mixed
+ */
+function count_invites($pdo){
+    if (isset($_SESSION['user_id'])){
+        if (!check_owner($pdo)) {
+            $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE tenant_id = ?');
+            $stmt->execute([$_SESSION['user_id']]);
+            $optins = $stmt->rowCount();
+            return $optins;
+        }
+        else {
+            $stmt = $pdo->prepare('SELECT * FROM viewing_invites INNER JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE owner_id = ?');
+            $stmt->execute([$_SESSION['user_id']]);
+            $optins = $stmt->rowCount();
+            return $optins;
+        }
+    }
+    else {
+        return 0;
+    }
+}
 
 /**
  * Changes the HTTP Header to a given location
