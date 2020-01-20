@@ -63,9 +63,10 @@
                             <th scope="row">Number of rooms owned</th>
                             <td><?= $nbr_rooms_by_owner ?></td>
                         </tr>
-                        </tbody>
+                <?php } ?>
+                                        </tbody>
                     </table>
-                <?php }
+                <?php
                 /* only display edit and remove buttons if the user page is in ownership of the session user*/
                 if($_SESSION['user_id'] === $user_info['id']) {?>
                     <div class='row'>
