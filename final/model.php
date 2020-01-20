@@ -483,10 +483,10 @@ function p_print($input){
  */
 function get_available_rooms($pdo, $limit){
     if($limit === true) {
-        $stmt = $pdo->prepare('SELECT rooms.* FROM rooms JOIN address ON rooms.street_address = address.street_address AND rooms.city = address.city WHERE is_available = 1 ORDER BY id DESC LIMIT 5');
+        $stmt = $pdo->prepare('SELECT rooms.*, address.street_address, address.city, address.zipcode FROM rooms LEFT OUTER JOIN address ON rooms.address_id = address.id  WHERE is_available = 1 ORDER BY rooms.id DESC LIMIT 5');
     }
     else{
-        $stmt = $pdo->prepare('SELECT rooms.* FROM rooms JOIN address ON rooms.street_address = address.street_address AND rooms.city = address.city WHERE is_available = 1 ORDER BY id DESC');
+        $stmt = $pdo->prepare('SELECT rooms.*, address.street_address, address.city, address.zipcode FROM rooms LEFT OUTER JOIN address ON rooms.address_id = address.id  WHERE is_available = 1 ORDER BY rooms.id DESC');
     }
     $stmt->execute();
     $rooms = $stmt->fetchAll();
@@ -508,7 +508,7 @@ function get_available_rooms($pdo, $limit){
  * @return mixed
  */
 function get_roominfo($pdo, $room_id){
-    $stmt = $pdo->prepare('SELECT * FROM rooms JOIN address ON rooms.street_address = address.street_address AND rooms.city = address.city WHERE rooms.id = ? ');
+    $stmt = $pdo->prepare('SELECT rooms.*, address.street_address, address.city, address.zipcode FROM rooms LEFT OUTER JOIN address ON rooms.address_id = address.id  WHERE rooms.id = ?');
     $stmt->execute([$room_id]);
     $room_info = $stmt->fetch();
     $room_info_exp = Array();
@@ -527,7 +527,7 @@ function get_roominfo($pdo, $room_id){
  * @return array Associative array with all series
  */
 function get_owner_rooms($pdo){
-    $stmt = $pdo->prepare('SELECT rooms.* FROM rooms JOIN address ON rooms.street_address = address.street_address AND rooms.city = address.city WHERE rooms.owner_id = ? ');
+    $stmt = $pdo->prepare('SELECT rooms.*, address.street_address, address.city, address.zipcode FROM rooms LEFT OUTER JOIN address ON rooms.address_id = address.id  WHERE rooms.owner_id = ? ');
     $stmt->execute([$_SESSION['user_id']]);
     $rooms = $stmt->fetchAll();
     $room_exp = Array();
@@ -574,7 +574,7 @@ function get_error($feedback){
  * @param object $pdo database object
  * @return array Associative array with all series
  */
-function get_optin_rooms($pdo){
+function get_optins($pdo){
     if(!isset($_SESSION)) {
         session_start();
     }
@@ -667,7 +667,7 @@ function add_room($pdo, $room_info){
     }
 
     /* Check if room already exists */
-    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE street_address = ?');
+    $stmt = $pdo->prepare('SELECT rooms.*, address.street_address, address.city, address.zipcode FROM rooms LEFT OUTER JOIN address ON rooms.address_id = address.id WHERE street_address = ?');
     $stmt->execute([$room_info['street_address']]);
     $room = $stmt->rowCount();
     if ($room){
@@ -684,17 +684,17 @@ function add_room($pdo, $room_info){
         $room_info['city'],
         $room_info['zipcode'],
     ]);
+    $address_id = $pdo->lastInsertId();
     $inserted = $stmt->rowCount();
     if ($inserted ==  1) {
-        $stmt = $pdo->prepare("INSERT INTO rooms (street_address, city, description, price, temporary, square_meters, owner_id) VALUES (?, ?, ?, ?, ?, ?, ? )");
+        $stmt = $pdo->prepare("INSERT INTO rooms (description, price, temporary, square_meters, owner_id, address_id) VALUES (?, ?, ?, ?, ?, ? )");
         $stmt->execute([
-            $room_info['street_address'],
-            $room_info['city'],
             $room_info['description'],
             $room_info['price'],
             $room_info['temporary'],
             $room_info['square_meters'],
-            $_SESSION['user_id']
+            $_SESSION['user_id'],
+            $address_id
         ]);
         $inserted = $stmt->rowCount();
         if ($inserted ==  1) {
@@ -751,7 +751,7 @@ function update_room($pdo, $room_info){
     }
 
     /* Get current room name */
-    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE id = ?');
+    $stmt = $pdo->prepare('SELECT rooms.*, address.street_address, address.city, address.zipcode FROM rooms LEFT OUTER JOIN address ON rooms.address_id = address.id WHERE rooms.id = ?');
     $stmt->execute([$room_info['room_id']]);
     $room = $stmt->fetch();
     if ($_SESSION['user_id'] !== $room['owner_id']){
@@ -763,7 +763,7 @@ function update_room($pdo, $room_info){
     $current_address = $room['street_address'];
 
     /* Check if room already exists */
-    $stmt = $pdo->prepare('SELECT * FROM rooms WHERE street_address = ?');
+    $stmt = $pdo->prepare('SELECT rooms.*, address.street_address, address.city, address.zipcode FROM rooms LEFT OUTER JOIN address ON rooms.address_id = address.id WHERE street_address = ?');
     $stmt->execute([$room_info['street_address']]);
     $room = $stmt->fetch();
     if ($room_info['street_address'] == $room['street_address'] and $room['street_address'] != $current_address){
@@ -774,26 +774,25 @@ function update_room($pdo, $room_info){
     }
 
     /* Update Room */
-    $stmt = $pdo->prepare('UPDATE address SET street_address = ?, city = ?, zipcode = ? WHERE street_address = ? AND city = ?');
-    $stmt->execute([
-        $room_info['street_address'],
-        $room_info['city'],
-        $room_info['zipcode'],
-        $room['street_address'],
-        $room['street_address']
-    ]);
-    $updated = $stmt->rowCount();
-    $stmt = $pdo->prepare('UPDATE rooms SET description = ?, price = ?, square_meters = ?, temporary = ?, owner_id = ?, street_address= ?, city = ? WHERE id = ?');
-    $stmt->execute([
+    $pdo->prepare('ALTER TABLE rooms DROP FOREIGN KEY FK_address');
+    $stmt1 = $pdo->prepare('UPDATE rooms SET description = ?, price = ?, square_meters = ?, temporary = ?, owner_id = ? WHERE id = ?');
+    $stmt1->execute([
         $room_info['description'],
         $room_info['price'],
         $room_info['square_meters'],
         $room_info['temporary'],
         $_SESSION['user_id'],
-        $room_info['street_address'],
-        $room_info['city'],
         $room_info['room_id']
     ]);
+    $updated = $stmt1->rowCount();
+    $stmt2 = $pdo->prepare('UPDATE address SET street_address = ?, city = ?, zipcode = ? WHERE id = ?');
+    $stmt2->execute([
+        $room_info['street_address'],
+        $room_info['city'],
+        $room_info['zipcode'],
+        $room['address_id'],
+    ]);
+    $pdo->prepare('ALTER TABLE rooms ADD CONSTRAINT FK_address FOREIGN KEY (address_id) REFERENCES address(id);');
     $updated = $updated + $stmt->rowCount();
     if ($updated >=  1) {
         return [
