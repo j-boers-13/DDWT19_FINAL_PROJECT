@@ -540,6 +540,22 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myprofile/edit', 'post')) {
         json_encode($error_msg), $_POST['user_id']));
 }
 
+/* Remove profile POST */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/remove', 'post')) {
+    /* check if logged in */
+    if ( !check_login()) {
+        redirect('/DDWT19_FINAL_PROJECT/final/login/');
+    }
+
+    /* Remove profile in database */
+    $user_id = $_POST['user_id'];
+    $feedback = remove_profile($db, $user_id);
+
+    /* Redirect to overview GET route */
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/overview/?error_msg=%s',
+        json_encode($feedback)));
+}
+
 
 /* Login GET */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/login/', 'get')) {

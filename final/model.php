@@ -230,6 +230,45 @@ function update_profile($pdo, $user_info){
 }
 
 /**
+ * Removes a room with a specific room-ID
+ * @param object $pdo db object
+ * @param int $room_id id of the to be deleted room
+ * @return array
+ */
+function remove_profile($pdo, $user_id){
+    /* Get room info */
+    $user_info = get_other_userinfo($user_id, $pdo);
+
+
+    /* Delete Room */
+    $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+    $stmt->execute([$user_id]);
+    $deleted = $stmt->rowCount();
+    if ($deleted ==  1) {
+        if (isset($_SESSION['user_id']) ) {
+            session_destroy();
+            $feedback = [
+                'type' => 'success',
+                'message' => "You're account was removed succesfully"
+            ];
+        } else {
+            $feedback = [
+                'type' => 'danger',
+                'message' => 'you"re account was deleted but the log out seems to have failed please try logging out to experience the website bug-free'
+            ];
+        }
+        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/?error_msg=%s',
+            json_encode($feedback)));
+    }
+    else {
+        return [
+            'type' => 'warning',
+            'message' => 'An error occurred. Your profile was not removed.'
+        ];
+    }
+}
+
+/**
  * Check Login
  *
  */

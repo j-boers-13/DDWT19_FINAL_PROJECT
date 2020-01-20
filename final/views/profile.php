@@ -79,6 +79,8 @@
                     <?php } ?>
                 </div>
 
+
+
                 <!-- Right column -->
                 <div class="col-md-4">
 
