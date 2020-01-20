@@ -63,11 +63,10 @@
                             <?php if(check_owner($db) === True) { ?>
                             <a href="/DDWT19_FINAL_PROJECT/final/myrooms" class="btn btn-primary"> <span class = "emphasis"> <?=$nbr_rooms_by_owner?> </span> rooms listed</a>
                             <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary"><span class = "emphasis"> <?= $nbr_optins ?></span> opt-ins received </a>
-                            <a href="/DDWT19_FINAL_PROJECT/final/invites" class="btn btn-primary"><span class = "emphasis"> <?=  $nbr_invites_by_user ?></span> invites sent </a>
+                            <a href="/DDWT19_FINAL_PROJECT/final/invites" class="btn btn-primary"><span class = "emphasis"> <?=  $nbr_invites_by_owner ?></span> invites sent </a>
                             <?php } else { ?>
                             <a href="/DDWT19_FINAL_PROJECT/final/optins" class="btn btn-primary"> <span class = "emphasis"> <?=$nbr_optins?> </span> opt-ins </a>
-                            <a href="/DDWT19_FINAL_PROJECT/final/invites" class="btn btn-primary"> <span class = "emphasis"> 0 </span> invites </a>
-                                <a href="/DDWT19_FINAL_PROJECT/final/invites" class="btn btn-primary"><span class = "emphasis"> <?=  $nbr_invites_by_user ?></span> invites sent </a>
+                            <a href="/DDWT19_FINAL_PROJECT/final/invites" class="btn btn-primary"><span class = "emphasis"> <?=  $nbr_invites_by_tenant ?></span> invites recieved </a>
                             <?php } ?>
                         </div>
                     </div>
