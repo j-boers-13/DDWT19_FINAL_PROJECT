@@ -1,13 +1,17 @@
 <!-- Room count -->
 
+
 <div class="card">
     <div class="card-body">
         <p class="count"> There are <span class = "emphasis"> <?= $nbr_rooms ?> </span> rooms listed. </p>
+        <?php if(check_owner($db) === True) { ?>
         <div class = "pd-15">
-        <a href="/DDWT19_FINAL_PROJECT/final/add/" class="btn btn-success">Add yours!</a>
+            <a href="/DDWT19_FINAL_PROJECT/final/add/" class="btn btn-success">Add yours!</a>
         </div>
+        <?php } ?>
     </div>
 </div>
+
 <!-- Users count -->
 <div class="card">
     <div class="card-body">
