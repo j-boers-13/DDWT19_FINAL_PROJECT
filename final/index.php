@@ -720,6 +720,37 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/remove', 'post')) {
         json_encode($feedback)));
 }
 
+/* Remove opt-in POST */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/remove', 'post')) {
+    /* check if logged in */
+    if ( !check_login()) {
+        redirect('/DDWT19_FINAL_PROJECT/final/login/');
+    }
+
+    /* Remove profile in database */
+    $optin_id = $_POST['optin_id'];
+    $feedback = remove_optin($db, $optin_id);
+
+    /* Redirect to overview GET route */
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/overview/?error_msg=%s',
+        json_encode($feedback)));
+}
+
+/* Remove viewing invite POST */
+elseif (new_route('/DDWT19_FINAL_PROJECT/final/invites/remove', 'post')) {
+    /* check if logged in */
+    if ( !check_login()) {
+        redirect('/DDWT19_FINAL_PROJECT/final/login/');
+    }
+
+    /* Remove profile in database */
+    $invite_id = $_POST['invite_id'];
+    $feedback = remove_invite($db, $invite_id);
+
+    /* Redirect to overview GET route */
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/overview/?error_msg=%s',
+        json_encode($feedback)));
+}
 
 /* Login GET */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/login/', 'get')) {
@@ -747,6 +778,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/login/', 'get')) {
     /* choose template */
     include use_template('login');
 }
+
 /* Login POST */
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/login/', 'post')) {
     /* Log in user */

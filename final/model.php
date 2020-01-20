@@ -1206,13 +1206,57 @@ function remove_room($pdo, $room_id){
     if ($deleted ==  1) {
         return [
             'type' => 'success',
-            'message' => sprintf("Series '%s' was removed!", $room_info['street_address'])
+            'message' => sprintf("Room '%s' was removed!", $room_info['street_address'])
         ];
     }
     else {
         return [
             'type' => 'warning',
-            'message' => 'An error occurred. The series was not removed.'
+            'message' => 'An error occurred. The room was not removed.'
+        ];
+    }
+}
+
+function remove_invite($pdo, $invite_id){
+    /* Get invite info */
+    $invite_info = get_inviteinfo($pdo, $invite_id);
+
+    /* Delete Room */
+    $stmt = $pdo->prepare("DELETE FROM invites WHERE id = ?");
+    $stmt->execute([$invite_id]);
+    $deleted = $stmt->rowCount();
+    if ($deleted ==  1) {
+        return [
+            'type' => 'success',
+            'message' => sprintf("Invite to '%s' was removed!", $invite_info['street_address'])
+        ];
+    }
+    else {
+        return [
+            'type' => 'warning',
+            'message' => 'An error occurred. The invite was not removed.'
+        ];
+    }
+}
+
+function remove_optin($pdo, $optin_id){
+    /* Get invite info */
+    $invite_info = get_inviteinfo($pdo, $optin_id);
+
+    /* Delete Room */
+    $stmt = $pdo->prepare("DELETE FROM opt_ins WHERE id = ?");
+    $stmt->execute([$optin_id]);
+    $deleted = $stmt->rowCount();
+    if ($deleted ==  1) {
+        return [
+            'type' => 'success',
+            'message' => sprintf("Opt-in to '%s' was removed!", $invite_info['street_address'])
+        ];
+    }
+    else {
+        return [
+            'type' => 'warning',
+            'message' => 'An error occurred. The opt-in was not removed.'
         ];
     }
 }
