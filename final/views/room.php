@@ -73,8 +73,12 @@
                             <a href="/DDWT19_FINAL_PROJECT/final/optins/add/?room_id=<?=
                             $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                         </div>
+                        <div class ='col-sm-2'>
+                            <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $room_info['owner_id'] ?>" role="button" class="btn btn-primary">Show profile</a></td>
+                        </div>
                     </div>
-                    <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $room_info['owner_id'] ?>" role="button" class="btn btn-primary">Show profile</a></td>
+
+
                     <?php } } ?>
                 </div>
 
