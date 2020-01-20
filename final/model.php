@@ -435,9 +435,9 @@ function get_breadcrumbs($breadcrumbs) {
  */
 function get_navigation($template,$active_id){
     $navigation_exp = '
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #36faff;">
     <a class="navbar-brand">ROOM.NET</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler bordered" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -445,7 +445,7 @@ function get_navigation($template,$active_id){
     foreach ($template as $id => $array) {
         if ($id[$active_id]){
             $navigation_exp .= '<li class="nav-item active">';
-            $navigation_exp .= '<a class="nav-link" href="'.$array['url'].'">'.$array['name'].'</a>';
+            $navigation_exp .= '<a class="nav-link bordered" href="'.$array['url'].'">'.$array['name'].'</a>';
         }else{
             $navigation_exp .= '<li class="nav-item">';
             $navigation_exp .= '<a class="nav-link" href="'.$array['url'].'">'.$array['name'].'</a>';

@@ -14,3 +14,13 @@
     margin: 0;
     font-weight: bold;
 }
+
+nav {
+    border-bottom-style: solid;
+    border-radius: 1px;
+    border-color: #dbd8cf;
+    background-color: #FAACA8;
+    background-image: linear-gradient(19deg, #dbdbde 0%, #DDD6F3 100%);
+
+}
+
