@@ -130,17 +130,21 @@ function login_user($pdo, $form_data){
     }
     /* Return error message for wrong username */
     if ( empty($user_info) ) {
-        return [
+        $feedback = [
             'type' => 'danger',
-            'message' => 'The username you entered does not exist!'
+            'message' => 'The username you entered is does not exist!'
         ];
+        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/login/?error_msg=%s',
+            json_encode($feedback)));
     }
     /* Check password */
     if ( !password_verify($form_data['password'], $user_info['password'])){
-        return [
+        $feedback = [
             'type' => 'danger',
             'message' => 'The password you entered is incorrect!'
         ];
+        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/login/?error_msg=%s',
+        json_encode($feedback)));
     }
     else {
         session_start();
