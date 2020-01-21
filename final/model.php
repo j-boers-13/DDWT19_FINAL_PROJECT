@@ -253,12 +253,12 @@ function remove_profile($pdo, $user_id){
             session_destroy();
             $feedback = [
                 'type' => 'success',
-                'message' => "You're account was removed succesfully"
+                'message' => "Your account was removed succesfully"
             ];
         } else {
             $feedback = [
                 'type' => 'danger',
-                'message' => 'you"re account was deleted but the log out seems to have failed please try logging out to experience the website bug-free'
+                'message' => 'Your account was deleted but the log out seems to have failed please try logging out to experience the website bug-free'
             ];
         }
         redirect(sprintf('/DDWT19_FINAL_PROJECT/final/?error_msg=%s',
@@ -273,7 +273,7 @@ function remove_profile($pdo, $user_id){
 }
 
 /**
- * Check Login
+ * Check  if user logged in
  *
  */
 function check_login(){
@@ -313,6 +313,17 @@ function check_invitation($pdo, $room_id){
     }
 }
 
+function check_optin($pdo, $room_id){
+    $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ? AND room_id = ?');
+    $stmt->execute([$_SESSION['user_id'], $room_id]);
+    $optin = $stmt->rowCount();
+    if ($optin > 0) {
+        return True;
+    }
+    else {
+        return False;
+    }
+}
 
 function check_if_sender($pdo, $tenant_id) {
     if (isset($_SESSION['user_id'])){

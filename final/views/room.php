@@ -69,12 +69,12 @@
                         </div>
                         <?php } else { if(isset($_SESSION['user_id'])) {?>
                         <div class='row'>
-                        <?php if (!($user_is_invited)){ ?>
+                        <?php if (!($user_opted_in)) { ?>
                         <div class ='col-sm-2'>
                             <a href="/DDWT19_FINAL_PROJECT/final/optins/add/?room_id=<?=
                             $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                         </div>
-                        <?php } else { ?>
+                        <?php } if (!($user_is_invited)) { ?>
                         <div class ='col-sm-2'>
                             <form action="/DDWT19_FINAL_PROJECT/final/invites/confirm" method="POST">
                                 <input type="hidden" value='. $value['id'] .' name="invite_id">
