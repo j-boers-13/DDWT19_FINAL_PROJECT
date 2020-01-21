@@ -54,7 +54,9 @@
                         </tbody>
                     </table>
                     <?php if ($is_owner) { ?>
-                            <div class ='col-sm-2'>
+                    <div class='row'>
+
+                    <div class ='col-sm-2'>
                                 <a href="/DDWT19_FINAL_PROJECT/final/edit/?room_id=<?=
                                 $room_id ?>" role="button" class="btn btn-warning">Edit</a>
                             </div>
@@ -65,7 +67,8 @@
                                     <button type="submit" class="btn btn-danger">Remove</button>
                                 </form>
                             </div>
-                        <?php } else { if(isset($_SESSION['user_id'])) {?>
+                    </div>
+                        <?php } else { if(isset($_SESSION['user_id']) and !($user_is_owner)) {?>
                             <?php if (!($user_opted_in)) { ?>
                             <div class='row'>
 
@@ -73,14 +76,15 @@
                                     <a href="/DDWT19_FINAL_PROJECT/final/optins/add/?room_id=<?=
                                     $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                                 </div>
+                                <div class ='col-sm-2'>
+                                    <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $room_info['owner_id'] ?>" role="button" class="btn btn-info">Show owners' profile</a></td>
+                                </div>
                             </div>
                             <?php } ?>
                         <?php ;}
                         ;}
                         ?>
-                        <div class ='col-sm-2'>
-                            <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $room_info['owner_id'] ?>" role="button" class="btn btn-info">Show owners' profile</a></td>
-                        </div>
+
                 </div>
 
                 <!-- Right column -->
