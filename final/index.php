@@ -253,8 +253,8 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/add/', 'post')) {
     $room_info = get_roominfo($db, $room_id);
 
     /* Redirect to room get route */
-    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/optins/add/?error_msg=%s&room_id=%s',
-        json_encode($feedback), $_POST['room_id']));
+    redirect(sprintf('/DDWT19_FINAL_PROJECT/final/optins/?error_msg=%s',
+        json_encode($feedback)));
 }
 
 /* Single Viewing Invite */
