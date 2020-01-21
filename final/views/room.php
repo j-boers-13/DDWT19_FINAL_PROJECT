@@ -53,7 +53,6 @@
                         </tr>
                         </tbody>
                     </table>
-                <div class='row'>
                     <?php if ($is_owner) { ?>
                             <div class ='col-sm-2'>
                                 <a href="/DDWT19_FINAL_PROJECT/final/edit/?room_id=<?=
@@ -66,7 +65,6 @@
                                     <button type="submit" class="btn btn-danger">Remove</button>
                                 </form>
                             </div>
-                        </div>
                         <?php } else { if(isset($_SESSION['user_id'])) {?>
                             <?php if (!($user_opted_in)) { ?>
                             <div class='row'>
@@ -83,7 +81,6 @@
                         <div class ='col-sm-2'>
                             <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $room_info['owner_id'] ?>" role="button" class="btn btn-info">Show owners' profile</a></td>
                         </div>
-                    </div>
                 </div>
 
                 <!-- Right column -->
@@ -92,8 +89,8 @@
                     <?php include $right_column ?>
 
                 </div>
-        </div>
             </div>
+        </div>
 
 
         <!-- Optional JavaScript -->
