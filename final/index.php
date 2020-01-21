@@ -63,10 +63,6 @@ if (new_route('/DDWT19_FINAL_PROJECT/final/', 'get')) {
 
     /* Page info */
     $page_title = 'Home';
-    $breadcrumbs = get_breadcrumbs([
-        'ROOM.NET' => na('/DDWT19_FINAL_PROJECT/final/', False),
-        'Home' => na('/DDWT19_FINAL_PROJECT/final/', True)
-    ]);
     $navigation = get_navigation($nav_array,1);
 
     /* Page content */
@@ -89,11 +85,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/overview/', 'get')) {
 
     /* Page info */
     $page_title = 'Overview';
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'Week 2' => na('/DDWT19/final/', False),
-        'Overview' => na('/DDWT19_FINAL_PROJECT/final/overview', True)
-    ]);
     $navigation = get_navigation($nav_array, 2);
 
     /* Page content */
@@ -115,11 +106,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myrooms/', 'get')) {
 
     /* Page info */
     $page_title = 'All your rooms';
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'final' => na('/DDWT19/final/', False),
-        'My Rooms' => na('/DDWT19_FINAL_PROJECT/final/myrooms', True)
-    ]);
     $navigation = get_navigation($nav_array, 2);
 
     /* Page content */
@@ -147,12 +133,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
 
     /* Page info */
     $page_title = $room_info['street_address'];
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'Week 2' => na('/DDWT19_FINAL_PROJECT/final', False),
-        'Overview' => na('/DDWT19_FINAL_PROJECT/final/overview/', False),
-        $room_info['street_address'] => na('/DDWT19_FINAL_PROJECT/final/room/?room_id='.$room_id, True)
-    ]);
     $navigation = get_navigation($nav_array,2);
 
     /* Page content */
@@ -184,11 +164,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optin/', 'get')) {
 
     /* Page info */
     $page_title = $optin_info['street_address'];
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'Week 2' => na('/DDWT19_FINAL_PROJECT/final', False),
-        $optin_info['street_address'] => na('/DDWT19_FINAL_PROJECT/final/optin/?optin_id='.$optin_id, True)
-    ]);
     $navigation = get_navigation($nav_array,2);
 
     /* Page content */
@@ -234,12 +209,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/add/', 'get')) {
 
     /* Page info */
     $page_title = "Send opt-in message";
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'Week 2' => na('/DDWT19_FINAL_PROJECT/final', False),
-        'Overview' => na('/DDWT19_FINAL_PROJECT/final/overview/', False),
-        $room_info['street_address'] => na('/DDWT19_FINAL_PROJECT/final/optins/add/?room_id='.$room_id, True)
-    ]);
     $navigation = get_navigation($nav_array,2);
 
     /* Page content */
@@ -533,11 +502,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/edit/', 'get')) {
 
     /* Page info */
     $page_title = 'Edit Room';
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'Week 2' => na('/DDWT19_FINAL_PROJECT/final/', False),
-        sprintf("Edit Room %s", $room_info['street_address']) => na('/DDWT19_FINAL_PROJECT/final/edit/', True)
-    ]);
     $navigation = get_navigation($nav_array,6);
 
     /* Page content */
@@ -609,11 +573,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myaccount/', 'get')) {
     /* Page info */
     $page_title = 'My Account';
 
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'Week 2' => na('/DDWT19_FINAL_PROJECT/final/', False),
-        'Overview' => na('/DDWT19_FINAL_PROJECT/final/myaccount', True)
-    ]);
     $navigation = get_navigation($nav_array, 3);
     /* Page content */
     $page_subtitle = sprintf("Check out your account");
@@ -763,11 +722,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/login/', 'get')) {
     }
     /* Page info */
     $page_title = 'Login';
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT', False),
-        'Week 2' => na('/DDWT19_FINAL_PROJECT/final/', False),
-        'Overview' => na('/DDWT19_FINAL_PROJECT/final/login', True)
-    ]);
+
     $navigation = get_navigation($nav_array,0);
     /* Page content */
     $page_subtitle = sprintf("Log in to your account");
@@ -821,11 +776,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/', 'get')) {
 
     $is_owner = check_owner($db);
     $page_title = 'Opt-ins';
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'final' => na('/DDWT19/final/', False),
-        'Opt-ins' => na('/DDWT19_FINAL_PROJECT/final/optins', True)
-    ]);
+
     $navigation = get_navigation($nav_array, 2);
 
     /* Page content */
