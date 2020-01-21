@@ -1299,6 +1299,15 @@ function remove_optin($pdo, $optin_id){
  */
 
 function confirm_viewing($pdo,$invite_id) {
+    $prestmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE id = ?');
+    $prestmt->execute([$invite_id]);
+    $check = $prestmt->fetch();
+    if ($check['is_confirmed'] === "Yes") {
+        return [
+            'type' => 'info',
+            'message' => 'You already confirmed this viewing day'
+        ];
+    }
     /* change is_confirmed */
     $stmt = $pdo->prepare('UPDATE viewing_invites SET is_confirmed = ? WHERE id = ?');
     $stmt->execute(["Yes",
