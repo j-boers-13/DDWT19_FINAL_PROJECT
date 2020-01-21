@@ -302,6 +302,12 @@ function check_owner($pdo) {
     }
 }
 
+/**
+ * @param $pdo database object
+ * @param $room_id an identifier that carries the room_id for the database
+ * @return bool true or false depending on if the user was invited
+ */
+
 function check_invitation($pdo, $room_id){
     $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE tenant_id = ? AND room_id = ?');
     $stmt->execute([$_SESSION['user_id'], $room_id]);
@@ -313,6 +319,12 @@ function check_invitation($pdo, $room_id){
         return False;
     }
 }
+
+/** Checks if the user has opted in to a room
+ * @param $pdo database object
+ * @param $room_id room_id identifier for database
+ * @return bool True/False  depending on if the user has opted-in
+ */
 
 function check_optin($pdo, $room_id){
     $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE tenant_id = ? AND room_id = ?');
@@ -326,6 +338,11 @@ function check_optin($pdo, $room_id){
     }
 }
 
+/** Checks if the current user is the sender of a message
+ * @param $pdo database object
+ * @param $tenant_id t enant_id identifier in the datbase
+ * @return bool| returns true if the current user was the sender of a message
+ */
 function check_if_sender($pdo, $tenant_id) {
     if (isset($_SESSION['user_id'])){
         if ($_SESSION['user_id'] === $tenant_id) {
@@ -340,6 +357,11 @@ function check_if_sender($pdo, $tenant_id) {
     }
 }
 
+/**
+ * compares current user_id to owner_id
+ * @param $owner_id owner_id database identifier
+ * @return bool|null
+ */
 function check_if_owner($owner_id) {
     if (isset($_SESSION['user_id'])){
         if ($_SESSION['user_id'] === $owner_id) {
@@ -451,27 +473,7 @@ function use_template($template){
     return $template_doc;
 }
 
-/**
- * Creates breadcrumb HTML code using given array
- * @param array $breadcrumbs Array with as Key the page name and as Value the corresponding url
- * @return string html code that represents the breadcrumbs
- */
-function get_breadcrumbs($breadcrumbs) {
-    $breadcrumbs_exp = '
-    <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">';
-    foreach ($breadcrumbs as $name => $info) {
-        if ($info[1]){
-            $breadcrumbs_exp .= '<li class="breadcrumb-item active" aria-current="page">'.$name.'</li>';
-        }else{
-            $breadcrumbs_exp .= '<li class="breadcrumb-item"><a href="'.$info[0].'">'.$name.'</a></li>';
-        }
-    }
-    $breadcrumbs_exp .= '
-    </ol>
-    </nav>';
-    return $breadcrumbs_exp;
-}
+
 
 /**
  * Creates navigation HTML code using given array
