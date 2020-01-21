@@ -74,13 +74,7 @@
                             <a href="/DDWT19_FINAL_PROJECT/final/optins/add/?room_id=<?=
                             $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                         </div>
-                        <?php } if (($user_is_invited)) { ?>
-                        <div class ='col-sm-2'>
-                            <form action="/DDWT19_FINAL_PROJECT/final/invites/confirm" method="POST">
-                                <input type="hidden" value='. $value['id'] .' name="invite_id">
-                                <button type="submit" class="btn btn-warning">Confirm</button> </form>
-                        </div>
-                        <?php ;}
+                        <?php }
                         ;}
                         ;}
                         ?>
