@@ -74,8 +74,9 @@
                             <a href="/DDWT19_FINAL_PROJECT/final/optins/add/?room_id=<?=
                             $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                         </div>
-                        <?php }
-                        ;}
+                        <?php } ?>
+                        </div>
+                        <?php ;}
                         ;}
                         ?>
                         <div class ='col-sm-2'>
