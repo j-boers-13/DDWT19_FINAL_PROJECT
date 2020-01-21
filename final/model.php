@@ -695,6 +695,30 @@ function count_rooms_by_owner($pdo){
 }
 
 /**
+ * count  all optins by room_id
+ * @param object $pdo database object
+ * @return int integer with all opt-ins per room
+ */
+function count_optins_per_room($pdo, $room_id){
+    $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE room_id = ?');
+    $stmt->execute([$room_id]);
+    $rooms = $stmt->rowCount();
+    return $rooms;
+}
+
+/**
+ * count  all invites by room_id
+ * @param object $pdo database object
+ * @return int integer with all invites per room
+ */
+function count_invites_per_room($pdo, $room_id){
+    $stmt = $pdo->prepare('SELECT * FROM viewing_invites WHERE room_id = ?');
+    $stmt->execute([$room_id]);
+    $rooms = $stmt->rowCount();
+    return $rooms;
+}
+
+/**
  * Creates HTML alert code with information about the success or failure
  * @param array $feedback Array with keys 'type' and 'message'.
  * @return string
