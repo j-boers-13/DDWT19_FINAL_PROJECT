@@ -48,6 +48,14 @@
                             <td><?= $room_info['temporary'] ?></td>
                         </tr>
                         <tr>
+                            <th scope="row">Number of opt-ins</th>
+                            <td><?= $nbr_optins_room ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Number of invites to viewing evening</th>
+                            <td><?= $nbr_invites_room ?></td>
+                        </tr>
+                        <tr>
                             <th scope="row">Added by owner</th>
                             <td><?= $added_by ?></td>
                         </tr>
@@ -75,8 +83,11 @@
                                     <a href="/DDWT19_FINAL_PROJECT/final/optins/add/?room_id=<?=
                                     $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                                 </div>
-                        <?php } ?>
-
+                        <?php } else { ?>
+                            <div class ='col-sm-2'>
+                                <p> You already opted in!</p>
+                            </div>
+                        <?php ;} ?>
                         <div class ='col-sm-2'>
                                     <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $room_info['owner_id'] ?>" role="button" class="btn btn-info">Show owners' profile</a></td>
                                 </div>
