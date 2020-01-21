@@ -162,6 +162,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
     $date_added = $room_info['created_at'];
     $is_owner = check_if_owner($room_info['owner_id']);
     $user_is_owner = check_owner($db);
+    $user_opted_in = check_optin($db, $room_id);
     $user_is_invited = check_invitation($db, $room_id);
 
     /* Get error msg from POST route */
