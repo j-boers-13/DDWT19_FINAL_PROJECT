@@ -24,21 +24,29 @@ if(check_login() === true) {
         'name' => 'My Account',
         'url' => '/DDWT19_FINAL_PROJECT/final/myaccount'
     );
+    $nav_array[4] = Array(
+        'name' => 'Opt-ins',
+        'url' => '/DDWT19_FINAL_PROJECT/final/optins'
+    );
+    $nav_array[5] = Array(
+        'name' => 'Viewing invites',
+        'url' => '/DDWT19_FINAL_PROJECT/final/invites'
+    );
     if(check_owner($db)) {
-    $nav_array[4] =  Array(
+    $nav_array[6] =  Array(
         'name' => 'Add a room',
         'url' => '/DDWT19_FINAL_PROJECT/final/add'
     );}
-    $nav_array[5] = Array(
+    $nav_array[7] = Array(
         'name' => 'Log out',
         'url' => '/DDWT19_FINAL_PROJECT/final/logout');
 }
 else{
-    $nav_array[6] =  Array(
+    $nav_array[8] =  Array(
         'name' => 'Register',
         'url' => '/DDWT19_FINAL_PROJECT/final/register'
     );
-    $nav_array[7] =  Array(
+    $nav_array[9] =  Array(
         'name' => 'Log in',
         'url' => '/DDWT19_FINAL_PROJECT/final/login'
     );
@@ -167,7 +175,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optin/', 'get')) {
 
     /* Page info */
     $page_title = $optin_info['street_address'];
-    $navigation = get_navigation($nav_array,2);
+    $navigation = get_navigation($nav_array,4);
 
     /* Page content */
     $is_owner = check_owner($db);
@@ -212,7 +220,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/add/', 'get')) {
 
     /* Page info */
     $page_title = "Send opt-in message";
-    $navigation = get_navigation($nav_array,2);
+    $navigation = get_navigation($nav_array,4);
 
     /* Page content */
     $page_subtitle = $room_info['street_address'];
@@ -260,7 +268,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/invite/', 'get')) {
 
     /* Page info */
     $page_title = $invite_info['street_address'];
-    $navigation = get_navigation($nav_array,2);
+    $navigation = get_navigation($nav_array,5);
 
     /* Page content */
     $is_owner = check_owner($db);
@@ -306,7 +314,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/invites/add/', 'get')) {
 
     /* Page info */
     $page_title = "Send viewing invite to " . get_user_name($db, $tenant_id);
-    $navigation = get_navigation($nav_array,2);
+    $navigation = get_navigation($nav_array,5);
 
     /* Page content */
     $page_subtitle = $room_info['street_address'];
@@ -349,7 +357,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/invites/', 'get')) {
 
     $is_owner = check_owner($db);
     $page_title = 'Invites';
-    $navigation = get_navigation($nav_array, 2);
+    $navigation = get_navigation($nav_array, 5);
 
     /* Page content */
     $page_subtitle = 'The overview of all your invites';
@@ -377,7 +385,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myprofile/', 'get')) {
 
     /* Page info */
     $page_title = 'Profile';
-    $navigation = get_navigation($nav_array, 2);
+    $navigation = get_navigation($nav_array,3 );
 
 
     /* Page content */
@@ -404,7 +412,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/', 'get')) {
 
     /* Page info */
     $page_title = get_user_name($db, $user_id);
-    $navigation = get_navigation($nav_array, 2);
+    $navigation = get_navigation($nav_array, 3);
 
 
     /* Page content */
@@ -441,7 +449,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/add/', 'get')) {
 
     /* Page info */
     $page_title = 'Add room';
-    $navigation = get_navigation($nav_array,5);
+    $navigation = get_navigation($nav_array,6);
 
     /* Page content */
     $page_subtitle = 'Add your room';
@@ -583,7 +591,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myaccount/', 'get')) {
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/register', 'get')) {
     /* Page info */
     $page_title = 'Register';
-    $navigation = get_navigation($nav_array, 4  );
+    $navigation = get_navigation($nav_array, 8);
     /* Page content */
     $page_subtitle = sprintf("Register an account");
     $page_content = "Fill in the form below";
@@ -624,7 +632,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myprofile/edit', 'get')) {
 
     /* Page info */
     $page_title = 'Edit Profile';
-    $navigation = get_navigation($nav_array,6);
+    $navigation = get_navigation($nav_array,3);
 
     /* Page content */
     $page_subtitle = sprintf("Edit %s", $user_info['username']);
@@ -762,7 +770,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/', 'get')) {
     $is_owner = check_owner($db);
     $page_title = 'Opt-ins';
 
-    $navigation = get_navigation($nav_array, 2);
+    $navigation = get_navigation($nav_array, 4);
 
     /* Page content */
     $page_subtitle = 'The overview of all your opt-ins';
