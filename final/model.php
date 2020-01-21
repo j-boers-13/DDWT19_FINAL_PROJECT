@@ -581,7 +581,7 @@ function p_print($input){
 }
 
 /**
- * Get array with all listed series from the database
+ * Get array with all listed rooms from the database
  * @param object $pdo database object,
  * @param bool $limit quantity of rows (if false then show all rows)
  * @return array Associative array with all series
@@ -625,6 +625,11 @@ function get_roominfo($pdo, $room_id){
     return $room_info_exp;
 }
 
+/** Returns an array with information about the opt-in
+ * @param $pdo database object
+ * @param $optin_id database identifier
+ * @return array of optin information
+ */
 function get_optininfo($pdo, $optin_id){
     $stmt = $pdo->prepare('SELECT opt_ins.*, rooms.owner_id, address.street_address, address.city, address.zipcode FROM opt_ins JOIN rooms ON opt_ins.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE opt_ins.id = ?');
     $stmt->execute([$optin_id]);
@@ -637,6 +642,12 @@ function get_optininfo($pdo, $optin_id){
     }
     return $optin_info_exp;
 }
+
+/** Retrieves the information for an invite
+ * @param $pdo database object
+ * @param $invite_id database identifier
+ * @return array of invite info
+ */
 
 function get_inviteinfo($pdo, $invite_id){
     $stmt = $pdo->prepare('SELECT viewing_invites.*, rooms.owner_id, address.street_address, address.city, address.zipcode FROM viewing_invites JOIN rooms ON viewing_invites.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE viewing_invites.id = ?');
@@ -721,7 +732,7 @@ function get_tenant_optins($pdo){
 }
 
 /**
- * Get array with the rooms a tenant has opted-in for
+ * Get array with the rooms a received an invite for
  * @param object $pdo database object
  * @return array Associative array with all series
  */
@@ -744,7 +755,7 @@ function get_tenant_invites($pdo){
 }
 
 /**
- * Get array with the rooms a user has opted-in for
+ * Get array with the rooms an owner has received an opt-in for
  * @param object $pdo database object
  * @return array Associative array with all series
  */
@@ -767,7 +778,7 @@ function get_owner_optins($pdo){
 }
 
 /**
- * Get array with the rooms a user has opted-in for
+ * get array with invites the owner has sent
  * @param object $pdo database object
  * @return array Associative array with all series
  */
@@ -1023,6 +1034,12 @@ function add_room($pdo, $room_info){
     }
 }
 
+/**Send opt-in to the database
+ * @param $pdo
+ * @param $opt_in_form
+ * @return array
+ */
+
 function send_optin($pdo, $opt_in_form)
 {
     /* Check if all fields are set */
@@ -1043,7 +1060,7 @@ function send_optin($pdo, $opt_in_form)
 
     }
 
-    /* Check if room already exists */
+    /* Check if optin already exists */
     $stmt = $pdo->prepare('SELECT * FROM opt_ins WHERE room_id = ? AND tenant_id = ?');
     $stmt->execute([$opt_in_form['room_id'], $_SESSION['user_id']]);
     $room = $stmt->rowCount();
@@ -1076,6 +1093,11 @@ function send_optin($pdo, $opt_in_form)
     }
 }
 
+/** Send viewing invite to the database
+ * @param $pdo
+ * @param $invite_form
+ * @return array
+ */
 
 function send_viewing_invite($pdo, $invite_form)
 {
@@ -1251,6 +1273,11 @@ function remove_room($pdo, $room_id){
     }
 }
 
+/** Removes an invite with a specific invite Id
+ * @param $pdo
+ * @param $invite_id
+ * @return array
+ */
 function remove_invite($pdo, $invite_id){
     /* Get invite info */
     $invite_info = get_inviteinfo($pdo, $invite_id);
@@ -1273,6 +1300,11 @@ function remove_invite($pdo, $invite_id){
     }
 }
 
+/** Remove optin with a specific optin id
+ * @param $pdo
+ * @param $optin_id
+ * @return array
+ */
 function remove_optin($pdo, $optin_id){
     /* Get invite info */
     $invite_info = get_inviteinfo($pdo, $optin_id);
