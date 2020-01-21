@@ -53,8 +53,8 @@
                         </tr>
                         </tbody>
                     </table>
+                <div class='row'>
                     <?php if ($is_owner) { ?>
-                        <div class='row'>
                             <div class ='col-sm-2'>
                                 <a href="/DDWT19_FINAL_PROJECT/final/edit/?room_id=<?=
                                 $room_id ?>" role="button" class="btn btn-warning">Edit</a>
@@ -68,21 +68,22 @@
                             </div>
                         </div>
                         <?php } else { if(isset($_SESSION['user_id'])) {?>
-                        <div class='row'>
-                        <?php if (!($user_opted_in)) { ?>
-                        <div class ='col-sm-2'>
-                            <a href="/DDWT19_FINAL_PROJECT/final/optins/add/?room_id=<?=
-                            $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
-                        </div>
-                        <?php } ?>
-                        </div>
+                            <?php if (!($user_opted_in)) { ?>
+                            <div class='row'>
+
+                                <div class ='col-sm-2'>
+                                    <a href="/DDWT19_FINAL_PROJECT/final/optins/add/?room_id=<?=
+                                    $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
+                                </div>
+                            </div>
+                            <?php } ?>
                         <?php ;}
                         ;}
                         ?>
                         <div class ='col-sm-2'>
                             <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $room_info['owner_id'] ?>" role="button" class="btn btn-info">Show owners' profile</a></td>
                         </div>
-                        </div>
+                    </div>
                 </div>
 
                 <!-- Right column -->
@@ -91,9 +92,8 @@
                     <?php include $right_column ?>
 
                 </div>
-
-            </div>
         </div>
+            </div>
 
 
         <!-- Optional JavaScript -->
