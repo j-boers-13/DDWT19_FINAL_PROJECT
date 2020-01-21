@@ -49,7 +49,7 @@
                 <div class="form-group row">
                     <label for="messageInput" class="col-sm-2 col-form-label">Message</label>
                     <div class="col-sm-12">
-                        <textarea class="form-control" id="messageInput" rows="3" name="message" placeholder="Dear..." required></textarea>
+                        <textarea maxlength="255" class="form-control" id="messageInput" rows="3" name="message" placeholder="Dear..." required></textarea>
                     </div>
                 </div>
                 <?php if(isset($room_id)){ ?><input type="hidden" name="room_id" value="<?php echo $room_id ?>"><?php } ?>
