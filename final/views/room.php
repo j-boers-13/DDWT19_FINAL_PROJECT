@@ -75,13 +75,15 @@
                             $room_id ?>" role="button" class="btn btn-warning">Opt in</a>
                         </div>
                         <?php } ?>
+                        <?php if (($user_is_invited)){ ?>
                         <div class ='col-sm-2'>
                             <form action="/DDWT19_FINAL_PROJECT/final/invites/confirm" method="POST">
                                 <input type="hidden" value='. $value['id'] .' name="invite_id">
-                                <button type="submit" class="btn btn-primary">Confirm</button> </form>
+                                <button type="submit" class="btn btn-warning">Confirm</button> </form>
                         </div>
                         <?php ;}
-                        ;} ?>
+                        ;}
+                        ;}?>
                         <div class ='col-sm-2'>
                             <td><a href="/DDWT19_FINAL_PROJECT/final/profile/?user_id=<?= $room_info['owner_id'] ?>" role="button" class="btn btn-info">Show owners' profile</a></td>
                         </div>
