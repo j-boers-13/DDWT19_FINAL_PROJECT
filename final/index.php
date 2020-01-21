@@ -48,6 +48,7 @@ else{
 /* Redudant code is added here */
 /* Get Number of rooms */
 $nbr_rooms = count_rooms($db);
+
 /* Get Number of Users */
 $nbr_users = count_users($db);
 $nbr_owners = count_owners($db);
@@ -144,6 +145,8 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/room', 'get')) {
     $user_is_owner = check_owner($db);
     $user_opted_in = check_optin($db, $room_id);
     $user_is_invited = check_invitation($db, $room_id);
+    $nbr_invites_room = count_invites_per_room($db, $room_id);
+    $nbr_optins_room = count_optins_per_room($db, $room_id );
 
     /* Get error msg from POST route */
     if ( isset($_GET['error_msg']) ) {
@@ -217,9 +220,11 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/add/', 'get')) {
     $added_by = get_user_name($db, $room_info['owner_id']);
     $date_added = $room_info['created_at'];
     $user_is_owner = check_owner($db);
+
     $owner_name = get_user_name($db, $room_info['owner_id']);
     $submit_btn = "Opt-in and send message";
     $form_action = '/DDWT19_FINAL_PROJECT/final/optins/add/';
+
 
     /* Get error msg from POST route */
     if ( isset($_GET['error_msg']) ) {
