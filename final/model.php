@@ -206,7 +206,7 @@ function update_profile($pdo, $user_info){
         ];
     }
 
-    /* Update Serie */
+    /* Update USER */
     $stmt = $pdo->prepare('UPDATE users SET firstname = ?, lastname = ?, profession = ?, languages = ?, telephone = ?, email = ?, biography = ? WHERE id = ?');
     $stmt->execute([
         $user_info['firstname'],
@@ -240,10 +240,6 @@ function update_profile($pdo, $user_info){
  * @return array
  */
 function remove_profile($pdo, $user_id){
-    /* Get room info */
-    $user_info = get_other_userinfo($user_id, $pdo);
-
-
     /* Delete Room */
     $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
     $stmt->execute([$user_id]);
@@ -253,12 +249,12 @@ function remove_profile($pdo, $user_id){
             session_destroy();
             $feedback = [
                 'type' => 'success',
-                'message' => "You're account was removed succesfully"
+                'message' => "Your account was removed succesfully"
             ];
         } else {
             $feedback = [
                 'type' => 'danger',
-                'message' => 'you"re account was deleted but the log out seems to have failed please try logging out to experience the website bug-free'
+                'message' => 'Your account was deleted but the log out seems to have failed please try logging out to experience the website bug-free'
             ];
         }
         redirect(sprintf('/DDWT19_FINAL_PROJECT/final/?error_msg=%s',
@@ -286,6 +282,11 @@ function check_login(){
         return False;
     }
 }
+
+/**
+ * @param $pdo
+ * @return boolean depending on the if the user is owner
+ */
 
 function check_owner($pdo) {
     if (isset($_SESSION['user_id'])){
