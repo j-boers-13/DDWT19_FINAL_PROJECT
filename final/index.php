@@ -372,11 +372,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myprofile/', 'get')) {
 
     /* Page info */
     $page_title = 'Profile';
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'final' => na('/DDWT19/final/', False),
-        'Profile' => na('/DDWT19_FINAL_PROJECT/final/myprofile', True)
-    ]);
     $navigation = get_navigation($nav_array, 2);
 
 
@@ -404,11 +399,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/profile/', 'get')) {
 
     /* Page info */
     $page_title = get_user_name($db, $user_id);
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'final' => na('/DDWT19/final/', False),
-        'Profile' => na('/DDWT19_FINAL_PROJECT/final/myprofile', True)
-    ]);
     $navigation = get_navigation($nav_array, 2);
 
 
@@ -446,11 +436,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/add/', 'get')) {
 
     /* Page info */
     $page_title = 'Add room';
-    $breadcrumbs = get_breadcrumbs([
-        'ROOM.NET' => na('/DDWT19_FINAL_PROJECT/', False),
-        'Rooms' => na('/DDWT19_FINAL_PROJECT/final/', False),
-        'Add Room' => na('/DDWT19_FINAL_PROJECT/final/new/', True)
-    ]);
     $navigation = get_navigation($nav_array,5);
 
     /* Page content */
@@ -593,11 +578,6 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/myaccount/', 'get')) {
 elseif (new_route('/DDWT19_FINAL_PROJECT/final/register', 'get')) {
     /* Page info */
     $page_title = 'Register';
-    $breadcrumbs = get_breadcrumbs([
-        'DDWT19' => na('/DDWT19_FINAL_PROJECT/', False),
-        'Week 2' => na('/DDWT19_FINAL_PROJECT/final/', False),
-        'Overview' => na('/DDWT19_FINAL_PROJECT/final/register/', True)
-    ]);
     $navigation = get_navigation($nav_array, 4  );
     /* Page content */
     $page_subtitle = sprintf("Register an account");
