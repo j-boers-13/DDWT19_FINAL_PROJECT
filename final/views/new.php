@@ -76,7 +76,7 @@
                         <div class="form-group row">
                             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
                             <div class="col-md-6">
-                                <textarea class="form-control" id="inputDescription" rows="3" name="description" placeholder="Tell us something about the room!" required><?php if (isset($room_info)){echo $room_info['description'];} ?></textarea>
+                                <textarea maxlength='255' class="form-control" id="inputDescription" rows="3" name="description" placeholder="Tell us something about the room!" required><?php if (isset($room_info)){echo $room_info['description'];} ?></textarea>
                             </div>
                         </div>
                         <?php if(isset($room_id)){ ?><input type="hidden" name="room_id" value="<?php echo $room_id ?>"><?php } ?>
