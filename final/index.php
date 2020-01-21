@@ -223,7 +223,7 @@ elseif (new_route('/DDWT19_FINAL_PROJECT/final/optins/add/', 'get')) {
             'message' => 'Owners can\'t send opt-ins.'
         ];;
         /* Redirect to room GET route */
-        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/optins/add/?error_msg=%s',
+        redirect(sprintf('/DDWT19_FINAL_PROJECT/final/optins/?error_msg=%s',
             json_encode($feedback)));
     }
 
