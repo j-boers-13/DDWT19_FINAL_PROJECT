@@ -37,7 +37,7 @@
                 <div class="form-group row">
                     <label class="control-label">Appointment Time</label>
                     <div class='input-group date' id='datetimepicker1'>
-                        <input type='datetime' name="date" class="form-control" />
+                        <input type='text' name="date" class="form-control" />
                         <span class="input-group-addon">
                      <span class="glyphicon glyphicon-calendar"></span>
                      </span>
@@ -71,7 +71,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script>
     $(function () {
-        $('#datetimepicker1').datetimepicker();
+        $('#datetimepicker1').datetimepicker({ format: "YYYY-MM-DD HH:MM:SS"});
     });
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
