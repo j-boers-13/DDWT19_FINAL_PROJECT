@@ -715,7 +715,7 @@ function get_tenant_invites($pdo){
     if(!isset($_SESSION)) {
         session_start();
     }
-    $stmt = $pdo->prepare('SELECT viewing_invites.*, rooms.square_meters, address.street_address, address.city, address.zipcode FROM viewing_invites INNER JOIN rooms ON viewing_invites.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE tenant_id = ? AND is_confirmed = "No"');
+    $stmt = $pdo->prepare('SELECT viewing_invites.*, rooms.square_meters, address.street_address, address.city, address.zipcode FROM viewing_invites INNER JOIN rooms ON viewing_invites.room_id = rooms.id JOIN address ON rooms.address_id = address.id WHERE tenant_id = ?');
     $stmt->execute([$_SESSION['user_id']]);
     $optins = $stmt->fetchAll();
     $optins_exp = Array();
